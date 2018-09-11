@@ -1,0 +1,25 @@
+<div class = "page">
+	<div class="page-content-cersonalityBackground">
+		<div id="writeSuggest" class="personal_feedback_div_04">写建议</div>
+		<img alt="头像" src="images/avatar.png" class = "avatarImg">
+		<div id="lookBack" class="personal_feedback_div_05">看回复</div>
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="personal_feedback" id = "personal_feedback">
+		<ul>
+			<li><div class="personal_feedback_div_01">2015/11/11 15:26</div><div style="float:right;" id = "delete"><img style="height:30px;margin-right:10px;" src="images/delete.png"/></div></li>
+			<li><div class="personal_feedback_div_02">请写下您的建议，帮助我们更好的为您服务，帮助我们更好的为您服务，帮助我们更好的为您服务，帮助我们更好的为您服</div></li>
+			<li><div  class="personal_feedback_div_03">[回复]：请写下您的建议，请写下您的建议,请写下您的建议,请写下您的建议,请写下您的建议</div></li>
+		</ul>
+	</div>
+	
+	<% for(var i  in ReplyMessage){%>
+		<div class="personal_feedback">
+			<ul>
+				<li><div class="personal_feedback_div_01"><%=ReplyMessage[i].feedback_time%></div><div style="float:right;" id = "dddddd"><img style="height:30px;margin-right:10px;" src="images/delete.png"/></div></li>
+				<li><div class="personal_feedback_div_02">请写下您的建议，帮助我们更好的为您服务，帮助我们更好的为您服务，帮助我们更好的为您服务，帮助我们更好的为您服</div></li>
+				<li><div  class="personal_feedback_div_03">[回复]：请写下您的建议，请写下您的建议,请写下您的建议,请写下您的建议,请写下您的建议</div></li>
+			</ul>
+		</div>
+	<%}%>
+</div>

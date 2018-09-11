@@ -1,0 +1,32 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground" id = "Picture_frame">
+		
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="index_page_buttom_message">
+		<ul class="index_page_ul">
+			<li>
+			    <div class="index_page_ul_lileft">生日</div>
+				<div class = "index_page_select personal_birthday_div">
+					<select id="personal_year" data-role='none'>
+						<%=dataYear%>
+					</select>
+					<span>年</span>
+					<div class = "year_select_style date_select_style"></div>
+					<select id="personal_month" data-role='none'>
+						<%=dataMonth%>
+					</select>
+					<span>月</span>
+					<div class = "month_select_style date_select_style"></div>
+					<select id="personal_day" data-role='none'>
+						<%=dataDay%>
+					</select>
+					<div class = "day_select_style date_select_style"></div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="personal_sex_buttonDiv_01" id = "personal_birthday_buttonDiv">
+		<span>确</span><span class="personal_birthday_span_01">定</span>
+	</div>
+</div>

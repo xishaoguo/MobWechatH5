@@ -1,0 +1,29 @@
+<div data-role="none" class="flight-content" id="myflight">
+     
+     <div id="wrapper">
+     	<ul data-role="listview" class='flightlistview'>
+     	<% for(var i  in data){%>
+     		<li  class="item-content">
+     			<div class="flightdate"><%=data[i].de_date%>/<%=data[i].de_week%></div><div class="addcard" id="addcard"><%=data[i].air_scn_num%></div>
+     			<div class="flightclear"><div class="departcity flightcheckin-city-font"><%=data[i].de_city%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivecity flightcheckin-city-font"><%=data[i].ar_city%></div></div>
+     			
+     			<div class="departtime flightcheckin-time-font"><%=data[i].de_time%></div><div class="flight-icon"></div><div class="arrivetime flightcheckin-time-font"><%=data[i].ar_time!=''?data[i].ar_time:' '%></div>
+     			
+     			<div class="depart-airport flightcheckin-travelnum"><div class="all-icon write-icon"></div><div class="travelnum-font">常客号码：1234567</div></div>
+     			<div class="flightcheckin-half-round"></div>
+     			<div class="circle"></div>
+     			<div class="flight-msg flightcheckin-msg" id="seatselection">办理值机</div>
+     			<!-- <div class="flight-msg flightcheckin-msg CancelCheckin">取消值机</div> -->
+     		</li>
+     	<%}%>
+     	</ul>
+     </div>
+  </div>
+  
+  <div data-role="none" class="footer notice">
+  	<div><div class="common-contact-checkbox  all-icon checkboxed-icon" style="float: left;"></div>已阅读并同意值机协议、乘机须知、危险品公告<div class="notice-font" id="notice">温馨提示</div></div>
+  	<ul id="noticeli" style="margin-left: 18px;">
+  		<li>儿童、婴儿、特殊旅客暂不办理</li>
+  		<li>一个航班只能办理三次手机值机取消</li>
+  	</ul>
+  </div>

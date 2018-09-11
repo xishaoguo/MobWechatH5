@@ -1,0 +1,40 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<img alt="头像" src="images/avatar.png" class="avatarImg">
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="index_page_buttom_message">
+		<ul class="index_page_ul">
+			<li>
+			    <div class="index_page_ul_lileft">生日</div>
+				<div class = "index_page_select" style="float:right;margin-right:8px;margin-top:8px;">
+					<select id="personal_year" data-role='none'>
+						<%=dataYear%>
+					</select>
+					<span>年</span>
+					<select id="personal_month" data-role='none'>
+						<option value="01">01</option>
+						<option value="02">02</option>
+						<option value="03">03</option>
+						<option value="04">04</option>
+						<option value="05">05</option>
+						<option value="06">06</option>
+						<option value="07">07</option>
+						<option value="08">08</option>
+						<option value="09">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+					</select>
+					<span>月</span>
+					<select id="personal_day" data-role='none'>
+						<%=dataDay%>
+					</select>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="personal_sex_buttonDiv_01" id = "personal_birthday_buttonDiv">
+		<span>确定</span>
+	</div>
+</div>

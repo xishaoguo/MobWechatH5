@@ -1,0 +1,91 @@
+  <div data-role="header">
+    <div class="flight-icon-airline flight-icon-<%=data.airCode%>"></div><div class="flight-guide-air-num"><%=data.airCn%></div>
+    <% if(data.delay=="Y"){%><div class="flight-guide-late">延误</div><% }%><div class="flight-guide-addcard">加到卡包</div>
+  </div>
+
+  <div data-role="content" class="flight-guide" style="padding-left: 7px;">
+     <div id="wrapper">
+     
+     	<ul data-role="none">
+     	<li style="float: left;height:845px;"><div class="scroll-bar"></div><div class="grey-scroll-bar"></div></li>
+     	   <!-- 出票 -->
+     	    <li class="guide-date"><%=data.odate%> <%=data.otime%></li>
+     		<li class="item-guide item-guide-done" id="flightdetails">
+     			<div class="flight-state flight-state-font"><%=data.oname%></div>
+     			<div><%=data.ocontext%></div>
+     			<div><div class="guide-button guide-button-margin" couponId="<%=data.couponId%>">机票详情</div></div>
+     			<div class="guide-half-round"></div>   			
+     		</li>
+     		<!-- 预留 -->
+     		<li class="guide-date"><%=data.sdate%> <%=data.stime%></li>
+     		<li class="item-guide item-guide-todo j-seatselection" >
+     			<div class="flight-state flight-state-font j-seatselection-font"><%=data.sname%></div>
+     			<%if(data.scontext==2){%>
+     			<div class="guide-button" id="seatselection">预选座位</div>
+     			<%}else if(data.scontext==4){%>
+     			<div><div class="guide-div">座位号：</div><div class="guide-div guide-info"><%=data.selectSeatId%></div></div>
+     			<div class="guide-button guide-button-margin" id="cancelPrimary">取消预留</div>
+     			<%}%>
+     			<div class="guide-half-round"></div>
+     		</li>
+     		<!-- 值机 -->
+     		<li class="guide-date"><%=data.peDate%> <%=data.peTime%></li>
+     		<li class="item-guide item-guide-todo" id="boardingpass">
+     			<div class="flight-state flight-state-font j-checkin-font"><%=data.peName%></div>
+     			<%if(data.peContext==4){%>
+     			<div class="guide-button j-CheckIn">值机选座</div>
+     			<%}else if(data.peContext==5){%>
+     			<div class="guide-button j-cancelCheckIn">取消值机</div>
+     			<%}else{%>
+     			<div class="guide-text"><%=data.peContext%></div>
+     			<%}%>
+     			<div class="guide-half-round"></div>
+     			<div class="all-icon item-guide-doing"></div>
+     		</li>
+     		<!--托运  -->
+     		<li><div class="all-icon item-guide-doing"></div></li>
+     		<li class="guide-date"><%=data.tdate%> <%=data.ttime%></li>
+     		<li class="item-guide item-guide-todo" id="consignment">
+     			<div class="flight-state flight-state-font j-consign-font"><%=data.tname%></div>
+     			<div class="guide-text"><%=data.tcontext%></div>
+     			<div class="guide-half-round"></div>
+     		</li>
+     		<!-- 安检 -->
+     		<li class="guide-date"><%=data.sfDate%> <%=data.sfTime%></li>
+     		<li class="item-guide item-guide-todo" id="QRCode">
+     			<div class="flight-state flight-state-font j-security-font"><%=data.sfName%></div>
+     			<div class="guide-text"><%=data.sfContext%></div>
+     			<div class="guide-half-round"></div>
+     		</li>
+     		<!-- 登机 -->
+     		<li class="guide-date"><%=data.bdate%> <%=data.btime%></li>
+     		<li class="item-guide item-guide-todo" id="boarding">
+     			<div class="flight-state flight-state-font j-goboarding-font"><%=data.bname%></div>
+     			<div class="guide-text"><%=data.bcontext%></div>
+     			<% if(data.delay!=null){%>
+     			<div class="triangle-topleft"></div>
+     			<div class="triangle-topleft-font">延</div>
+     			<% }%>
+     			<div class="guide-half-round"></div>
+     		</li>
+     		<!-- 到达 -->
+     		<li class="guide-date"><%=data.adate%> <%=data.atime%></li>
+     		<li class="item-guide item-guide-todo" id="arrive">
+     			<div class="flight-state flight-state-font j-arrive-font"><%=data.aname%></div>
+     			<div class="guide-text"><%=data.acontext%></div>
+     			<% if(data.delay!=null){%>
+     			<div class="triangle-topleft"></div>
+     			<div class="triangle-topleft-font">延</div>
+     			<% }%>
+     			<div class="guide-half-round"></div>
+     		</li>
+     	</ul>
+     	
+     	<% if(0){%>
+     	<div class="all-icon exclamation-mark-icon"></div>
+     	<div class="authentication-success-msg">航班取消</div>
+        <div class="authentication-user-info">您的航班已取消，请联系航空公司</div>
+        <div class="authentication-line"></div>
+     	<%}%>
+     </div>
+  </div>

@@ -1,0 +1,443 @@
+@charset "utf-8";
+
+/*****************main************************/
+.ui-page,.ui-page-active{ overflow:hidden!important;}/* fixed闪屏 */ 
+.ui-page { /* -webkit-perspective: 1000;-webkit-transform: translateZ(0); backface-visibility : hidden !important;*/-webkit-backface-visibility : hidden; -moz-backface-visibility : hidden !important; /*-webkit-overflow-scrolling: touch;*/ }
+.ui-mobile-rendering > * { visibility: hidden; }
+.ui-page{ height: 100% !important;-webkit-transform:translate3d(0,0,0);
+-moz-transform: translate3d(0, 0, 0)!important;-ms-transform: translate3d(0, 0, 0)!important;transform: translate3d(0, 0, 0)!important;}
+.page-content{background: #f3f3f3;height: 100%;}
+/*.ui-header{height: 58px;}*/
+body{min-width: 320px;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {margin:0;padding:0;overflow: hidden;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,iframe { display:block}
+h2,h3,h4,h5,h6 {font-size:100%;font-weight:500}
+address,cite,dfn,em,var,i {font-style:normal;font-weight:400}
+dfn {font-family:Arial}
+ul,ol {list-style:none}
+a {text-decoration:underline;color:#5ec3b8;font-size:18px;font-weight: bold;}
+a:hover {-webkit-transition:color .2s linear;-moz-transition:color .2s linear;-ms-transition:color .2s linear;-o-transition:color .2s linear;transition:color .2s linear}
+fieldset,img,button,input {border:0}
+button,input,select,textarea {font-size:100%}
+table {width:100%;/* border-collapse:collapse;border-spacing:0 ; */}
+/*input {-webkit-appearance:none;border-radius:0}*/
+body {-moz-user-select:none;-webkit-user-select:none;user-select:none;/*min-width:320px;background:#f5f5f5;overflow-x:hidden;-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-font-smoothing:antialiased;-moz-user-select:none;color:#000*/}
+:focus {outline:0}
+.clearfix:after {clear:both;content:'.';display:block;height:0;visibility:hidden;line-height:0}
+.clearfix {zoom:1}
+.fl {float:left}
+.fr {float:right}
+.clear {clear:both}
+.overflow {overflow:hidden}
+.ellips {white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ellips_line2,.ellips_line3 {display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.ellips_line2 {-webkit-line-clamp:2}
+.ellips_line3 {-webkit-line-clamp:3}
+.pos_rel {position:relative}
+.abs_size {-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+.opacity {opacity:.7}
+/*.direction_ltr::-webkit-input-placeholder,.direction_ltr::-moz-input-placeholder,.direction_ltr::-ms-input-placeholder {direction:ltr!important;text-align:left;color:#ccc;font-size: 13px!important;font-weight: bold;text-shadow: none;}*/
+html,body,.h100,#main {height:100%}
+button {text-align:center}
+.break_all {word-break:break-all}
+.m10 {margin:10px}
+.m20 {margin:20px}
+.mt10 {margin-top:10px}
+.mt20 {margin-top:20px}
+.mb10 {margin-bottom:10px}
+.pt10 {padding-top:10px}
+.pb10 {padding-bottom:10px}
+.hm {text-align:center}
+.vm {vertical-align:middle}
+.mlr {margin:0 10px}
+.mtb {margin:20px 0}
+.pb85 {padding-bottom:85px!important}
+.b60 {padding-bottom:45px}
+.p10 {padding:10px}
+
+/***************flight search******************************/
+
+.cont_pd_wrap {margin:48px 0 0;padding:10px}
+.cont_box_white {/*padding:10px;*/margin-bottom:10px;background:#fff;height: 100%; }
+.cont_blue,.cont_blue1 {margin-top:48px}
+.bg_white {background-color:#fff}
+.checked,.i,.i_aft:after,.arr_r:after,.arr_down:after,.arr_up:after,#city_list li.citylistcrt:after,.fselect.current i,.light.current:after, .light:active:after,#city_list .cur-selected:after,.citylist .ok_crt:after,.cui-w-loading,.cui-white-logo,body .cui-select-fullscreen .cui-option-selected:after {
+	width: 44px;height: 44px;background: url(../images/common-mine/icon-44.png) no-repeat; 
+	background-size: 132px 2640px;
+}
+
+
+.date_txt em {display:block;color:#3399ff;font-size: 16px;font-weight: bold;text-shadow: none;}
+.date_txt b {display:block;line-height:24px}
+
+.fix_bottom,.fix_b {position:fixed;bottom:0;width:100%;left:0;z-index:9999}
+.btn_green.fix_bottom {width:100%;margin:auto;text-align:center}
+.arr_r,.arr_up,.arr_down {position:relative}
+.arr_r:after {top:28%;margin-top:-10px;right:-10px;width:30px;height:32px;background-position: 0px -572px;margin-right: 10px;}
+.arr_up:after{top:28%;right:-5px;width:44px;height:44px;background-position: 0px -840px;}
+.arr_down:after{top:28%;right:-5px;width:44px;height:44px;background-position: 0px -796px;}
+.air-city{color:#ccc;font-size: 13px;font-weight: bold;text-shadow: none;}
+/*
+.arr_up:after {
+	-webkit-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg);
+	-o-transform:rotate(-90deg);
+	transform:rotate(-90deg)
+}
+.arr_down:after {
+	-webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+	transform:rotate(90deg)
+}
+*/
+.i_bef:before,.i_aft:after,.arr_r:after,.arr_down:after,.arr_up:after,.tab_search li:before,.tab_search li:after,#city_list li.citylistcrt:after,.list_crt:after {content:"";position:absolute}
+.btn_backHome{width: 100%;height: 45px;line-height: 45px;background: #fff;color: #34d471;font-size: 18px;margin-left: auto;margin-right: auto;text-align: center;/*-webkit-tap-highlight-color: #ff8c00;*/border-radius: 3px;border: 1px solid #34d471;}
+.btn_green {width:100%;height:45px;line-height:45px;background:#34d471;color:#fff;font-size:18px;margin-left:auto;margin-right:auto;text-align:center;/*-webkit-tap-highlight-color:#ff8c00;*/border-radius: 3px;}
+.btn_f36 {width:100%;height:45px;line-height:45px;background:#f63;color:#fff;font-size:18px;margin-left:auto;margin-right:auto;text-align:center;/*-webkit-tap-highlight-color:#ff8c00;*/border-radius: 3px;}
+.btn_green:active,header i:active,.icon_home:active,.icon_phone:active {opacity:.7}
+.arr_r:active,.arr_up:active,.arr_down li:active { /*background:rgba(242,242,242,.8)*/}
+.search_day dd.city_txt {line-height:18px;color:#3399ff;font-size: 17px;font-weight: bold;text-shadow: none;}
+.search_day span{color:#3399ff;font-size: 17px;}
+.search_day {margin-bottom:12px}
+.search_list h3,.search_day dt {position:relative;text-indent:10px;color:#999999;font-size: 13px;font-weight: bold;text-shadow: none;padding-top: 10px;}
+.search_list i{padding-top: 10px;position: absolute;text-indent: 10px;}
+.search_list p,.search_day dd {position:relative;padding:0 5px 0 10px;line-height:34px;}
+.search_day {width:100%;overflow:hidden;margin-right:-2%}
+.search_day dl {float:left;/*width:49%;*/}
+.search_day dl:first-child {/*margin-right:2%*/}
+.search_day dd {padding:10px}
+.search_day em {display:block;font:600 1.286em/30px STXihei;color:#ff7900}
+.search_day i {display:block;line-height:20px}
+.ofv{overflow: visible!important;}
+/***************flight******************************/
+.city_tab {overflow:hidden;border-bottom:1px solid #cfcfcf}
+.city_tab li {float:left;width:50%;height:38px;line-height:38px;font-size:16px;text-align:center;color:#808285;border-bottom:4px solid transparent}
+.city_tab li.cityTabCrt {color:#329ECB;background-color: #FFF;}
+.f_list_tab {border-bottom: 1px solid #DCDCDC;width: 100%;height: 64px;overflow: hidden;font-size: 14px;position: relative;background-color: #FFF;-webkit-tap-highlight-color: #f2f2f2;}
+ul.f_list_tab {padding:0}
+.f_list_tab div {float:left}
+.f_list_tab .f_info {padding:10px 0px 10px 10px;line-height:22px;position:relative}
+.f_list_policy{background-color: #88b8ea;border-radius: 1px;padding:1px 2px;width: 28px;height: 15px;color:#fff;font-size: 9px;}
+.f_list_contrary{background-color: #86d46d;border-radius: 1px;padding:1px 2px;width: 28px;height: 15px;color:#fff;font-size: 9px;}
+.f_list_stopover{background-color: #fcc348;border-radius: 1px;padding:1px 2px;width: 28px;height: 15px;color:#fff;font-size: 9px;}
+.f_list_share{background-color: #f9a986;border-radius: 1px;padding:1px 2px;width: 28px;height: 15px;color:#fff;font-size: 9px;}
+.f_info p {color:#333;font-size:15px}
+.f_info strong {color:#333333;font-size: 16px;font-weight: bold;text-shadow: none;letter-spacing:-1px}
+.f_info i {color:#fff;font-size:9px;}
+.f_info em {color:#999999;font-size: 13px;font-weight: bold;text-shadow: none;}
+.f_info_w{width:45%;}
+.f_list_tab .f_price {padding:10px 10px;line-height:22px;position:absolute;right:25px;text-align:right;min-width: 70px;}
+.f_l_price {padding:10px;line-height:22px;position:relative;}
+.f_price,.f_l_price dfn{color:#ff6633;font-size: 13px;font-weight: bold;text-shadow: none;}
+.f_price,.f_l_price strong {color:#ff6633;font-size:18px;font-weight: bold;text-shadow: none;}
+.f_price,.f_l_price span{color: #666;}
+.f_num {margin-left:6px}
+.small {color:#C12E33}
+.f_cabin{display: none;}
+.f_cabin_show{display: block;}
+.f_cabin {background-color:#EBEBEB;font-size:13px;position:relative}
+.f_cabin li {letter-spacing:-1px;border-bottom:1px solid #DCDCDC;height:44px;line-height:44px;position:relative}
+.f_cabin li:last-child {border-bottom:0}
+.f_cabin li:hover {background-color:#c5dbef}
+.cabin_type {width:100%;display:inline-block;color:#333;padding-left:10px;position:absolute}
+.cabin_type em {margin-left:10px}
+.cabin_info {display:inline-block;position:absolute;left:45%;min-width: 74px;text-align: right;}
+.cabin_price {text-align:right;display:inline-block;position:absolute;right:45px;color:#39f;}
+.cabin_price strong {font-size:16px;}
+.cabin_price dfn{color:#39f;}
+.backdate {display:none}
+.backtrack .backdate {display:block}
+.backtrack .city_tit {box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
+.backtrack .city_tit_box {overflow:hidden}
+.backtrack .startdate {float:left}
+.backtrack .backdate {float:right}
+.flights_switch dl {width:45%}
+.flights_switch dl:first-child {margin-right:0}
+.flights_switch .switch_btn {width: 22px;height: 44px;margin-top: 15px;background: url(../images/common-mine/icon-44.png) center center no-repeat;background-position: -3px -348px;text-indent: -9999px;text-align: center;background-size: 88px 1760px;float: left;}
+.flights_switch dd {height:18px}
+.flights_switch dd span {width:100%;left:0;top:0px;height:38px;line-height:38px;text-indent:10px;position:absolute;z-index:2;-webkit-transition:all .5s ease-in-out}
+.switch_left {-webkit-transform:translateX(-140%)}
+.switch_right {-webkit-transform:translateX(140%)}
+.m10 { margin:10px}
+.pt10 { padding:10px 0}
+/*腾讯需求，提示信息*/
+.notification {height: 25px;padding: 8px 5px 8px 60px;-webkit-border-radius: 4px;margin: 10px;border: 2px solid #FFC237;background-color: #FFEAA8;}
+.notification p {font-size: 11px;padding: 0px;margin: 0px;color: #333333;}
+
+/*-----------------------flight list------------------------------*/
+.flight_nav{ border: 1px #FFF solid;border-radius: 3px;width: 100%;}
+.flight_list_bar{z-index: 101;height: 32px;line-height: 32px;text-align: center;border-bottom: solid 1px #DCDCDC;border-top: solid 1px #FFF;background-color: #f3f3f3;}
+.flightlist-bar-line{height: 64px;line-height: 30px;}
+.ui_cabin_list {margin: 10px -10px 0px -10px;margin-top: 10px;margin-right: -10px;margin-bottom: 0px;margin-left: -10px;}
+.ui_list {margin: 0px;padding: 0px;border-radius: 0px;}
+.flight_els_border{ border: #C9D1D6 1px solid;border-radius: 3px;}
+.flight_cabin_select{ border: none;-webkit-appearance: none;-moz-appearance: none;cursor: pointer;}
+.flight_search_date{ width: 58%;}
+.flight_trends_date{width:100%;}
+.flight_search_time{ width: 40%;margin-left: 4px;height: 62px;}
+.flight_search_time select{line-height: 85px; padding-left: 10px;width:100%;height: 100%;background-color: #FFF;}
+.flight_search_time em{line-height: 85px;padding-left: 10px; width:100%;height: 100%;}
+.flight_return_dateTime{ display:none !important}
+.flight_return_mt10{ margin-top: 10px;}
+.flight-footer{position: absolute;width: 100%;bottom: 0px;background-color: #FFF;-webkit-box-shadow: 4px 4px 4px 4px #DCDCDC;}
+.flight-footer a{background: none;color:#666666;text-shadow: none;border:none;}
+
+.f-sort-panel{ position: absolute;width: 100%;height: 100%;top: 0px;background-color: #000;z-index: 999;background:rgba(0,0,0,0.3);}
+.f-sort-panel ul{ position: absolute;width: 100%;bottom: 0px;background-color: #FFF;opacity: 0.96;}
+.f-sort-panel li{ float: left; width: 100%; text-align: center;border-top: 1px solid #dcdcdc;height: 44px;line-height: 44px;}
+.f-sort-panel label{text-align: center;line-height: 40px; color:#666666;font-size: 16px;font-weight: normal;text-shadow: none;}
+.f-panel-sub-bg{background-color: #FFF;left: 0px;margin-top: 95%;height: 100%;}
+.cabin-panel,.airline-panel,.contrary-panel,.time-panel,.seat-panel,.meal-panel,.purpose-panel,.cert-panel,
+.ticket-options-panel,.appr-model-panel{display:none;}
+.panel-show{display:block;}
+.f-label-selected{color:#3399ff;font-size: 16px;font-weight: bold;text-shadow: none;}
+.filter-icon{vertical-align: middle;position: absolute;right: 0px;margin: 15px 12px 0px 0px;height: 22px;}
+.flight-cabin,.flight-airline,.flight-contrary,.flight-time{line-height: 24px;}
+.flight-list-h{height: 52px;}
+.flight-list-h ul{/*margin: 4px 0px;*/}
+.flight-nav:active{background: #39F;color: #FFF;}
+.flight-nav-active{background: #39F !important;color: #FFF !important;}
+/*-------------------------fligth lowest list------------------------------*/
+.flight-lowest-tip{height: 40px;background: #FF9664;padding: 4px 10px;}
+.flight-lowest-book{ background: #34D471; margin: 15px 8px; height: 39px; line-height: 39px; width: 48px; text-align: center; border-radius: 5px;position: absolute;right: 5px;}
+/*---------------------fligth city-----------------------------*/
+.city-seatch-icon {width: 28px;height: 28px;background: url(../images/common-mine/icon-44.png) no-repeat;background-size: 88px 1760px;background-position: 0px -440px;}
+.search-box{ float: left;width: 75%;background-color: #FFF;border-radius: 3px;margin: 10px 5px 6px 12px;}
+.search-input{ width: 80%; vertical-align: middle;line-height: 15px;height: 28px; font-size: 13px!important;font-weight: bold;text-shadow: none;}
+/*.search-input::-webkit-input-placeholder { color:#ccc;font-size: 13px;font-weight: bold;text-shadow: none;}*/
+.search-cancel{ margin: 15px 3px;padding: 0px;text-align: center;}
+.flight_city_grid_item{list-style-type: none;display: inline-block;position: relative;overflow: hidden;float: left;width: 100%;text-decoration: none;cursor: pointer;color: #999}
+.flight_city_listview{/*transition: 0ms;-webkit-transition: 0ms;-webkit-transform-origin: 0px 0px; position: absolute; */top: 0px;left: 0px;margin: 0px !important;}
+.flight_city_listview li{background: #fff;/*border-top: solid 1px #ddd;border-bottom: none;*/}
+.flight_city_city_group{background: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3), to(#F3F3F3)) !important;padding: 6px !important;}
+.flight_city_list_item{vertical-align: middle;width: 100%;}
+.flight_city_list_item span{display: inline-block;width: 40%;}
+.flight_city_scroll{overflow-x:hidden;overflow-y:hidden;-webkit-overflow-scrolling: touch;overflow-scrolling: touch;/* overflow: auto; */}
+.flight_city_list {-webkit-border-radius: 0px !important;border-radius: 0px !important;}
+.flight_city_slider_filter .ui_link{color: #fff !important;font-weight: normal!important;height: 4.17%;}
+.flight_city_slider_filter{ position: absolute;right:0;z-index:1001;width: 30px;top:50px;height: 100%;background-color:#fff;text-align: center;color:#999999;font-size: 12px;font-weight: bold;text-shadow: none;padding-top: 62px}
+/*.flight_city_slider_filter_hover{ background: rgba(0, 0, 0, 0.8); text-shadow: 0px 1px 1px #000; }*/
+.flight_city_airport_content #wrapper {position: absolute;z-index: 1;/*top: 55px;*/bottom: 0px;width: 100%;left: 0px;overflow: auto;}
+#charFilter{ display: none;z-index: 101;position: absolute;top: 50%;left: 50%;width: 50px;height: 53px;margin-left: -30px;margin-top: -60px;background-color: #000;color: #fff;text-align: center;opacity: 0.5;padding: 5px;font-size: 40px;}
+
+/*---------------------select user----------------------------*/
+.cont-box-gray {background:#f3f3f3;width:100%;height: 100%; }
+.nav-btn-margin { margin: 10px 20px 5px 20px;}
+.nav-btn-margin li{width: 100% !important; padding: 5px 0px !important;}
+.user_list{ position:relative;margin: 0px; padding: 0px;}
+.user_list li:first-child {border-top: 1px #DCDCDC solid;}
+.user_list li{ background: #FFF;border-bottom: 1px #dcdcdc solid;height: 64px;}
+.user-info-pos{margin: 10px 12px;float: left;}
+.user-del-icon{ float: left; padding: 10px 0px;cursor: pointer;}
+.user-cont-mt10{ margin: 10px 0px;}
+.user-cont-mt5{ margin-top: 5px;}
+.add-user-btn{ width: 100%;height: 45px;line-height: 45px;background: #FAFAFC;color: #333;font-size: 18px;border: 1px #DCDCDC solid;cursor: pointer;}
+.find-user-box{height: 30px;width: 65%;margin: 10px 15%;border-radius: 3px;font-size: 13px!important;font-weight: bold;}
+/*.find-user-box ::-webkit-input-placeholder { color:#ccc;font-size: 13px;font-weight: bold;text-shadow: none;}*/
+.find-user-btn{line-height: 45px;font-size: 16px ! important;color: #FFF;cursor: pointer;padding: 0px 15px;}
+.user-selected-icon{margin-top: 10px;right: 10px;position: absolute;}
+.hide-selected-icon{display:none}
+
+/*---------------------checked order----------------------------*/
+.cont-box-white{ background-color: #fff;border-top: 1px solid #DCDCDC;border-bottom: 1px solid #DCDCDC;}
+.check-order-bg0{background: url(../images/common-mine/check-order-info.png) no-repeat; background-size: 640px 150px;background-position: 0px 0px;-webkit-background-size: 100% 100%;}
+.check-order-bg1{background: url(../images/common-mine/check_rt_order.png) no-repeat; background-size: 640px 150px;background-position: 0px 0px;-webkit-background-size: 100% 100%;}
+.check-order { margin: 0px;padding:0px;}
+.check-order-btn{ margin: 10px 10px 5px 10px;}
+.check-order-date{border-radius: 15px;margin: 10px 7%;padding: 5px 2px;background: #000;/*opacity: .4;*/background: rgba(0, 0, 0, 0.3);}
+.check-order-time{font-size: 32px !important;color:#fff;}
+
+.check-order-info{ height: 64px; background: #fff;}
+.check-order-psg{height:auto;}
+.check-order-info dl{ padding-left: 12px;}
+.check-order-info dt{ padding-top: 10px;}
+.check-order-info dd{ padding: 10px 0px;border-top: 1px solid #DCDCDC; }
+.check-order-info span{ right: 25px; position: absolute; }
+.check-order-psg dt{ padding-top: 0px;height: 32px; line-height: 32px;}
+.check-order-psg dd{padding:0px;height: 44px; line-height: 40px;}
+.cabin-y{ background-color: #5caeff;border-radius: 2px;padding: 2px;font-size: 14px;color: #FFF;}
+.cabin-f{ background-color: #ba77d8;border-radius: 2px;padding: 2px;font-size: 14px;color: #FFF;}
+.check-order-bottomline{border-bottom: 1px solid #dcdcdc;}
+
+.check-order-totalPrice{ right: 25px; position: absolute; top: 10px; color:#ff6633;font-size:18px;font-weight: bold;text-shadow: none;}
+.ticket-info strong{ color:#333333;font-size: 13px;font-weight: bold;text-shadow: none;} 
+.ticket-info dfn{ color:#ff6633;font-size: 13px;font-weight: bold;text-shadow: none;} 
+.ticket-info span{ color:#ff6633;font-size: 13px;font-weight: normal;text-shadow: none;} 
+.policy-info{border-top: 1px solid #DCDCDC;border-bottom: 1px solid #DCDCDC;}
+.dept-title{background-color: #39f;border-radius: 8px;padding:3px 6px;line-height: 40px;color:#fff;font-size: 12px;font-weight: bold;}
+.return-title{background-color: #34d471;border-radius: 8px;padding:3px 6px;line-height: 40px;color:#fff;font-size: 12px;font-weight: bold;}
+.restrictions{margin-bottom: 20px;height: 44px;line-height: 44px;text-indent: 10px;}
+/*--------------------------flight_restrictions---退改签----------------------*/
+.flight-restrictions{margin: 10px 10px 0px 10px;}
+.flight-restrictions dt{height: 35px; line-height: 35px; text-indent: 10px; font-size: 13px; font-weight: bold; color: #333; }
+.flight-restrictions dd{ border-top: 1px solid #DCDCDC; padding: 10px; color: #999; font-weight: bold;font-size: 13px;}
+/*-----------------------book order result------------------------------*/
+.order-rs-list{margin: 0px; padding: 0px;}
+.order-rs-list li{ background: #FFF;border-bottom: 1px #dcdcdc solid; height: 80px;}
+.order-rs-status{  position: absolute; right: 20px; top: 5px;text-align: center;}
+.order-rs-describe{  font-size: 16px; color: #34d471; }
+.order-describe-bookunderway{font-size: 16px;color: #3399ff};
+.order-rs-gohomebtn{width: 100%;height: 45px;line-height: 45px;background: #fff;color: #34d471;font-size: 18px;margin-left: auto;margin-right: auto;text-align: center;/*-webkit-tap-highlight-color: #ff8c00;*/border-radius: 3px;border: 1px solid #34d471;}
+.order-rs-psgname{ margin-top: 5px;width: 70%;}
+/*-----------------------submit order---------------------------------*/
+/*.submit-order-info{ margin: 0px; padding: 0px;}*/
+.submit-order-info li{ background: #FFF;border: 1px #dcdcdc solid; height: auto;}
+.submit-order-info dl{ padding-left: 12px;}
+.submit-order-info dd{ padding: 11.5px 0px;border-bottom: 1px solid #DCDCDC; }
+.submit-order-info dd:nth-last-child(1){ border: none;}
+.submit-order-info span{ right: 25px; position: absolute; }
+.submit-appr-title{ padding-left: 24px;}
+
+/*------------------------------psg info--------------------------------------*/
+.psg-info{background: #fff;}
+.psg-info dl{ padding: 0px 10px;}
+.psg-info dt{ padding-top: 16px;}
+.psg-info dd{ padding: 10px 0px;border-top: 1px solid #DCDCDC; height: 30px;line-height: 30px;}
+.psg-info em{ background-color: #FFF;right: 24px;position: absolute;line-height: 35px;text-align: right;}
+.psg-info input{ background-color: #FFF;right: 24px;position: absolute;line-height: 35px;text-align: right;}
+.panel-scroll{ position:absolute; z-index:1; width:100%; overflow: hidden;}
+.panel-wrapper{position:absolute; z-index:1; bottom:0px;width:100%; overflow: hidden;}
+
+/*-----------------------------purpose ---------------------------------------*/
+.other-reason{height: 150px;width: 100%;border: 0px;text-align: left;margin-top: 10px;border: 1px solid #DCDCDC;}
+.textarea-reason{background-color: #FFF;width: 100%;height: 100%}
+
+/*------------------------------amex submit-----------------------------------------*/
+.amex-submit-item{ line-height: 44px;}
+.amex-submit-item div{ text-indent: 12px;width: 90%;}
+.amex-submit-item span{ padding: 0px 10px;position: absolute;right: 20px;text-align: right;width: 65%;}
+.amex-bar-disc{text-indent: 12px;height: 32px;line-height: 32px;}
+.amex-appr-model{border-bottom: 1px #DCDCDC solid;border-top: 1px #DCDCDC solid;margin-bottom: 20px;}
+
+/**---------------------------------列表 说明 描述bar 如违背原因，历史，------------------------------------*/
+.description-bar{text-indent: 10px;height: 32px;line-height: 32px;background-color: #F3F3F3;border: 1px #DCDCDC;margin-left: 12px;}
+.single-list-h{height: 44px !important;line-height:44px !important;}
+.doubli-list-h{height: 64px;line-height:64px;}
+
+/**--------------------------------------航空公司图标---------------------------------------*/
+.ui-icon-airline{float: left;margin-right: 2px;display: inline-block;width: 16px;height: 15px;vertical-align: middle;background: url(../icon-airline.png) no-repeat;background-size: 80px 328px;}
+/*航空公司*/
+.ui-icon-ca,.ui-icon-CA{background-position:0px 2px;}/*国航*/
+.ui-icon-mu,.ui-icon-MU{background-position:0px -14px;}/*东航*/
+.ui-icon-cz,.ui-icon-CZ{background-position:0px -29px;height: 14px;}/*南方航空*/
+.ui-icon-hu,.ui-icon-HU{background-position:0px -42px;}/*海航*/
+.ui-icon-cn,.ui-icon-CN{background-position:0px -42px;}/*大新华*/
+.ui-icon-sc,.ui-icon-SC{background-position:0px -56px;}/*山东航空*/
+
+.ui-icon-8m,.ui-icon-8M{background-position:0px -70px;}
+.ui-icon-ac,.ui-icon-AC{background-position:0px -84px;}
+.ui-icon-ar,.ui-icon-AR{background-position:0px -98px;}
+.ui-icon-bi,.ui-icon-BI{background-position:0px -112px;}
+.ui-icon-ek,.ui-icon-EK{background-position:0px -126px;}
+.ui-icon-fv,.ui-icon-FV{background-position:0px -140px;}
+.ui-icon-jr,.ui-icon-JR{background-position:0px -154px;}
+.ui-icon-jq,.ui-icon-JQ{background-position:0px -168px;}
+.ui-icon-km,.ui-icon-KM{background-position:0px -182px;}
+.ui-icon-lx,.ui-icon-LX{background-position:0px -196px;}
+.ui-icon-mk,.ui-icon-MK{background-position:0px -210px;}
+.ui-icon-oa,.ui-icon-OA{background-position:0px -224px;}
+.ui-icon-pk,.ui-icon-PK{background-position:0px -238px;}
+.ui-icon-rg,.ui-icon-RG{background-position:0px -252px;}
+.ui-icon-sq,.ui-icon-SQ{background-position:0px -266px;}
+.ui-icon-tn,.ui-icon-TN{background-position:0px -280px;}
+.ui-icon-um,.ui-icon-UM{background-position:0px -394px;}
+
+.ui-icon-fm,.ui-icon-FM{background-position:-16px 2px;}
+.ui-icon-zh,.ui-icon-ZH{background-position:-16px -12px;}
+.ui-icon-3u,.ui-icon-3U{background-position:-16px -28px;}
+.ui-icon-mf,.ui-icon-MF{background-position:-16px -43px;width: 14px;height: 14px;}
+.ui-icon-bk,.ui-icon-BK{background-position:-16px -56px;}
+
+.ui-icon-8u,.ui-icon-8U{background-position:-16px -70px;}
+.ui-icon-af,.ui-icon-AF{background-position:-16px -84px;}
+.ui-icon-as,.ui-icon-AS{background-position:-16px -98px;}
+.ui-icon-cm,.ui-icon-CM{background-position:-16px -112px;}
+.ui-icon-et,.ui-icon-ET{background-position:-16px -126px;}
+.ui-icon-ga,.ui-icon-GA{background-position:-16px -140px;}
+.ui-icon-it,.ui-icon-IT{background-position:-16px -154px;}
+.ui-icon-js,.ui-icon-JS{background-position:-16px -168px;}
+.ui-icon-kq,.ui-icon-KQ{background-position:-16px -182px;}
+.ui-icon-ly,.ui-icon-LY{background-position:-16px -196px;}
+.ui-icon-ms,.ui-icon-MS{background-position:-16px -210px;}
+.ui-icon-os,.ui-icon-OS{background-position:-16px -224px;}
+.ui-icon-pr,.ui-icon-PR{background-position:-16px -238px;}
+.ui-icon-s7,.ui-icon-S7{background-position:-16px -252px;}
+.ui-icon-su,.ui-icon-SU{background-position:-16px -266px;}
+.ui-icon-tp,.ui-icon-TP{background-position:-16px -280px;}
+.ui-icon-un,.ui-icon-UN{background-position:-16px -294px;}
+
+
+.ui-icon-9c,.ui-icon-9C{background-position:-32px 2px;}
+.ui-icon-eu,.ui-icon-EU{background-position:-32px -14px;}
+.ui-icon-kn,.ui-icon-KN{background-position:-32px -28px;}
+.ui-icon-g5,.ui-icon-G5{background-position:-32px -42px;}
+.ui-icon-8l,.ui-icon-8L{background-position:-32px -56px;}
+
+.ui-icon-9w,.ui-icon-9W{background-position:-32px -70px;}
+.ui-icon-ah,.ui-icon-AH{background-position:-32px -84px;}
+.ui-icon-ay,.ui-icon-AY{background-position:-32px -98px;}
+.ui-icon-co,.ui-icon-CO{background-position:-32px -112px;}
+.ui-icon-fe,.ui-icon-FE{background-position:-32px -126px;}
+.ui-icon-gf,.ui-icon-GF{background-position:-32px -140px;}
+.ui-icon-iy,.ui-icon-IY{background-position:-32px -154px;}
+.ui-icon-kc,.ui-icon-KC{background-position:-32px -168px;}
+.ui-icon-la,.ui-icon-LA{background-position:-32px -182px;}
+.ui-icon-md,.ui-icon-MD{background-position:-32px -196px;}
+.ui-icon-nh,.ui-icon-NH{background-position:-32px -210px;}
+.ui-icon-ou,.ui-icon-OU{background-position:-32px -224px;}
+.ui-icon-px,.ui-icon-PX{background-position:-32px -238px;}
+.ui-icon-sa,.ui-icon-SA{background-position:-32px -252px;}
+.ui-icon-sv,.ui-icon-SV{background-position:-32px -266px;}
+.ui-icon-u6,.ui-icon-U6{background-position:-32px -280px;}
+.ui-icon-vn,.ui-icon-VN{background-position:-32px -294px;}
+
+.ui-icon-ho,.ui-icon-HO{background-position:-48px 2px;height: 17px;}/*吉祥*/
+.ui-icon-jd,.ui-icon-JD{background-position:-48px -15px;height: 13px;}/*金鹿-东航*/
+.ui-icon-gs,.ui-icon-GS{background-position:-48px -28px;}/**/
+.ui-icon-pn,.ui-icon-PN{background-position:-48px -42px;}/*西部航空*/
+.ui-icon-ij,.ui-icon-IJ{background-position:-48px -56px;}/**/
+
+.ui-icon-aa,.ui-icon-AA{background-position:-48px -70px;}
+.ui-icon-ai,.ui-icon-AI{background-position:-48px -84px;}
+.ui-icon-az,.ui-icon-AZ{background-position:-48px -98px;}
+.ui-icon-dj,.ui-icon-DJ{background-position:-48px -112px;}
+.ui-icon-fi,.ui-icon-FI{background-position:-48px -126px;}
+.ui-icon-ha,.ui-icon-HA{background-position:-48px -140px;}
+.ui-icon-jj,.ui-icon-JJ{background-position:-48px -154px;}
+.ui-icon-ke,.ui-icon-KE{background-position:-48px -168px;}
+.ui-icon-lh,.ui-icon-LH{background-position:-48px -182px;}
+.ui-icon-mh,.ui-icon-MH{background-position:-48px -196px;}
+.ui-icon-nw,.ui-icon-NW{background-position:-48px -210px;}
+.ui-icon-oz,.ui-icon-OZ{background-position:-48px -224px;}
+.ui-icon-qf,.ui-icon-QF{background-position:-48px -238px;}
+.ui-icon-sk,.ui-icon-SK{background-position:-48px -252px;}
+.ui-icon-tg,.ui-icon-TG{background-position:-48px -266px;}
+.ui-icon-ua,.ui-icon-UA{background-position:-48px -280px;}
+.ui-icon-vs,.ui-icon-VS{background-position:-48px -294px;}
+
+.ui-icon-f4,.ui-icon-F4{background-position:-54px 2px;}
+.ui-icon-ji,.ui-icon-JI{background-position:-54px -14px;}
+.ui-icon-dz,.ui-icon-DZ{background-position:-64px -28px;}
+.ui-icon-xf,.ui-icon-XF{background-position:-54px -42px;}
+
+.ui-icon-ab,.ui-icon-AB{background-position:-54px -56px;}
+.ui-icon-am,.ui-icon-AM{background-position:-54px -70px;}
+.ui-icon-ba,.ui-icon-BA{background-position:-54px -84px;}
+.ui-icon-dl,.ui-icon-DL{background-position:-54px -98px;}
+.ui-icon-ft,.ui-icon-FT{background-position:-54px -112px;}
+.ui-icon-hz,.ui-icon-HZ{background-position:-54px -126px;}
+.ui-icon-jl,.ui-icon-JL{background-position:-54px -140px;}
+.ui-icon-kl,.ui-icon-KL{background-position:-54px -154px;}
+.ui-icon-lo,.ui-icon-LO{background-position:-54px -168px;}
+.ui-icon-mi,.ui-icon-MI{background-position:-54px -182px;}
+.ui-icon-nz,.ui-icon-NZ{background-position:-54px -196px;}
+.ui-icon-pg,.ui-icon-PG{background-position:-54px -210px;}
+.ui-icon-qr,.ui-icon-QR{background-position:-54px -224px;}
+.ui-icon-sn,.ui-icon-SN{background-position:-54px -238px;}
+.ui-icon-tk,.ui-icon-TK{background-position:-54px -252px;}
+.ui-icon-ul,.ui-icon-UL{background-position:-54px -266px;}
+.ui-icon-vv,.ui-icon-VV{background-position:-54px -280px;}
+	

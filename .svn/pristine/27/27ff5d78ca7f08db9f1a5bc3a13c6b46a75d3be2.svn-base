@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="format-detection" content="telephone=no"/>
+<meta id='metaCon' name="viewport" content="minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, width=device-width, user-scalable=no" />
+<meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+<script data-main="js/main" src="js/vendor/jqm/jquery-1.8.3.js"></script>
+</head>
+<body class="ui-mobile-viewport ui-overlay-g ui-overlay-a">
+<input type="text"
+			value='{"rpid":"1000","ropenid":"4526948","version":"1.0","rip":"127.0.0.1","rpara":{"flightno":"CA1501"}}' id="para"> 
+<div id="ajaxtest" onClick="javascript:ajaxtest()">anniu</div>
+<input type="file" name="pic" id="fileElem" multiple accept="image/*" >
+<div id="fileList" style="width:200px;height:200px;"></div>
+<img src="" id="img0" >
+</body>
+<script>
+function ajaxtest(daboge){
+	var www ={"rpid":"1051",
+			"ropenid":"001",
+			"version":"1.0",
+			"rip":"127.0.0.1",
+			"rpara":{"open_id":"001"}};
+	var qqq = {"rpid":"2000","ropenid":"4526948","version":"1.0","rip":"127.0.0.1","rpara":null};
+	var eee = JSON.stringify(qqq);
+	var aaa = new  Object();
+	aaa.para = eee;
+    var _req = {"para":"{\"rpid\":\"1017\",\"ropenid\":\"4526948\",\"version\":\"1.0\",\"rip\":\"127.0.0.1\",\"rpara\":{\"card_id\":\"99999999\"}}"};
+	$.ajax({
+        type: "POST",
+        url: "http://122.119.111.54/v1/tfs",
+        //contentType: "application/json", 
+        async : true,
+        dataType: "json",
+        data: daboge,
+        //data: {"para":"{\"rpid\":\"1017\",\"ropenid\":\"4526948\",\"version\":\"1.0\",\"rip\":\"127.0.0.1\",\"rpara\":{\"card_id\":\"99999999\"}}"},  //相当于 //data: "{'str1':'foovalue', 'str2':'barvalue'}",
+        success: function (data) {
+        	var seat = JSON.parse(data.rsp);
+            alert(data);
+        },
+        error: function(){
+        alert("网络连接出错！"); 
+        }
+    });
+
+}
+
+$("#fileElem").change(function(){
+	var daboge = document.getElementById("fileElem").files[0];
+	ajaxtest(daboge);
+	var objUrl = getObjectURL(daboge) ;
+	console.log("objUrl = "+objUrl) ;
+	if (objUrl) {
+		$("#img0").attr("src", objUrl) ;
+	}
+}) ;
+//建立一個可存取到該file的url
+function getObjectURL(file) {
+	var url = null ; 
+	if (window.createObjectURL!=undefined) { // basic
+		url = window.createObjectURL(file) ;
+	} else if (window.URL!=undefined) { // mozilla(firefox)
+		url = window.URL.createObjectURL(file) ;
+	} else if (window.webkitURL!=undefined) { // webkit or chrome
+		url = window.webkitURL.createObjectURL(file) ;
+	}
+	return url ;
+}
+</script>
+</html>

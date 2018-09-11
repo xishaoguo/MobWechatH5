@@ -1,0 +1,169 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_feedback_write.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalFeedbackWrite = SGView.extend({
+		pageId : 'personal_feedback_write',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personal_feed_buttonDiv" : "PersonalFeedButtonDiv",
+			"click #lookBack" : "LookBack",
+			"click #delImg" : "DeleteImage",
+		},
+		/**
+		 * 提交信息
+		 * 
+		 */
+		PersonalFeedButtonDiv : function() {
+				
+			var status = document.getElementById("status");
+			alert(status);
+			$("img[name='uploadImage']").each(function(){ 
+				　　alert($(this).attr("src"));
+				});
+			return false;
+			if(status.value != "" && status.value != null ){//判断输入框有没有内容
+				var self = this;
+				var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+				var _query = {
+					    "rpid": "1012", 
+					    "ropenid": openid, 
+					    "version": "1.0", 
+					    "rip": "127.0.0.1", 
+					    "rpara": {
+					        "content": status.value, 
+					        "img_address": "http://localhost"
+					    }
+					};
+				self.utils.showMessage("onLoading",'',self.sgClient);
+				self.sgClient.post(_query,'',function(customs_data){
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					self.utils.showAlert({
+						text : ("提交成功")
+					});
+					status.value = "";
+					var personalFeedButtonDiv = document.getElementById("personal_feed_buttonDiv");
+					
+					personalFeedButtonDiv.removeAttribute("class");
+					personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+					document.getElementById("counter").innerHTML = "0";
+					
+				} else if (customs_data && customs_data.code != 0) {//查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+				},"json");
+			}
+			//alert(content.rpara.content);
+		},
+		/**
+		 * 删除图片
+		 * 
+		 */
+		DeleteImage : function(e) {
+			//var preview = document.getElementById("wpic");
+			//var preview_parent = preview.parentNode;
+			var preview = $(e.currentTarget);
+			var preview_parent = preview.parent();
+			var id = preview_parent.parent().attr("id");
+			var idNum=id.charAt(id.length - 1);
+			idNum=idNum-1;
+			var idObject = document.getElementById("input_file"+idNum);
+			if (idObject != null){
+			    idObject.parentNode.removeChild(idObject);
+			}
+			preview_parent.parent().remove();
+			return;
+		},
+		/**
+		 * 点击跳到查询回复页面
+		 */
+		LookBack : function() {
+			var self = this;
+			var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+		var _query = {
+			    "rpid": "1013", 
+			    "ropenid": openid, 
+			    "version": "1.0", 
+			    "rip": "127.0.0.1", 
+			    "rpara": ""
+			};
+		self.utils.showMessage("onLoading",'',self.sgClient);
+		self.sgClient.post(_query,'',function(data){
+			if (data && data.code == 0) {// 查询成功
+				var DataRsp = JSON.parse(data.rsp);
+				self.addCache("ReplyMessage",DataRsp);
+				self.jumpTo("forward/personalFeedbackView");
+			} else if (data && data.code != 0) {//查询失败
+				self.utils.showAlert({
+					text : (data.msg)
+				});
+			}
+				self.utils.hideMessage();
+			},"json");
+		},
+	});
+	return PersonalFeedbackWrite;
+});
+/**
+ * 输入框已输入的文字个数和提交按钮的状态
+ * @param textareaName
+ * @param spanName
+ * @param personalFeedButtonDiv
+ */
+function countChar(textareaName,spanName,personalFeedButtonDiv){
+   document.getElementById(spanName).innerHTML = document.getElementById(textareaName).value.length;
+   var personalFeedButtonDiv = document.getElementById(personalFeedButtonDiv);
+   if(document.getElementById(textareaName).value.length != "0"){
+		personalFeedButtonDiv.removeAttribute("class");
+		personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_01');
+   }else if(document.getElementById(textareaName).value.length == "0"){
+	   personalFeedButtonDiv.removeAttribute("class");
+	   personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+   }
+}
+/**
+ * 上传
+ * 
+ */
+var index=1;
+function previewImage(files){
+	var html = '';
+	var file;
+	var onceFileCount = files.files.length;
+	var i = 0;
+	while (files.files[i]!=undefined) {
+		file = files.files[i];
+		//隐藏当前的input file，然后添加一个新的上去
+		$(file).hide();
+		var inputFile = '<input type="file" data-role="none" id = "input_file'+window.index+'" name="mulUp[]"  onchange="previewImage(this)"/>';
+		$("#uploadForm").append(inputFile);
+		//$(file).siblings("input").show();
+		var reader = new FileReader();
+        reader.onload = function(e) {
+			html = html +'<div id="wpic_' + window.index + '" class="personal_feedback_write_div_04">'
+						+'<div id="img1">'
+						+'<img id="delImg" src="images/Clear.png" data-ke-src="add_img.png" class="personal_feedback_write_img_01"/>'
+						+'<img id="uploadImage_' + window.index + '" name="uploadImage" src="' + e.target.result + '" data-ke-src="add_img.png" class="personal_feedback_write_img_02"/>'
+						+'</div>'
+						+'</div>';
+			$("#upload_files").append(html);
+			html='';
+			window.index++;
+		}
+		i++;
+		reader.readAsDataURL(file);
+      }
+}

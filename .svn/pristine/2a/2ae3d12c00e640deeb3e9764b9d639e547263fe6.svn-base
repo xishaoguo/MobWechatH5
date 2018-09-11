@@ -1,0 +1,14 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<img alt="头像" src="<%=GetHeadImg%>" class="avatarImg">
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div style="float: left; width: 25%; margin-left: 10px;">身份证</div>
+	<span><%=GetNumber%></span>
+	<div
+		style="float: right; color: #BBBBBB; font-size: 14px; margin-right: 10px;">
+		已认证</div>
+	<div class="personal_sex_buttonDiv_01" id = "personal_sex_buttonDiv">
+		<span>证件解绑</span>
+	</div>
+</div>

@@ -1,0 +1,186 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_feedback_write.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalFeedbackWrite = SGView.extend({
+		pageId : 'personal_feedback_write',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personal_feed_buttonDiv" : "PersonalFeedButtonDiv",
+			"click #lookBack" : "LookBack",
+			"click #preview" : "DeleteImage",
+		},
+		/**
+		 * 提交信息
+		 * 
+		 */
+		PersonalFeedButtonDiv : function() {
+				
+			var status = document.getElementById("status");
+			if(status.value != "" && status.value != null ){//判断输入框有没有内容
+				var self = this;
+				var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+				var _query = {
+					    "rpid": "1012", 
+					    "ropenid": openid, 
+					    "version": "1.0", 
+					    "rip": "127.0.0.1", 
+					    "rpara": {
+					        "content": status.value, 
+					        "img_address": "http://localhost"
+					    }
+					};
+				self.utils.showMessage("onLoading",'',self.sgClient);
+				self.sgClient.post(_query,'',function(customs_data){
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					self.utils.showAlert({
+						text : ("提交成功")
+					});
+					status.value = "";
+					var personalFeedButtonDiv = document.getElementById("personal_feed_buttonDiv");
+					
+					personalFeedButtonDiv.removeAttribute("class");
+					personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+					document.getElementById("counter").innerHTML = "0";
+					
+				} else if (customs_data && customs_data.code != 0) {//查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+				},"json");
+			}
+			//alert(content.rpara.content);
+		},
+		/**
+		 * 删除图片
+		 * 
+		 */
+		DeleteImage : function() {
+			var preview = document.getElementById("preview");
+			var preview_parent = preview.parentNode;
+			preview_parent.parentNode.removeChild(preview_parent);
+			 
+		},
+		/**
+		 * 点击跳到查询回复页面
+		 */
+		LookBack : function() {
+			var self = this;
+			var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+		var _query = {
+			    "rpid": "1013", 
+			    "ropenid": openid, 
+			    "version": "1.0", 
+			    "rip": "127.0.0.1", 
+			    "rpara": ""
+			};
+		self.utils.showMessage("onLoading",'',self.sgClient);
+		self.sgClient.post(_query,'',function(data){
+			if (data && data.code == 0) {// 查询成功
+				var DataRsp = JSON.parse(data.rsp);
+				self.addCache("ReplyMessage",DataRsp);
+				self.jumpTo("forward/personalFeedbackView");
+			} else if (data && data.code != 0) {//查询失败
+				self.utils.showAlert({
+					text : (data.msg)
+				});
+			}
+				self.utils.hideMessage();
+			},"json");
+		},
+	});
+	return PersonalFeedbackWrite;
+});
+/**
+ * 输入框已输入的文字个数和提交按钮的状态
+ * @param textareaName
+ * @param spanName
+ * @param personalFeedButtonDiv
+ */
+function countChar(textareaName,spanName,personalFeedButtonDiv){
+   document.getElementById(spanName).innerHTML = document.getElementById(textareaName).value.length;
+   var personalFeedButtonDiv = document.getElementById(personalFeedButtonDiv);
+   if(document.getElementById(textareaName).value.length != "0"){
+		personalFeedButtonDiv.removeAttribute("class");
+		personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_01');
+   }else if(document.getElementById(textareaName).value.length == "0"){
+	   personalFeedButtonDiv.removeAttribute("class");
+	   personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+   }
+}
+/**
+ * 上传
+ * 
+ */
+function previewImage(file){
+	var MAXWIDTH = 50;
+	var MAXHEIGHT = 50;
+	var upload_part = document.getElementById('upload_part');
+	if (file.files && file.files[0]) {
+		var upload_img = document.createElement("div");
+		upload_img.setAttribute("id","upload_img");
+		upload_img.setAttribute("class","upload_img");
+		var preview = document.createElement("div");
+		preview.setAttribute("id","preview");
+		preview.setAttribute("class","preview");
+		preview.setAttribute("style","inherit!important;");
+		var cancel = document.createElement("div");
+		cancel.setAttribute("id","cancel");
+		cancel.setAttribute("class","cancel");
+		var imghead = document.createElement("img");
+		imghead.setAttribute("id","imghead");
+		imghead.setAttribute("class","preview_img");
+		
+		upload_part.appendChild(upload_img);
+		upload_img.appendChild(preview);
+		preview.appendChild(cancel);
+		preview.appendChild(imghead);
+		/*var imghead = document.createElement("img");
+		var cancel = document.createElement("div");
+		imghead.setAttribute("id","imghead");
+		cancel.setAttribute("id","cancel");
+		cancel.setAttribute("class","cancel");
+		preview.appendChild(imghead);
+		preview.appendChild(cancel);*/
+		var img = document.getElementById('imghead');
+		img.onload = function() {
+			var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth,
+					img.offsetHeight);
+			img.width = rect.width;
+			img.height = rect.height;
+			// img.style.marginLeft = rect.left+'px';
+			img.style.marginTop = rect.top + 'px';
+		}
+		var reader = new FileReader();
+		reader.onload = function(evt) {
+			img.src = evt.target.result;
+		}
+		reader.readAsDataURL(file.files[0]);
+	} else // 兼容IE
+	{
+		var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+		file.select();
+		var src = document.selection.createRange().text;
+		preview.innerHTML = '<img id=imghead>';
+		var img = document.getElementById('imghead');
+		img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+		var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth,
+				img.offsetHeight);
+		status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+		preview.innerHTML = "<div id=divhead style='width:" + rect.width
+				+ "px;height:" + rect.height + "px;margin-top:" + rect.top
+				+ "px;" + sFilter + src + "\"'></div>";
+	}
+}

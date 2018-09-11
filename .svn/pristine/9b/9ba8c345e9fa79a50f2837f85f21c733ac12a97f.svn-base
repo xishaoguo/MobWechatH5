@@ -1,0 +1,66 @@
+  <div data-role="header" class="flight-header" role="banner">
+    <aside class="cont_wrap" >
+		    <ul class="journey_tab">
+		        <li data-journey="1" class="journeyTabCrt" >本人</li>
+		        <li data-journey="2" class="" >同行人</li>
+		    </ul>
+	</aside>
+  </div>
+<!--本人  -->
+  <div data-role="none" class="flight-content" id="myflight">
+     <% if(data.length<1){%>
+     <span class="flight-count" id="textajax">...目前没有可用航班...</span>
+     <%}else{%>
+     <span class="flight-count" id="textajax">...您有<%=data.length%>个可用航班...</span>
+     <div id="wrapper">
+     	<ul data-role="none" class='flightlistview  ui-listview'>
+     	<% for(var i  in data){%>
+     		<li  class="item-content ui-li-static ui-body-inherit ui-first-child" couponId="<%=data[i].couponId%>">
+     		    <div class="flightinfo-firstdiv"><div class="firstdiv-left"><%=data[i].airlineName%><%=data[i].airCode%><%=data[i].fltNum%></div><div class="firstdiv-right"><%=data[i].username%></div></div>
+     			<div class="flightdate"><%=data[i].deDate%> <%=data[i].deWeek%></div><div class="addcard" id="addcard"><%=data[i].arDate%> <%=data[i].arWeek%></div>
+     			<div class="flightclear de-ar-city-div"><div class="departcity"><%=data[i].deCityNameCN%></div><div class="arrivecity"><%=data[i].arCityNameCN%></div></div>
+     			<% if(data[i].otherStatus=="7"){%>
+     			<div class="flightclear delay"><div class="delay-departtime"><%=data[i].deDelayTime%></div><div class="delay-arrivetime"><%=data[i].arDelayTime%></div></div>
+     			<%}%>
+     			<div class="departtime"><%=data[i].deTime%><% if(data[i].otherStatus=="7"){%><div class="late-icon">延误</div><%}%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivetime"><%=data[i].arTime%></div>
+     			
+     			<div class="flightclear"><div class="depart-airport"><%=data[i].deAirportNameCN%><%=data[i].deTerminal%></div><div class="arrive-airport"><%=data[i].arAirportCN%><%=data[i].arTerminal%></div></div>
+     			<div class="half-round"></div>
+     			<div class="circle"></div><div class="flight-msg"><%=data[i].trailStatus%><i class="all-icon flightlst-forward"></i></div>
+     		</li>
+     	<%}%>
+     	</ul>
+     </div>
+     <%}%>
+  </div>
+<!-- 同行人 -->
+  <div data-role="none" class="flight-content" id="historyflight">
+     <div id="wrapperHistory">
+     	<ul data-role="none" class='flightlistview  ui-listview'>
+     	<% for(var i  in othersFlightInfo){%>
+     		<li  class="item-content ui-li-static ui-body-inherit ui-first-child" couponId="<%=data[i].couponId%>">
+     		    <div class="flightinfo-firstdiv"><div class="firstdiv-left"><%=othersFlightInfo[i].airlineName%><%=othersFlightInfo[i].airCode%><%=othersFlightInfo[i].fltNum%></div><div class="firstdiv-right"><%=othersFlightInfo[i].username%></div></div>
+     			<div class="flightdate"><%=othersFlightInfo[i].deDate%> <%=othersFlightInfo[i].deWeek%></div><div class="addcard" id="addcard"><%=othersFlightInfo[i].arDate%> <%=othersFlightInfo[i].arWeek%></div>
+     			<div class="flightclear"><div class="departcity"><%=othersFlightInfo[i].deCityNameCN%></div><div class="arrivecity"><%=othersFlightInfo[i].arCityNameCN%></div></div>
+     			<% if(othersFlightInfo[i].otherStatus=="7"){%>
+     			<div class="flightclear delay"><div class="delay-departtime">1:00</div><div class="delay-arrivetime">1:00</div></div>
+     			<%}%>
+     			<div class="departtime"><%=othersFlightInfo[i].deTime%><% if(othersFlightInfo[i].otherStatus=="7"){%><div class="late-icon">延误</div><%}%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivetime"><%=othersFlightInfo[i].arTime%></div>
+     			
+     			<div class="flightclear"><div class="depart-airport"><%=othersFlightInfo[i].deAirportNameCN%><%=data[i].deTerminal%></div><div class="arrive-airport"><%=othersFlightInfo[i].arAirportCN%><%=othersFlightInfo[i].arTerminal%></div></div>
+     			<div class="half-round"></div>
+     			<div class="circle"></div><div class="flight-msg"><%=othersFlightInfo[i].trailStatus%><i class="all-icon flightlst-forward"></i></div>
+     		</li>
+     	<%}%>
+     	</ul>
+     </div>
+  </div>
+  
+
+  <% if(0){%>
+  <div data-role="navbar" class="footer authentication">
+    <div>隐私保护，信息安全 </div>
+    <div class="authentication-com">中国航信安全系统保护您的信息安全</div>
+  </div>
+  <%}%>
+     

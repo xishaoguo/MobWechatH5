@@ -1,0 +1,39 @@
+<div data-role="content" id="content" class="flight-guide">
+	<div class="ticket">
+ 		<div class="ticket-header ticket-font-padding">
+			<div class="primaryseat-flNo "><%=data.airScnNum%></div><div class="primaryseat-name ticket-airline"><%=data.passengerName%></div>
+			<div class="flightclear"><div class="departcity ticket-msg-font"><%=data.deDate%> <%=data.deWeek%></div><div class="arrivecity ticket-msg-font"><%=data.arDate%> <%=data.arWeek%></div></div>
+			<div class="flightclear"><div class="primaryseat-depart-airport ticket-msg-font"><%=data.deCity%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="primaryseat-arrive-airport ticket-msg-font"><%=data.arCity%></div></div>
+			<div class="flightclear"><div class="departtime ticket-msg-font"><%=data.deTime%></div><div class="arrivetime ticket-msg-font"><%=data.arTime%></div></div>
+			<div class="flightclear"><div class="primaryseat-depart-airport ticket-msg-font"><%=data.deAirpot%></div><div class="primaryseat-arrive-airport ticket-msg-font"><%=data.arAirport%></div></div>
+			<div class="ticket-half-round"></div>
+		</div>
+		
+		<div class="ticket-context">
+			<div class="flightclear">
+		       <table >
+		    	<tr ><td class="ticket-table"><div class="primaryseat-td-title">登机时间</div><div class="primaryseat-time">06:00</div></td>
+		    	     <td class="ticket-table"><div class="primaryseat-td-title">座位号</div><div class="primaryseat-time"><%=PrimaryRsp[0].seatNum%></div></td>
+		    	     <td class="ticket-table"><div class="primaryseat-td-title">登机口</div><div class="primaryseat-boardinggate">待定</div></td>
+		    	</tr>
+		    	</table>
+			</div>
+			<div style="margin-top: 8px;">
+ 			<ul style="min-height: 200px;">
+			    <li><div class="primaryseat-userList">乘客</div><div class="primaryseat-userList">添加到我的座位</div></li>
+			    <% for(var i  in PrimaryRsp){%>
+			    <li><div class="primaryseat-userList"><%=PrimaryRsp[i].passengerName%></div><div class="primaryseat-userList"></div></li>
+			    <%}%>
+			</ul>
+			</div>
+		</div>
+		    
+		<div class="">
+			<div class="primaryseat-addcard">添加到微信卡包</div>
+		</div>
+	</div>
+</div>
+
+<div data-role="navbar" class="footer">
+<div class="primaryseat-footer-font">您仍需在线或柜台办理值机选座，预留座位可能发生变更</div>
+</div>   

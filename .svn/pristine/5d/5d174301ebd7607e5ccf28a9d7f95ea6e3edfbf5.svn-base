@@ -1,0 +1,66 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_profile_cert.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalProfileCert = SGView.extend({
+		pageId : 'personal_profile',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var GetIdNumber = this.GetIdNumber();
+			var hisrsp = {};
+			self.$el.append(self.template({GetIdNumber:GetIdNumber}));
+			return this;
+		},
+		events : {
+			"click #personal_sex_buttonDiv" : "PersonalSexButtonDiv",
+		},
+		/**
+		 * 获取证件号
+		 * 
+		 * */
+		GetIdNumber : function() {
+			var GetIdNumber = this.getCache("PersonalProfileData");
+			if(GetIdNumber.cert_id != "" && GetIdNumber.cert_id != null){
+				return GetIdNumber;
+			}else {
+				alert("证件未认证");
+			}
+		},
+		
+		/**
+		 * 证件解绑
+		 * 
+		 * */
+		PersonalSexButtonDiv : function() {
+			var self = this;
+			var _query = {
+				    "rpid": "1037", 
+				    "ropenid": "oG3L4wr2X_qLQNNNe_EfoxMAM5MU", 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": ""
+				};
+			var customs_data = {
+				    "rsp": "", 
+				    "code": 0, 
+				    "msg": "success"
+				};
+			if (customs_data && customs_data.code == 0) {// 查询成功
+				//var PersonalSexButtonDiv = customs_data.rsp;//整理json字符串
+				this.utils.showAlert({
+					text : ("解绑成功")
+				});
+				this.jumpTo("forward/personalProfile");
+			} else if (customs_data && customs_data.code != 0) {//查询失败
+				this.utils.showAlert({
+					text : ("解绑失败,请稍候再试")
+				});
+				this.jumpTo("forward/personalProfile");
+			}
+		},
+	});
+	return PersonalProfileCert;
+});

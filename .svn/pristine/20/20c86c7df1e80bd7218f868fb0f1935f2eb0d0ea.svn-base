@@ -1,0 +1,8 @@
+  <div data-role="none" class = "picture-preview-div01">
+  	<img alt="" src="<%=PicturePreviewImg%>" id = "picture-preview-img"/>
+  	<div class = "picture-preview-buttom-background"></div>
+  	<div class = "picture-preview-buttom">
+  		<div class = "picture-preview-buttom-delete picture-preview-buttom-button" id = "preview_delete">删除</div>
+  		<div class = "picture-preview-buttom-back picture-preview-buttom-button" id = "preview_back">返回</div>
+  	</div>
+  </div>

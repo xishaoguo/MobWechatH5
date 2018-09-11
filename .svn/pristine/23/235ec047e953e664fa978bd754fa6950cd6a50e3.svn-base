@@ -1,0 +1,149 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_center.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalCenter = SGView.extend({
+		pageId : 'personal_center',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			setTimeout(function(){self.GetThePicture()},500);
+			var hisrsp = {};
+			self.$el.append(self.template({
+			}));
+			return this;
+		},
+		events : {
+			"click #personalProfiel" : "PersonalProfile",
+			"click #feedback" : "PersonalFeedbackWrite",
+			"click #concernList" : "PersonalConcertList",
+			"click #flyHistory" : "PersonalSelectedHistroy",
+		},
+		/**
+		 * 个人资料
+		 * 
+		 */
+		PersonalProfile : function() {
+			var self = this;
+			var openid = self.store.getOpenId();
+			//var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+			var _query = {
+				"rpid" : "1006",
+				"ropenid" : openid,
+				"version" : "1.0",
+				"rip" : "127.0.0.1",
+				"rpara" : ""
+			};
+			self.utils.showMessage("onLoading", '', self.sgClient);
+			self.sgClient.post(_query, '', function(customs_data) {
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					var DataRsp = customs_data.rsp;// 整理json字符串
+					var Birthday = DataRsp.birthday;
+					var Sex = DataRsp.sex;
+					var CertId = DataRsp.cert_id;
+					var headImgUrl = DataRsp.head_img_url;
+					self.removeCache("headImgUrl");
+					self.addCache("headImgUrl",headImgUrl);
+					self.addCache("PersonalProfileData", DataRsp);
+					self.addCache("Sex", Sex);
+					self.addCache("Birthday", Birthday);
+					self.addCache("CertId", CertId);
+					self.jumpTo("forward/personalProfile");
+				} else if (customs_data && customs_data.code != 0) {// 查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+			}, "json");
+		},
+		/**
+		 * 意见反馈
+		 */
+		PersonalFeedbackWrite : function() {
+			this.jumpTo("forward/personalFeedbackWrite");
+		},
+		/**
+		 * 选座历史
+		 */
+		PersonalSelectedHistroy : function() {
+			var self = this;
+			var openid = self.store.getOpenId();
+			//var openid = "100000000000151";
+			var _query = {
+				"rpid" : "3005",
+				"ropenid" : openid,
+				"version" : "1.0",
+				"rip" : "127.0.0.1",
+				"rpara" : {}
+			};
+			self.utils.showMessage("onLoading", '', self.sgClient);
+			self.sgClient.post(_query, '', function(customs_data) {
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					var DataRsp = customs_data.rsp;
+					self.removeCache("PersonalHistoryData");
+					self.addCache("PersonalHistoryData", DataRsp);
+					self.jumpTo("forward/personalSelectedHistroy");
+				} else if (customs_data && customs_data.code != 0) {// 查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+			}, "json");
+		},
+		
+		/**
+		 * 关注列表
+		 */
+		PersonalConcertList : function() {
+			var self = this;
+			//var openid = self.store.getOpenId();
+			var openid = "100000000000146";
+			var _query = {
+				"rpid" : "2007",
+				"ropenid" : openid,
+				"version" : "1.0",
+				"rip" : "127.0.0.1",
+				"rpara" : {}
+			};
+			self.utils.showMessage("onLoading", '', self.sgClient);
+			self.sgClient.post(_query, '', function(customs_data) {
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					var currentFlights = customs_data.rsp.currentFlights;
+					var hisFlights = customs_data.rsp.hisFlights;
+					self.addCache("HisFlights", hisFlights);
+					self.addCache("CurrentFlights", currentFlights);
+					self.jumpTo("forward/personalConcertList");
+				} else if (customs_data && customs_data.code != 0) {// 查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+			}, "json");
+		},
+		/**
+		 * 判断图片获取方式
+		 * 
+		 * */
+		GetThePicture : function() {
+			var headImgUrl = this.getCache("headImgUrl");
+			var imgStr;
+			var basePath = "http://flyer.travelsky.com";
+			var srcRear = "wx/tfsDownload?tfsName=";
+			if (headImgUrl == "" || headImgUrl == null) {
+				imgStr = '<img alt="testpic" src="images/avatar.png" class = "avatarImg" id = "imghead">';
+			} else if(CheckUrl(headImgUrl)){
+				imgStr = '<img alt="testpic" src="'+ headImgUrl+ '" class = "avatarImg" id = "imghead">';
+			}else{
+				imgStr = '<img alt="testpic" id = "imghead" class = "avatarImg" src="'+basePath+'/wx/tfsDownload?tfsName='+headImgUrl+'"'+'/>';
+			}
+			$("#Picture_frame").append(imgStr);
+		}
+	});
+	return PersonalCenter;
+});
+

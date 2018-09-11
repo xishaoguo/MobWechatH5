@@ -1,0 +1,14 @@
+<div class = "page">
+	<div class="page-content-cersonalityBackground">
+		<form method="post" enctype="multipart/form-data" id = "mainForm">
+			<input type="file" data-role="none" id = "input_head_portrait" onchange="previewImage2(this)" name = "headPortrait"/>
+			<!-- <img alt="testpic" src="<%=basePath%>ws/tfsDownload?tfsName=T18RZTBXAT1RCvBVdK"/> -->
+		</form>
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+		<ul class="index_page_ul">
+			<li id="personalSex"><div class="index_page_ul_lileft">性别</div><div class="index_page_ul_liright"><span class="index_page_li_span"><%=Sex%></span><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="personalBirthday"><div class="index_page_ul_lileft">生日</div><div class="index_page_ul_liright"><span class="index_page_li_span"><%=Birthday%></span><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="personalCert"><div class="index_page_ul_lileft">证件绑定</div><div class="index_page_ul_liright"><span>身份证<%=CertificateStatus%></span></div></li>
+		</ul>
+</div>

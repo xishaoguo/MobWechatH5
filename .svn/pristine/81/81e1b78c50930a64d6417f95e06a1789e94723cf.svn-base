@@ -1,0 +1,153 @@
+/*���������Զ��屳��*/
+body{background: white;}
+.ui-overlay-g{background-color: #ffffff;border-color: #bbb;color: #333;text-shadow: 0 1px 0 #f3f3f3;}
+.page-content-cersonalityBackground{width:100%;height:170px;background: url("../images/cersonalityBackground.png") no-repeat;margin:0;padding:0;filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";-moz-background-size:100% 80%;background-size:100% 80%;text-align: center;text-shadow: none;}
+.page .avatarImg{width:3em;border-radius:50%;margin-top:7em;border:2px solid #ffffff;}
+/*���������ҵ��м����㼣*/
+.index_page_buttom_message{width:100%;height:auto;}
+.index_page_hr{width:100%;margin-top:0px;height:1px;background: #CBC7CC;}
+.index_page_stroke_track{width:100%;}
+.index_page_type{width:100%;height:auto;}
+.index_page_type_fly{width:50%;height:auto;text-align: center;display: inline-block;padding:5px 0;font-size:12px;color:#8E8E93;}
+.index_page_type_footprint{width:50%;height:auto;text-align: center;display: inline-block;padding:5px 0;font-size:12px;color:#8E8E93;}
+.index_page_fly_span1{font-size:20px;padding-right:3px;}
+.index_page_fly_span2{font-size:12px;padding-left:3px;}
+.index_page_paddingL10{padding-left:10px;}
+.index_page_paddingR10{padding-right:10px;}
+.index_page_fly_spanNum{font-size:20px;padding-left:5px;padding-right:4px;}
+.index_page_message{width:100%;height:auto;color:#000000}
+.index_page_message_left{width:49%;height:50px;}
+.index_page_message_right{width:49%;height:50px;}
+.index_page_message_center{width:2%;height:auto;text-align: center;}
+.index_page_message_float{float:left}
+.index_page_shuxian{width:1px;height:39px;background: #979797;margin-top:8px;}
+.index_page_fly_message{width:100px;height:auto;background: white;margin:0 auto;}
+.index_page_fly_message_buttom{margin-top:0px;}
+.info_list{font-size:12px;font-weight: bold;border-bottom:1px solid #ccc;margin:0 auto;padding:3px 5px;}
+.birthday,.gender{width:25%;float:left;margin-left:10px;font-size:14px;height:25px;line-height: 25px;}
+.info_list_right{width:20%;float:right;text-align: center;font-size:12px;height:30px;line-height: 30px;color:#ccc;}
+.index_page_ul{color:#000000;margin-top:0x;font-size:15px;}
+.index_page_ul span{color:#8E8E93;}
+.index_page_ul_lileft{float:left;line-height:18px;padding-left:10px;margin-top:12px;text-shadow: none;}
+.index_page_ul_liright{float:right;line-height:18px;padding-right:10px;margin-top:12px;}
+.index_page_li_span{padding-right:5px;}
+.index_page_li_span_img{height:10px;}
+/*���������ҵ��г̺��㼣����*/
+/*��ͼ����*/
+.UnknownPicture{width:100%;height:auto;border��none;margin:0 auto;}
+.X-img{width:100%;background: url("../images/worldmap.png");margin-top:10px;height:171px;filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";-moz-background-size:100% 100%;background-size:100% 100%;}
+/*����������ҳ��ʽ*/
+.personal_center_ul{color:#000000;margin-top:0x;font-size:15px;}
+.personal_center_lileft{float:left;line-height:18px;padding-left:10px;margin-top:20px;text-shadow: none;}
+.personal_center_liright{float:right;line-height:18px;padding-right:10px;margin-top:20px;}
+/*����������ҳ��ʽ����*/
+/*��������֮�Ա�*/
+.personal_sex_div_01{float:left;padding-left:10px;}
+.personal_sex_div_02{float:right;padding-right:10px;}
+.personal_sex_list_box{ width:130px;height:20px;clear:both; border:1px solid #ffc54e;border-radius:3px;text-shadow:none}
+.personal_sex_list_box li{ width:50%; height:100%; border-radius:3px 0 0 3px;float:left; text-align:center;}
+.personal_sex_list_box .list_btn_01{ background:#FFC54F;color:#fff;}
+.personal_sex_list_box .list_btn_02{ background:#fff;color:#ffc54e;}
+.personal_sex_buttonDiv_01{position:fixed;bottom:0;width:100%;height:30px;background:#FFC54F;color:black;text-align: center;}
+.personal_sex_buttonDiv_02{position:fixed;bottom:0;width:100%;height:30px;background:gray;color:white;text-align: center;}
+.personal_sex_buttonDiv_01 span{line-height: 30px;text-shadow:none;}
+.personal_sex_buttonDiv_01:hover{background-color:#FF7900}
+/*��������֮�Ա����*/
+/*��������֮�����������*/
+.personal_feedback{background-color:#EFEFF4;width:94%;height:auto;margin-left:3%;margin-top:14px;border-radius:5px;text-shadow: none;}
+.personal_feedback_div_01{float:left;font-size:13px;color:#AAAAAA;padding-top:10px;margin-left: 14px;}
+.personal_feedback_div_02{margin-left:14px;margin-right:10px;font-size:14px;}
+.personal_feedback_div_03{border:1px solid #6D6D6D;height:auto;margin-left:12px;margin-right:14px;margin-top:10px;margin-bottom: 10px;padding-left:5px;padding-top:10px;padding-bottom:10px;font-size:13px;}
+.personal_feedback_div_04{float:left;margin-top:10em;font-size:15px;padding-left:22px;color:#AAAAAA}
+.personal_feedback_div_05{float:right;margin-top:10em;font-size:15px;padding-right:22px;color:#FFC54F}
+/*��������֮��������������*/
+/*��������֮�����д����*/
+.personal_feedback_write_textarea{width:96%;margin-top:14px;margin-left:2%;height:170px;border: 1px solid #ADADAD;border-radius:3px 3px 0 0px;resize: none;border-bottom: none;}
+.personal_feedback_write_div_01{margin-top: -11px;width:96%;text-align: right;margin-left:2%;border: 1px solid #ADADAD;color:#CCCCCC;border-radius:0px 0px 3px 3px;}
+.personal_feedback_write_div_02{float:left;margin-top:10em;font-size:15px;padding-left:22px;color:#FFC54F}
+.personal_feedback_write_div_03{float:right;margin-top:10em;font-size:15px;padding-right:22px;color:#AAAAAA}
+/*��������֮�����д�������*/
+/*��������֮��ע�б�*/
+.personal_concernList_div_01{float:right;margin-top:10em;font-size:15px;padding-right:22px;color:#FFC54F;text-align:center;}
+.personal_avatarImg{margin-left:75px;}
+.dispalyNone{display:none;}
+.padding-right3{padding-right:3px;}
+.personal_concernList_div_02{border:1px solid #ffc54e;border-radius:20px;font-size:14px;}
+.personal_concernList_div_02 span{padding-left:2px;padding:1px 10px 1px 10px;}
+.personal_concernList_div_03{border-radius:20px;font-size:14px;}
+.personal_concernList_div_03 span{padding-left:2px;padding:1px 10px 1px 10px;}
+.delete_able{background-color:#ffc54e;color:#000;}
+.delete_disable{background-color:#D8D8D8;color:#FFFFFF;}
+.personal_concernList_table{font-size:13px;margin-top:10px;}
+.personal_concernList_table td{border-style:none;}
+.personal_concernList_div_04{line-height: 65px;vertical-align: middle;text-align:center;width:100%;float:left;padding-right:10px;}
+.personal_concernList_div_04 input{border:1px solid #ffc54e;height:15px;width:15px;}
+.personal_concernList_div_05{width:100%;height:44px;}
+.personal_concernList_div_06{float:left;display: inline;padding-left:2px;}
+.personal_concernList_span_01{padding-left:6px;}
+.personal_concernList_li_01{padding-top:6px;}
+.personal_concernList_span_02{padding-left:38px;}
+.personal_concernList_span_03{padding-left:12px;}
+.personal_concernList_div_07{float:right;display: inline;margin-right:4px;}
+.personal_concernList_li_02{padding-top:6px;}
+.personal_concernList_span_04{padding-left:35px;}
+.personal_concernList_span_05{color:#88B8EA;font-size:16px;}
+.personal_concernList_div_08{text-align: center;line-height: 70px;width:100%;vertical-align: middle;background-color:#88B8EA;float:right;text-shadow:none;font-size:14px;border-radius:0px 8px 8px 0px;padding-left:6px;padding-right:2px;}
+input[type=checkbox]{
+-webkit-appearance: none;
+appearance: none;
+width: 15px;
+height: 15px;
+margin: 0;
+cursor: pointer;
+background: #fff;
+border: 1px solid #C9C9C9;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+position: relative;
+}
+input[type=checkbox]:checked,
+input[type=radio]:checked {
+background: #FFC550;
+border: 1px solid #FFC550;
+}
+/*��������֮��ע�б����*/
+/* 生日选项 */
+.index_page_select select{
+         margin: 0;
+         padding: 0;
+         outline: none;
+         height: 25px;
+         line-height: 25px;
+         padding-left:40px;
+         width: 120px;
+         border: #f80 1px solid;
+         border-radius: 10px;
+         display: inline-block;
+         font: normal 12px/25px "微软雅黑", "SimSun", "宋体", "Arial";
+         background-size: 5px 5px,5px 5px,25px 25px,1px 25px;
+         background-color: #fff;
+         background-image: repeating-linear-gradient(225deg,#f80 0%,#f80 50%,transparent 50%,transparent 100%), 
+         repeating-linear-gradient(135deg,#f80 0%,#f80 50%,transparent 50%,transparent 100%), 
+         linear-gradient( #FFFFFF 0%,#fff, #fff 0%), 
+		 repeating-linear-gradient( #fff,#fff);
+         background-repeat: no-repeat;
+         background-position: 101px 10px,106px 10px,right top,92px top;
+         -webkit-appearance: none
+ }
+
+ 
+ /**********切换按钮样式*********/
+ .toggleButton{width:100%;height:auto;text-align: center;padding:0.4em 0;}
+.tab_menu ul{margin:0;padding:0;}
+.tab_menu li{text-align:center;list-style:none;width:40%;height:auto;margin:0;padding:0.7em 0;background: white;margin:0 auto;display:inline-block;color:#5ec3b8;border:2px solid #5ec3b8;font-family: 黑体;font-size:12px;}
+.hide{display:none;}
+.tab_menu .selected{ background:#5ec3b8; color:#fff;margin-top:5px;}
+.ui-page-theme-g .ui-header,.flight-content{background: none;font-weight: normal;text-align: center;margin-top:1em;}
+ul,ol{text-align: center;}
+#radiusStyle1{border-radius:5px 0 0 5px;}
+#radiusStyle2{border-radius:0px 5px 5px 0px;}

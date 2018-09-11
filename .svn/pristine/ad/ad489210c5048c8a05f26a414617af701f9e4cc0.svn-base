@@ -1,0 +1,129 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_center.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalCenter = SGView.extend({
+		pageId : 'personal_center',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personalProfiel" : "PersonalProfile",
+			"click #feedback" : "PersonalFeedbackWrite",
+			"click #concernList" : "PersonalConcertList",
+		},
+		/**
+		 * 个人资料
+		 * 
+		 */
+		PersonalProfile : function(){
+			var self = this;
+			var _query = {  "rpid":"1051",
+							"ropenid":"4526948",
+							"version":"1.0",
+							"rip":"127.0.0.1",
+							"rpara":""
+							};
+			var customs_data = {
+				    "code": 0, 
+				    "msg": "success", 
+				    "rsp": {
+				        "open_id": "001", 
+				        "head_img_url": "001", 
+				        "certify_status": 1, 
+				        "fly_Count": 0, 
+				        "fly_Distance": 0, 
+				        "country_Count": 0, 
+				        "city_Count": 0, 
+				        "sex": 1, 
+				        "birthday": "1988-11-22", 
+				        "cert_id": "430521198806130038"
+				    }
+				};
+			if (customs_data && customs_data.code == 0) {// 查询成功
+				var DataRsp = customs_data.rsp;//整理json字符串
+				this.addCache("PersonalProfileData", DataRsp);
+				this.jumpTo("forward/personalProfile");
+			} else if (customs_data && customs_data.code != 0) {//查询失败
+				this.utils.showAlert({
+					text : (customs_data.msg)
+				});
+			}
+		},
+		/**
+		 * 意见反馈
+		 */
+		PersonalFeedbackWrite : function() {
+			this.jumpTo("forward/personalFeedbackWrite");
+		},
+		/**
+		 * 关注列表
+		 */
+		PersonalConcertList : function() {
+		var query = {
+				    "rpid": "2007", 
+				    "ropenid": "4526948", 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": { }
+				};
+		var customs_data = {
+			    "code": 0, 
+			    "msg": "success", 
+			    "rsp": {
+			        "data": {
+			            "currentFlights": [
+			                {
+			                    "airCode": "CA", 
+			                    "fltNum ": "133", 
+			                    "deDate ": "2015-11-11", 
+			                    "deTime": "08:15", 
+			                    "arTime": "09:50", 
+			                    "deCity": "北京", 
+			                    "arCity": "广州", 
+			                    "buttonMsg": "已值机", 
+			                    "opType": 4, 
+			                    "identity": "", 
+			                    "id": "24A0F11CBC353644E0530657060A1582"
+			                }
+			            ], 
+			            "hisFlights": [
+			                {
+			                    "airCode": "HU", 
+			                    "fltNum ": "144", 
+			                    "deDate ": "2015-11-17", 
+			                    "deTime": "06:15", 
+			                    "arTime": "08:50", 
+			                    "deCity": "上海", 
+			                    "arCity": "广州", 
+			                    "opType": 3, 
+			                    "content": "值机已关闭", 
+			                    "identity": "Y", 
+			                    "id": "24A0F11CBC353644E0530657060A1582"
+			                }
+			            ]
+			        }
+			    }
+			};
+		alert(customs_data.rsp.data);
+			/*if (customs_data && customs_data.code == 0) {// 查询成功
+				var DataRsp = customs_data.rsp;//整理json字符串
+				this.addCache("PersonalProfileData", DataRsp);
+				this.jumpTo("forward/personalConcertList");
+			} else if (customs_data && customs_data.code != 0) {//查询失败
+				this.utils.showAlert({
+					text : (customs_data.msg)
+				});
+			}*/
+		},
+	});
+	return PersonalCenter;
+});

@@ -1,0 +1,32 @@
+<div class = "page">
+	<div class="page-content-cersonalityBackground">
+		<div id="writeSuggest" class="personal_feedback_div_04">写建议</div>
+		<img alt="头像" src="images/avatar.png" class = "avatarImg" id = "10">
+		<div id="lookBack" class="personal_feedback_div_05">看回复</div>
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<% for(var i  in ReplyMessage){%>
+	    <%if(i==0){%>
+		<div class="personal_feedback personal_feedback1">
+		<%}else{%>
+		<div class="personal_feedback">
+		<%}%>
+			<ul>
+				<li>
+					<div class="personal_feedback_div_01"><%=ReplyMessage[i].feedback_time%></div>
+					<div style="float:right;">
+						<img class = "DeleteReplyImg" style="height:30px;margin-right:10px;" src="images/delete.png" name="deleteReplyImg" />
+						<div class = "magess_id dispalyNone"><%=ReplyMessage[i].message_id%></div>
+					</div>
+				</li>
+				<li>
+					<div class="personal_feedback_div_02"><%=ReplyMessage[i].feedback_content%></div>
+					<img alt="" src="images/delete.png" class = "Submit_proposal_img">
+					<img alt="" src="images/delete.png" class = "Submit_proposal_img">
+					<img alt="" src="images/delete.png" class = "Submit_proposal_img">
+				</li>
+				<li><div  class="personal_feedback_div_03">[回复]：<div><%=ReplyContent%></div></div></li>
+			</ul>
+		</div>
+	<%}%>
+</div>

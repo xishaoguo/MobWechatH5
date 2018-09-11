@@ -1,0 +1,69 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_feedback_view.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalFeedbackView = SGView.extend({
+		pageId : 'personal_feedback_view',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var ReplyMessage = this.ReplyMessage();
+			var hisrsp = {};
+			self.$el.append(self.template({
+				ReplyMessage:ReplyMessage
+			}));
+			return this;
+		},
+		events : {
+			"click #writeSuggest" : "PersonalFeedbackWrite",
+			"click #delete" : "DeleteReply",
+		},
+		/**
+		 * 回复反馈
+		 * 
+		 */
+		PersonalFeedbackWrite : function() {
+			this.jumpTo("forward/personalFeedbackWrite");
+		},
+		/**
+		 * 删除本条回复
+		 * 
+		 */
+		DeleteReply : function() {
+			var query = {
+				    "rpid": "1035", 
+				    "ropenid": "oG3L4wr2X_qLQNNNe_EfoxMAM5MU", 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": {
+				        "message_id": "001"
+				    }
+				};
+			var customs_data = {
+				    "rsp": "", 
+				    "code": 0, 
+				    "msg": "success"
+				};
+			if (customs_data && customs_data.code == 0) {// 查询成功
+				var personalFeedback = document.getElementById("personal_feedback");
+				personalFeedback.parentNode.removeChild(personalFeedback);
+				alert("已删");
+			} else if (customs_data && customs_data.code != 0) {//查询失败
+				this.utils.showAlert({
+					text : (customs_data.msg)
+				});
+			}
+		},
+		/**
+		 * 删除本条回复
+		 * 
+		 */
+		ReplyMessage : function() {
+			var ReplyMessage = this.getCache("ReplyMessage");
+			return ReplyMessage;
+		},
+	});
+	return PersonalFeedbackView;
+});

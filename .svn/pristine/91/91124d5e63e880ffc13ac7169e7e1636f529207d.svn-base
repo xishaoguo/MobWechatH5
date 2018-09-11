@@ -1,0 +1,30 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_feedback_view.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var NewIndex = SGView.extend({
+		pageId : 'personal_feedback_view',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #writeSuggest" : "PersonalFeedbackWrite",
+		},
+		/**
+		 * 回复反馈
+		 * 
+		 */
+		PersonalFeedbackWrite : function() {
+			this.jumpTo("forward/personalFeedbackWrite");
+		},
+	});
+	return NewIndex;
+});

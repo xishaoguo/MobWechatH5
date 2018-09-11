@@ -1,0 +1,13 @@
+div.seatCharts-seat:focus {
+	border: none;
+}
+.seatCharts-seat:focus {
+	outline: none;
+}
+div.seatCharts-row:after {
+	clear: both;
+}
+li.seatCharts-legendItem {
+	margin-top: 10px;
+	line-height: 2;
+}

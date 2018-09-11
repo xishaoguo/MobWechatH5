@@ -1,0 +1,228 @@
+define(['store','params','utils','SGClient','views/flight_search','views/flight_list','views/flight_infolist','views/flight_guide','views/flight_details','views/boarding_pass','views/seat_selection.js',
+        'views/flight_checkin','views/seatselection_details','views/QRCode','views/Authentication','views/authentication_success','views/authentication_photo','views/others_checkin','views/personal_center','views/personal_profile','views/personal_profile_sex','views/personal_profile_birthday'],
+function(store,params,utils,sgClient,FlightSearch,FlightList,FlightInfoList,FlightGuide,FlightDetails,BoardingPass,SeatSelection,FlightCheckIn,SeatSelectionDetails,QRCode,Authentication,AuthenticationSuccess,AuthenticationPhoto,OthersCheckin,PersonalCenter,PersonalProfile,PersonalProfileSex,PersonalProfileBirthday){
+	var Router = Backbone.Router.extend({
+		routes:{
+			'': 'first',
+			'forward/*forwardPath':'forward',
+			'back/*backPath':'back'
+		},
+		init: true,
+		first:function(){
+//			this.showFlightInfoList();//设置首页
+			this.showPersonalCenter();//设置首页
+
+		},
+		forward:function(forwardPath){
+			if(forwardPath == 'flightsearch'){
+				this.showFlightSearch();
+			}else if(forwardPath == "flightlist"){
+				this.showFlightList();
+			}else if(forwardPath == "flightinfolist"){
+				this.showFlightInfoList();
+			}else if(forwardPath == "flightguide"){
+				this.showFlightGuide();
+			}else if(forwardPath == "flightdetails"){
+				this.showFlightDetails();
+			}else if(forwardPath == "boardingpass"){
+				this.showBoardingPass();
+			}else if(forwardPath == "seatselection"){
+				this.showSeatSelection();
+			}else if(forwardPath == "flightcheckin"){
+				this.showFlightCheckIn();
+			}else if(forwardPath == "seatselectiondetails"){
+				this.showSeatSelectionDetails();
+			}else if(forwardPath == "qRCode"){
+				this.showQRCode();
+			}else if(forwardPath == "authentication"){
+				this.showAuthentication();
+			}else if(forwardPath == "authenticationsuccess"){
+				this.showAuthenticationSuccess();
+			}else if(forwardPath == "authenticationphoto"){
+				this.showAuthenticationPhoto();
+			}else if(forwardPath == "otherscheckin"){
+				this.showOthersCheckin();
+			}else if(forwardPath == "personalProfile"){//点击首页个人资料
+				this.showPersonalProfile();
+			}else if(forwardPath == "personalProfileSex"){//点击个人资料页的性别
+				this.showPersonalProfileSex();
+			}else if(forwardPath == "personalProfileBirthday"){//点击个人资料页的生日
+				this.showPersonalProfileBirthday();
+			}
+		},
+		back:function(backPath){
+			if(backPath == 'flightsearch'){
+				this.showFlightSearch(backPath,true);
+			}else if(backPath==''){
+				//TODO
+			}
+		},
+		changePage: function(view,isBack,flag,eventFlag) {
+			//add the attribute 'data-role="page" ' for each view's div
+			//view.$el.attr('data-role', 'page');
+			//append to dom
+			var self = this;
+			switch(eventFlag){
+				case 1://主页进来
+					self.unbind("dataChanged:perCenterViewReviewData");
+					break;
+				case 2://个人中心进来
+					self.unbind("dataChanged:homeViewJourneyData");
+					self.unbind("dataChanged:homeViewReviewData");
+					break;
+				case 3:
+					self.stopInterval();
+					break;
+				default:
+					self.unbind("dataChanged:homeViewJourneyData");
+					self.unbind("dataChanged:homeViewReviewData");
+					self.unbind("dataChanged:perCenterViewReviewData");
+					break;
+			}
+			
+			$(view.el).attr('data-role','page');
+			$(view.el).attr('data-dom-cache','true');
+			$(view.el).attr('id','container');
+			
+			
+			if(view.utils.browerVersion('android')){
+				$('body').empty();
+			}
+			
+			$('body').append($(view.el));
+			//$(view.el).css('max-height',$('body').height()+'px');
+			//$(view.el).css('overflow','hidden');
+			
+			if(isBack ==undefined || isBack == null){
+				isBack = false;
+			}
+			var tran = 'slide';
+			if(flag){
+				tran = 'none';
+			}
+			//var transition = $.mobile.defaultPageTransition;
+			if (!this.init) {
+				$.mobile.changePage($(view.el), {
+					transition:tran,
+					changeHash: false,
+					showLoadMsg:false,
+					reverse: isBack
+				});
+			} else {
+				this.init = false;
+			}
+			
+		},
+		showFlightSearch:function(view,isBack){
+			var flightSearch=new FlightSearch();
+			flightSearch.render();
+			this.changePage(flightSearch,isBack);
+			this.tmpView = flightSearch;
+		},
+		showFlightList:function(view,isBack){
+			var flightList=new FlightList();
+			flightList.render();
+			this.changePage(flightList,isBack);
+			this.tmpView = flightList;
+		},
+		showFlightInfoList:function(view,isBack){
+			var flightInfoList = new FlightInfoList();
+			flightInfoList.render();
+			this.changePage(flightInfoList,isBack);
+			this.tmpView = flightInfoList;
+		},
+		showFlightGuide:function(view,isBack){
+			var flightGuide = new FlightGuide();
+			flightGuide.render();
+			this.changePage(flightGuide,isBack);
+			this.tmpView = flightGuide;
+		},
+		showFlightDetails:function(view,isBack){
+			var flightDetails = new FlightDetails();
+			flightDetails.render();
+			this.changePage(flightDetails,isBack);
+			this.tmpView = flightDetails;
+		},
+		showBoardingPass:function(view,isBack){
+			var boardingPass = new BoardingPass();
+			boardingPass.render();
+			this.changePage(boardingPass,isBack);
+			this.tmpView = boardingPass;
+		},
+		showSeatSelection:function(view,isBack){
+			var seatSelection = new SeatSelection();
+			seatSelection.render();
+			this.changePage(seatSelection,isBack);
+			this.tmpView = seatSelection;
+		},
+		showFlightCheckIn:function(view,isBack){
+			var flightCheckIn = new FlightCheckIn();
+			flightCheckIn.render();
+			this.changePage(flightCheckIn,isBack);
+			this.tmpView = flightCheckIn;
+		},
+		showSeatSelectionDetails:function(view,isBack){
+			var seatSelectionDetails = new SeatSelectionDetails();
+			seatSelectionDetails.render();
+			this.changePage(seatSelectionDetails,isBack);
+			this.tmpView = seatSelectionDetails;
+		},
+		showQRCode:function(view,isBack){
+			var qRCode = new QRCode();
+			qRCode.render();
+			this.changePage(qRCode,isBack);
+			this.tmpView = qRCode;
+		},
+		showAuthentication:function(view,isBack){
+			var authentication = new Authentication();
+			authentication.render();
+			this.changePage(authentication,isBack);
+			this.tmpView = authentication;
+		},
+		showAuthenticationSuccess:function(view,isBack){
+			var authenticationsuccess = new AuthenticationSuccess();
+			authenticationsuccess.render();
+			this.changePage(authenticationsuccess,isBack);
+			this.tmpView = authenticationsuccess;
+		},
+		showAuthenticationPhoto:function(view,isBack){
+			var authenticationphoto = new AuthenticationPhoto();
+			authenticationphoto.render();
+			this.changePage(authenticationphoto,isBack);
+			this.tmpView = authenticationphoto;
+		},
+		showOthersCheckin:function(view,isBack){
+			var otherscheckin = new OthersCheckin();
+			otherscheckin.render();
+			this.changePage(otherscheckin,isBack);
+			this.tmpView = otherscheckin;
+		},
+		showPersonalCenter:function(view,isBack){
+			var personalCenter=new PersonalCenter();
+			personalCenter.render();
+			this.changePage(personalCenter,isBack);
+			this.tmpView = personalCenter;
+		},
+		showPersonalProfile:function(view,isBack){
+			var personalProfile=new PersonalProfile();
+			personalProfile.render();
+			this.changePage(personalProfile,isBack);
+			this.tmpView = personalProfile;
+		},
+		showPersonalProfileSex:function(view,isBack){
+			var personalProfileSex=new PersonalProfileSex();
+			personalProfileSex.render();
+			this.changePage(personalProfileSex,isBack);
+			this.tmpView = personalProfileSex;
+		},
+		showPersonalProfileBirthday:function(view,isBack){
+			var personalProfileBirthday=new PersonalProfileBirthday();
+			personalProfileBirthday.render();
+			this.changePage(personalProfileBirthday,isBack);
+			this.tmpView = personalProfileBirthday;
+		}
+	});
+    var _router = new Router();
+	
+	return _router;
+});

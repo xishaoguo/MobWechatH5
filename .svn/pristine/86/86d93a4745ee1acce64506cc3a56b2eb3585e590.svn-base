@@ -1,0 +1,47 @@
+<div class = "page">
+	<div class="page-content-cersonalityBackground">
+				<img alt="头像" src="images/avatar.png" class = "avatarImg">
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class = "index_page_buttom_message">
+			<div class = "index_page_stroke_track">
+				<div class = "index_page_type"><!-- 
+					 --><div class = "index_page_type_fly">
+						<span>飞行</span>
+					</div><!--  
+					--><div class = "index_page_type_footprint">
+						<span>足迹</span>
+					</div><!-- 
+				 --></div>
+				 <div class = "index_page_message">
+				 	<div class = "index_page_message_left index_page_message_float">
+				 		<div class = "index_page_fly_kilometre index_page_fly_message">
+				 			<span class="index_page_fly_span1">2000000</span><span class="index_page_fly_span2">公里</span>
+				 		</div>
+				 		<div class = "index_page_fly_frequency index_page_fly_message index_page_fly_message_buttom">
+				 			<span class="index_page_fly_span1">13</span><span class="index_page_fly_span2">次</span>
+				 		</div>
+				 	</div>
+				 	 <div class = "index_page_message_center index_page_message_float">
+				 	 	<div class = "index_page_shuxian"></div>
+				 	 </div>
+				 	 <div class = "index_page_message_right index_page_message_float">
+				 	 	<div class = "index_page_fly_country index_page_fly_message">
+				 			<span class="index_page_paddingR10 index_page_fly_span2">国家</span><span class="index_page_fly_spanNum">3</span><span class="index_page_paddingL10 index_page_fly_span2">个</span>
+				 		</div>
+				 		<div class = "index_page_fly_city index_page_fly_message index_page_fly_message_buttom">
+				 			<span class="index_page_paddingR10 index_page_fly_span2">城市</span><span class="index_page_fly_spanNum">8</span><span class="index_page_paddingL10 index_page_fly_span2">座</span>
+				 		</div>
+				 	 </div>
+				 </div>
+			</div>
+		</div>
+		<div class = "UnknownPicture" id = "wzimg">
+			 <div class = "X-img"></div>
+		</div>
+		<ul class="index_page_ul">
+			<li id="personalSex"><div class="index_page_ul_lileft">性别</div><div class="index_page_ul_liright"><span class="index_page_li_span">女</span><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="personalBirthday"><div class="index_page_ul_lileft">生日</div><div class="index_page_ul_liright"><span class="index_page_li_span">1989/11/13</span><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="personalCert"><div class="index_page_ul_lileft">证件绑定</div><div class="index_page_ul_liright"><span>身份证已认证</span></div></li>
+		</ul>
+</div>

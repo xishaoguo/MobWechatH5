@@ -1,0 +1,96 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<div class="personal_feedback_div_04" style="margin-left: 72px;"></div>
+		<img alt="头像" src="images/avatar.png" class="avatarImg">
+		<div id="edit" class="personal_concernList_div_01">
+			<div id="editButton" class="personal_concernList_div_02">
+				<span>编辑</span>
+			</div>
+		</div>
+		<div id="deleteFollow" class="personal_concernList_div_01 dispalyNone">
+			<div id="deleteButton" class="personal_concernList_div_03 delete_disable">
+				<span>删除</span>
+			</div>
+		</div>
+		<div id="cancel" class="personal_concernList_div_01 dispalyNone">
+			<div id="cancelButton" class="personal_concernList_div_02">
+				<span>取消</span>
+			</div>
+		</div>
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<% for(var i in CurrentFlights){%>
+	<table data-role='none' class="personal_concernList_table">
+		<tr>
+			<td>
+				<div class="personal_concernList_div_04 dispalyNone">
+					<input id="name" data-role='none' type="checkbox" name = "checkboxitems"/>
+				</div>
+			</td>
+			<td>
+				<div class="personal_concernList_div_05">
+					<div class="personal_concernList_div_06">
+						<ul>
+							<li><span><%=CurrentFlights[i].deDate%></span><span
+								class="personal_concernList_span_01">周一</span></li>
+							<li class="personal_concernList_li_01"><span><%=CurrentFlights[i].deTime%></span><span
+								class="personal_concernList_span_02"><%=CurrentFlights[i].deCity%></span><span
+								class="personal_concernList_span_03">-</span></li>
+						</ul>
+					</div>
+					<div class="personal_concernList_div_07">
+						<ul>
+							<li><span>国际航班</span><span><%=CurrentFlights[i].airCode%><%=CurrentFlights[i].fltNum%></span></li>
+							<li class="personal_concernList_li_02"><span><%=CurrentFlights[i].arCity%></span><span
+								class="personal_concernList_span_04"><%=CurrentFlights[i].arTime%></span></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<span>可选座位</span><span class="personal_concernList_span_05">10%</span><span>，快去办理吧</span>
+				</div>
+			</td>
+			<td class="padding-right3">
+				<div class="personal_concernList_div_08"><%=OpType%></div>
+			</td>
+		</tr>
+	</table>
+	<%}%>
+	<% for(var i in HisFlights){%>
+	<table data-role='none' class="personal_concernList_table">
+		<tr>
+			<td>
+				<div class="personal_concernList_div_04 dispalyNone">
+					<input id="name" data-role='none' type="checkbox" name = "checkboxitems"/>
+				</div>
+			</td>
+			<td>
+				<div class="personal_concernList_div_05">
+					<div class="personal_concernList_div_06">
+						<ul>
+							<li><span><%=HisFlights[i].deDate%></span><span
+								class="personal_concernList_span_01"><%=HisFlights[i].deWeek%></span></li>
+							<li class="personal_concernList_li_01"><span><%=HisFlights[i].arTime%></span><span
+								class="personal_concernList_span_02"><%=HisFlights[i].arCity%></span><span
+								class="personal_concernList_span_03">-</span></li>
+						</ul>
+					</div>
+					<div class="personal_concernList_div_07">
+						<ul>
+							<li><span><%=HisFlights[i].airCn%></span><span><%=HisFlights[i].airCode%><%=HisFlights[i].fltNum%></span></li>
+							<li class="personal_concernList_li_02"><span><%=HisFlights[i].deCity%></span><span
+								class="personal_concernList_span_04"><%=HisFlights[i].deTime%></span></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<span>可选座位</span><span class="personal_concernList_span_05">10%</span><span>，快去办理吧</span>
+				</div>
+			</td>
+			<td class="padding-right3">
+				<div class="personal_concernList_div_08"><%=OpType%></div>
+			</td>
+		</tr>
+	</table>
+	<%}%>
+</div>

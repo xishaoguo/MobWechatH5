@@ -1,0 +1,14 @@
+<div data-role="content">
+<div class="cancel-list-title">请您从下方列表中选择一名乘客</div>
+<ul>
+<% for(var i  in cancelUserList){%>
+    <li class="j-select-user cancel-list" passengerName="<%=cancelUserList[i].passengerName%>" certNo="<%=cancelUserList[i].certNo%>" certType="<%=cancelUserList[i].certType%>">
+        <div class="cancel-list-name"><%=cancelUserList[i].passengerName%></div><div class="cancel-list-cerdId"><%=cancelUserList[i].certNo%></div>
+    </li>
+<%}%>
+</ul>
+</div>
+
+<div data-role="navbar" class="footer">
+   <div class="button">确定</div>
+</div>              

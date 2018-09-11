@@ -1,0 +1,26 @@
+define(['jquery','underscore','backbone','SGView','text!templates/myPrimarySeat_details.html'],
+function($,_,Backbone,SGView,viewtTpl){
+	var MyPrimaryseatDetails = SGView.extend({
+		pageId:'PrimaryseatDetails',
+		template:_.template(viewtTpl),
+		render:function(){
+			var self = this;
+			this.$el.empty();
+			var PrimaryRsp = self.getCache("PrimaryRsp");
+			
+			self.$el.append(self.template({lang:self.lang,data:self.params.nowTicket,PrimaryRsp:PrimaryRsp.returnList}));
+			this.$el.attr('class','ui-page-active ui-page');
+			return this;
+		},
+		events: {
+			"click #searchsubmit": "back",
+		},
+		/**
+		 * 计算登机时间
+		 */
+		BoardingTime:function(){
+			this.jumpTo("back/flightsearch");
+		}
+	});
+	return MyPrimaryseatDetails;
+});

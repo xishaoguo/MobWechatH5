@@ -1,0 +1,14 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<img alt="头像" src="images/avatar.png" class="avatarImg">
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="index_page_buttom_message">
+		<ul class="index_page_ul">
+			<li>
+			    <div class="index_page_ul_lileft">生日</div>
+				<div>等待开发</div>
+			</li>
+		</ul>
+	</div>
+</div>

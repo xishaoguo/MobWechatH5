@@ -1,0 +1,43 @@
+<div id="wrapper">
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<div id="writeSuggest" class="personal_feedback_write_div_02">写建议</div>
+		<%=getImgTab()%>
+		<div id="lookBack" class="personal_feedback_write_div_03">看回复</div>
+	</div>
+	<textarea id="status" name="status" maxlength="300" data-role='none'
+		onkeydown='countChar("status","counter","personal_feed_buttonDiv");'
+		onkeyup='countChar("status","counter","personal_feed_buttonDiv");'
+		onfocus="PromptInformation();"
+		onblur="ClearPromptInformation()"
+		class="personal_feedback_write_textarea textarea_text_style">请写下您的建议,帮助我们更好的为您服务</textarea>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="personal_feedback_write_div_01">
+		<span id="counter">0</span>/300
+	</div>
+</div>
+<div class = "lower_position" id = "lower_position">
+	<div id="upload_files" style="overflow:visible!important;">
+		<div class="upload_part" id = "upload_part">
+			<div class = "dispalyNone" id = "Continue_upload">继续上传</div>
+		</div>
+	</div>
+	<div class = "upload_button" id = "upload_button">
+		<div class="add_button">
+			<form id="uploadForm" enctype="multipart/form-data" name = "uploadForm">
+				<input class = "form_display_input" type="file" data-role="none" id = "input_file0" name="fileParam"  onchange="previewImage(this)"/>
+			</form>
+		</div>
+		<div class="upload_photo upload_paddingTop3" id = "upload_picture_text">上传照片</div>
+	</div>
+</div>
+</div>
+<div class="personal_sex_buttonDiv_02" id = "personal_feed_buttonDiv">
+	<span>提</span><span class="personal_feedback_write_span_01">交</span>
+</div>
+<div class="dialog m46" id="isDelete" role="dialog">
+	<div class = "preview-pictures-buttom">
+		<div class = "preview-pictures-buttom-delete preview-pictures-buttom-button">删除</div>
+		<div class = "preview-pictures-buttom-back preview-pictures-buttom-button">返回</div>
+	</div>
+</div>

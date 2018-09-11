@@ -1,0 +1,69 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_profile_birthday.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalProfileBirthday = SGView.extend({
+		pageId : 'personal_profile_birthday',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personal_birthday_buttonDiv" : "PersonalBirthdayButtonDiv",
+		},
+		/**
+		 * 日期(年)列表
+		 * 
+		 */
+		YYYYMMDDstart : function() {
+			
+		},
+		/**
+		 * 确定提交
+		 * 
+		 */
+		PersonalBirthdayButtonDiv : function() {
+			var date = "1988-06-13";
+			var query = {
+				    "rpid": "1035", 
+				    "ropenid": "oG3L4wr2X_qLQNNNe_EfoxMAM5MU", 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": {
+				        "birthday": date
+				    }
+				};
+			var customs_data = {
+				    "rsp": "", 
+				    "code": 0, 
+				    "msg": "success"
+				};
+			if (customs_data && customs_data.code == 0) {// 查询成功
+				this.utils.showAlert({
+					text : ("已保存")
+				});
+				this.jumpTo("forward/personalProfile");
+			} else if (customs_data && customs_data.code != 0) {//查询失败
+				this.utils.showAlert({
+					text : (customs_data.msg)
+				});
+				this.jumpTo("forward/personalProfile");
+			}
+		},
+		/**
+		 * 回复反馈
+		 * 
+		 */
+		FeedBack : function() {
+			//this.jumpTo("forward/feedback");
+		},
+	});
+	return PersonalProfileBirthday;
+});

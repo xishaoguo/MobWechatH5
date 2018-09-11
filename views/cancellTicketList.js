@@ -1,0 +1,162 @@
+define(['jquery','underscore','backbone','SGView','text!templates/cancellTicketList.html'],
+function($,_,Backbone,SGView,viewtTpl){
+	var CancellTicketList = SGView.extend({
+		pageId:'flight_list',
+		template:_.template(viewtTpl),
+		render:function(){
+			var self = this;
+			this.$el.empty();
+			var cancelTicketList = self.getCache("cancelTicketList");//取消值机航班列表
+			self.$el.append(self.template({lang:self.lang,data:cancelTicketList}));
+			this.$el.attr('class','ui-page-active ui-page');
+			return this;
+		},
+		events: {
+			"click .cancelReserve": "cancelReserve",
+			"click .cancel-checkin": "cancelCheckin",
+		},
+		/**
+		 * 取消预留
+		 */
+		cancelReserve:function(e){
+			var self = this;
+			var ropenid = self.store.getOpenId();
+			var target = $(e.target);
+			var liIndex = target.parent('li').index();//当前被点击的票面数组位置
+			self.params.nowCancelTicket = self.getCache("cancelTicketList")[liIndex];//将当前被点击票面信息放入参数集
+			var pnrNo = self.params.nowCancelTicket.pnr;
+			var airCd = self.params.nowCancelTicket.airCd;
+			var fltNumber = self.params.nowCancelTicket.fltNumber;
+			var flightNo = airCd+fltNumber;
+			var phoneNO = "";
+			var deDate = self.params.nowCancelTicket.deDate;
+			var deTime = self.params.nowCancelTicket.deTime;
+			var flightDate = deDate+" "+deTime;
+			var depAirportCode = self.params.nowCancelTicket.deCode;
+			var arrAirportCode = self.params.nowCancelTicket.arCode;
+			var arrDate = self.params.nowCancelTicket.arDate;
+			var arrTime = self.params.nowCancelTicket.arTime;
+			var depDate = self.params.nowCancelTicket.deDate;
+			var depTime = self.params.nowCancelTicket.deTime;
+			var carrierFlightNo = self.params.nowCancelTicket.opAirCodeFltNumber;
+			var couponNum = self.params.nowCancelTicket.couponNumber;
+			var passengerList = [];
+			var seatNo = self.params.nowCancelTicket.selectSeatId;
+			passengerList[0] = {
+					"passengerName":self.params.cancelUserInfo.passengerName,
+					"passengerMark":"0",
+					"seatNum":seatNo,
+					"certId":self.params.cancelUserInfo.idNumber,
+					"ticketNum":self.params.nowCancelTicket.ticketNumber,
+					"certType":self.params.cancelUserInfo.idType,
+					"pnrNo":pnrNo
+			};
+			self.utils.showAlert({text:"您将取消航班"+flightNo+"，座位"+seatNo+"",title:"取消预留座位",onOK:function(){
+				var query = {
+					    "rpid": "3004",
+					    "ropenid": ropenid,
+					    "version": "1.0",
+					    "rip": "127.0.0.1",
+					    "rpara": {
+					        "flightNo": flightNo, 
+					        "phoneNO": phoneNO,
+					        "flightDate": flightDate, 
+					        "depAirportCode": depAirportCode,
+					        "arrAirportCode": arrAirportCode,
+					        "arrDate": arrDate,
+					        "arrTime": arrTime,
+					        "depDate": depDate,
+					        "depTime": depTime,
+					        "carrierFlightNo": carrierFlightNo,
+					        "couponNum": couponNum,
+					        "passengerList": passengerList,
+					        }
+					};
+				self.utils.showMessage("",'',self.sgClient);
+				self.sgClient.post(query,'',function(_data){			
+					if(_data && _data.code == 0){//成功
+						var checkinSeat = _data.rsp;
+						self.utils.showAlert({text:"取消预留座位成功",onOK:function(){
+							target.parent('li').css('display','none');//隐藏取消成功的票面
+						}});
+					}else if(_data.code != 0){//失败
+						self.utils.showAlert({text:(_data.msg)});
+					}
+					self.utils.hideMessage();
+				},"json");
+			},onCancel:function(){
+				return false;
+			}});
+		},
+		/**
+		 * 取消值机
+		 */
+		cancelCheckin:function(e){
+			var self = this;
+			var ropenid = self.store.getOpenId();
+			var target = $(e.target);
+			var liIndex = target.parent('li').index();//当前被点击的票面数组位置
+			self.params.nowCancelTicket = self.getCache("cancelTicketList")[liIndex];//将当前被点击票面信息放入参数集
+			var phoneNo = "";
+			var airCd = self.params.nowCancelTicket.airCd;
+			var fltNumber = self.params.nowCancelTicket.fltNumber;
+			var flightNo = airCd+fltNumber;
+			var flightDate = self.params.nowCancelTicket.deDate;
+			var toCity = self.params.nowCancelTicket.arCode;
+			var fromCity = self.params.nowCancelTicket.deCode;
+			var arrTime = self.params.nowCancelTicket.arTime;
+			var depTime = self.params.nowCancelTicket.deTime;
+			var arrDate = self.params.nowCancelTicket.arDate;
+			var couponNum = self.params.nowCancelTicket.couponNumber;
+			var actualFlyDate = self.params.nowCancelTicket.deDate;
+			var carrierFlightNo = self.params.nowCancelTicket.opAirCodeFltNumber;
+			var seatNo = self.params.nowCancelTicket.seatNumber;
+			var passengerList = [];
+			passengerList[0] = {
+					"certType":self.params.cancelUserInfo.idType,
+					"passengerMark": "0",
+					"passengerName":self.params.cancelUserInfo.passengerName,
+					"cardID":self.params.cancelUserInfo.idNumber,
+					"seatNo":seatNo,
+					"ticketNum":self.params.nowCancelTicket.ticketNumber,
+			};
+			self.utils.showAlert({text:"您将取消航班"+flightNo+"，座位"+seatNo+"",title:"取消值机座位",onOK:function(){
+				var query = {
+					    "rpid": "3008",
+					    "ropenid": ropenid,
+					    "version": "1.0",
+					    "rip": "127.0.0.1",
+					    "rpara": {
+					        "phoneNo": phoneNo,
+					        "flightNo": flightNo,
+					        "flightDate": flightDate,
+					        "toCity": toCity,
+					        "fromCity": fromCity,
+					        "arrTime": arrTime,
+					        "depTime": depTime,
+					        "arrDate": arrDate,
+					        "couponNum": couponNum,
+					        "actualFlyDate": actualFlyDate,
+					        "carrierFlightNo": carrierFlightNo,
+					        "passengerList": passengerList
+					    }
+					};
+				self.utils.showMessage("",'',self.sgClient);
+				self.sgClient.post(query,'',function(_data){			
+					if(_data && _data.code == 0){//成功
+						var checkinSeat = JSON.parse(_data.rsp);
+						self.utils.showAlert({text:"取消值机成功",onOK:function(){
+							target.parent('li').css('display','none');//隐藏取消成功的票面
+						}});
+					}else if(_data.code != 0){//失败
+						self.utils.showAlert({text:(_data.msg)});
+					}
+					self.utils.hideMessage();
+				},"json");
+			},onCancel:function(){
+				return false;
+			}});
+		}
+	});
+	return CancellTicketList;
+});

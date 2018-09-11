@@ -1,0 +1,21 @@
+  <div data-role="header">
+    <div class="lyb-seatnumber-header">
+    	<div class="lyb-div lyb-seatnumber-font1"><%=lang.Recommended_seat%></div>
+    	<div class="lyb-div lyb-seatnumber-font2"><%='50A'%></div>
+    	<div class="lyb-seatnumber-button lyb-seatnumber-font3" id='searchsubmit'><%=lang.done%></div>
+    </div>
+  </div>
+
+  <div data-role="content">
+     <div class="lyb-mayknow">
+    	<div class="lyb-content-item1"><div class="lyb-content-font2"><%=lang.Mayknow%></div>
+    	 	                           <div class="lyb-content-item2"><span class="lyb-content-font3"><%='filsh'%></span><span class="lyb-content-font3"><%='daboge'%></span><span class="lyb-content-font3"><%='apple'%></span></div>
+    	 	                           <div class="lyb-content-item4" id='searchsubmit'><div class="lyb-content-font1"><%=lang.SeatforPartner%></div><div class="lyb-content-font1"><span class="lyb-icon lyb-forward-img"></span></div></div>
+    	</div>
+    	
+    </div>
+  </div>
+
+  <div data-role="footer">
+   
+  </div>        

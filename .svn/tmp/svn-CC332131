@@ -1,0 +1,106 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_center.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalCenter = SGView.extend({
+		pageId : 'personal_center',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+
+			}));
+			return this;
+		},
+		events : {
+			"click #personalProfiel" : "PersonalProfile",
+			"click #feedback" : "PersonalFeedbackWrite",
+			"click #concernList" : "PersonalConcertList",
+			"click #flyHistory" : "PersonalSelectedHistroy",
+			"click #downloadClient" : "TestHtml",
+		},
+		/**
+		 * 个人资料
+		 * 
+		 */
+		PersonalProfile : function() {
+			var self = this;
+			var _query = {
+				"rpid" : "1006",
+				"ropenid" : "4526948",
+				"version" : "1.0",
+				"rip" : "127.0.0.1",
+				"rpara" : ""
+			};
+			alert("aaa");
+			self.utils.showMessage("onLoading", '', self.sgClient);
+			self.sgClient.post(_query, '', function(customs_data) {
+				alert("aaa");
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					alert("bbb");
+					var DataRsp = customs_data.rsp;// 整理json字符串
+					var Birthday = DataRsp.birthday;
+					var Sex = DataRsp.sex;
+					var CertId = DataRsp.cert_id;
+					self.addCache("PersonalProfileData", DataRsp);
+					self.addCache("Sex", Sex);
+					self.addCache("Birthday", Birthday);
+					self.addCache("CertId", CertId);
+					self.jumpTo("forward/personalProfile");
+				} else if (customs_data && customs_data.code != 0) {// 查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+			}, "json");
+		},
+		/**
+		 * 意见反馈
+		 */
+		PersonalFeedbackWrite : function() {
+			this.jumpTo("forward/personalFeedbackWrite");
+		},
+		PersonalSelectedHistroy : function() {
+			this.jumpTo("forward/personalSelectedHistroy");
+		},
+		/**
+		 * 测试页面
+		 */
+		TestHtml : function() {
+			this.jumpTo("forward/test");
+		},
+		/**
+		 * 关注列表
+		 */
+		PersonalConcertList : function() {
+			var self = this;
+			var _query = {
+				"rpid" : "2007",
+				"ropenid" : "100000000000180",
+				"version" : "1.0",
+				"rip" : "127.0.0.1",
+				"rpara" : {}
+			};
+			self.utils.showMessage("onLoading", '', self.sgClient);
+			self.sgClient.post(_query, '', function(customs_data) {
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					var currentFlights = customs_data.rsp.currentFlights;
+					var hisFlights = customs_data.rsp.hisFlights;
+					self.addCache("HisFlights", hisFlights);
+					self.addCache("CurrentFlights", currentFlights);
+					self.jumpTo("forward/personalConcertList");
+				} else if (customs_data && customs_data.code != 0) {// 查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+			}, "json");
+		},
+	});
+	return PersonalCenter;
+});

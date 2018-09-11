@@ -1,0 +1,80 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_profile_cert.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalProfileCert = SGView.extend({
+		pageId : 'personal_profile_cert',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			var GetNumber = this.GetNumber();
+			var GetHeadImg = this.GetHeadImg();
+			self.$el.append(self.template({
+				GetNumber:GetNumber,
+				GetHeadImg:GetHeadImg
+			}));
+			return this;
+		},
+		events : {
+			"click #personal_sex_buttonDiv" : "RemoveBinding",
+		},
+		/**
+		 * 获得证件号
+		 * 
+		 */
+		GetNumber : function() {
+			var GetNumber = this.getCache("CertId");
+			return GetNumber;
+		},
+		/**
+		 * 获得头像地址
+		 * 
+		 */
+		GetHeadImg: function() {
+			return this.getCache("headImgUrl");
+		},
+		/**
+		 * 解除绑定
+		 * 
+		 */
+		RemoveBinding : function() {
+			
+			var have;
+			var self = this;
+			var openid = self.store.getOpenId();
+			//var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+			var _query = {
+				    "rpid": "1010", 
+				    "ropenid": openid, 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": ""
+			};
+			self.utils.showMessage("onLoading",'',self.sgClient);
+			self.sgClient.post(_query,'',function(customs_data){
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					self.removeCache("GetNumber");
+					self.removeCache("CertId");
+					self.utils.showAlert({
+						text : ("解绑成功"),
+						onOK:function(){
+						have = 1;
+						self.addCache("Have", have);
+						self.jumpTo("forward/personalProfile");
+						}
+					});
+					
+				} else if (customs_data && customs_data.code != 0) {//查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+			},"json");
+		},
+	});
+	return PersonalProfileCert;
+});

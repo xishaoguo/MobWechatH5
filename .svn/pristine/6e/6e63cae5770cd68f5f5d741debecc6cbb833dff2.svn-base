@@ -1,0 +1,37 @@
+  <div data-role="header">
+    <ul class="lyb-header">
+        	<li class="lyb-header-font1">齐天大圣</li>
+        	<li class="lyb-header-font1 lyb-header-font2">太白</li>
+        	<li class="lyb-header-font1 lyb-header-font2">八戒</li>
+        	<li class="lyb-header-font1 lyb-header-font2">嫦娥</li>       	
+    </ul>  
+  </div>
+
+  <div data-role="none" style="background-color: #32343c;" id="ui-content">
+    <div class="lyb-content">
+        <div class="lyb-content-font1" id="seatnumber">35A</div>
+    	<div class="lyb-content-item1"><div class="lyb-content-font2">可能认识的人</div>
+    	 	                           <div class="lyb-content-item2"><span class="lyb-content-font3"><%='filsh'%></span><span class="lyb-content-font3"><%='daboge'%></span><span class="lyb-content-font3"><%='apple'%></span></div>
+    	</div>
+    	<div class="lyb-content-last" id='searchsubmit'>为同行人选座<span class="lyb-icon lyb-forward-img"></span></div>
+    </div>
+    
+ 
+  <div class="container">
+  <div class="booking-details">
+  	<div class="seat-explain"><div class="all-icon availableseat-icon"></div><div class="seat-explain-font">可选</div></div>
+  	<div class="seat-explain"><div class="all-icon unavailableseat-icon"></div><div class="seat-explain-font">已占</div></div>
+    <div class="seat-explain"><div class="floor-button">上层<div class="floor-button-circle left"></div></div></div>  
+  </div>
+   <div class="seat" id="wrapper">
+   <div id="seat-map" class="seat-map">
+      
+   </div>
+   </div> 
+  </div>
+
+  </div>
+
+  <div data-role="navbar" class="footer">
+    <div class="button" id="done"><%=lang.done%></div>
+  </div>        

@@ -1,0 +1,86 @@
+body {
+	font-family: '黑体', sans-serif;
+}
+a {
+	color: #b71a4c;
+}
+.front-indicator {
+	width: 145px;
+	margin: 5px 32px 15px 32px;
+	background-color: #f6f6f6;	
+	color: #adadad;
+	text-align: center;
+	padding: 3px;
+	border-radius: 5px;
+}
+.wrapper {
+	width: 100%;
+	text-align: center;
+}
+.container {
+	margin: 0 auto;
+/* 	width: 500px; */
+	text-align: left;
+}
+.booking-details {
+ 	float: left;
+	text-align: left;
+	margin-left: 35px;
+	font-size: 12px;
+	position: relative;
+ 	width:100%; 
+ 	height: 50px;
+ 	background-color: #32343c;
+}
+.booking-details h2 {
+	margin: 25px 0 20px 0;
+	font-size: 17px;
+}
+.booking-details h3 {
+	margin: 5px 5px 0 0;
+	font-size: 14px;
+}
+
+div.seatCharts-seat.available.first-class {
+/* 	background: url(vip.png); */
+	background-color: #3a78c3;
+}
+div.seatCharts-legend {
+	padding-left: 0px;
+	bottom: 0;
+}
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 200px;
+	/* overflow-y: scroll;
+	overflow-x: hidden;
+	width: 170px; */
+}
+.seatCharts-number{
+	list-style:none;
+	height:35px;
+	width:80px;
+	background-color: #fff;
+	border-style:solid;
+	border-width: 1px;
+	border-color:#80ff80;
+	border-radius: 5px;
+	float: left;
+}
+.seatCharts-number-font{
+	line-height: 35px;
+	text-align: center;
+	color:#80ff80;
+	font-size: 14px;
+}

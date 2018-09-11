@@ -1,0 +1,138 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground" style="position:absolute">
+		<img id="headImg"alt="头像" src="images/avatar.png" class="avatarImg">
+	</div>
+	<% if(CurrentFlights&&HisFlights){%>
+	<div class="personal_concernList_div_07 personal_concernList_div_09">
+	    <div id="cancel" class="personal_feedback_write_div_02 dispalyNone">
+			<div id="cancelButton" class="personal_concernList_div_02">
+				<span>取消</span>
+			</div>
+		</div>
+		<div id="edit" class="personal_concernList_div_01">
+			<div id="editButton" class="personal_concernList_div_02">
+				<span>编辑</span>
+			</div>
+		</div>
+		<div id="deleteFollow" class="personal_concernList_div_01 dispalyNone">
+			<div id="deleteButton" class="personal_concernList_div_03 delete_disable">
+				<span>删除</span>
+			</div>
+		</div>
+	</div>
+	<%}else{%>
+	<div class="dispalyNone">
+	    <div id="cancel" class="personal_feedback_write_div_02 dispalyNone">
+			<div id="cancelButton" class="personal_concernList_div_02">
+				<span>取消</span>
+			</div>
+		</div>
+		<div id="edit" class="personal_concernList_div_01">
+			<div id="editButton" class="personal_concernList_div_02">
+				<span>编辑</span>
+			</div>
+		</div>
+		<div id="deleteFollow" class="personal_concernList_div_01 dispalyNone">
+			<div id="deleteButton" class="personal_concernList_div_03 delete_disable">
+				<span>删除</span>
+			</div>
+		</div>
+	</div>
+	<%}%>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<% if(CurrentFlights){%>
+	<% for(var i in CurrentFlights){%>
+	<table data-role='none' class="personal_concernList_table" id='t<%=CurrentFlights[i].id%>'>
+		<tr>
+			<td>
+				<div class="personal_concernList_div_04 dispalyNone">
+					<div class = "dispalyNone">250</div>
+					<input id='<%=CurrentFlights[i].id%>' data-role='none' type="checkbox" name = "checkboxitems"onchange="ButtonSwitchChange()" class = "checkboxOnclicktype"/>
+				</div>
+			</td>
+			<td class="personal_concernList_td_01">
+				<div class="personal_concernList_div_05">
+					<div class="personal_concernList_div_06">
+						<ul>
+							<li><span><%=CurrentFlights[i].deDate%></span><span
+								class="personal_concernList_span_01">周一</span></li>
+							<li class="personal_concernList_li_01"><span><%=CurrentFlights[i].deTime%></span><span
+								class="personal_concernList_span_02"><%=CurrentFlights[i].deCity%></span><span
+								class="personal_concernList_span_03">-</span></li>
+						</ul>
+					</div>
+					<div class="personal_concernList_div_07">
+						<ul>
+							<li><span>国际航班</span><span><%=CurrentFlights[i].airCode%><%=CurrentFlights[i].fltNum%></span></li>
+							<li class="personal_concernList_li_02"><span><%=CurrentFlights[i].arCity%></span><span
+								class="personal_concernList_span_04"><%=CurrentFlights[i].arTime%></span></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<div class="personal_concernList_div_10"><%=CurrentFlights[i].passengerName%></div><div class="personal_concernList_div_11"><span class="personal_concernList_span_05"><%=CurrentFlights[i].remainSeatPer%></span><span>可选座位</span></div>
+				</div>
+			</td>
+			<td class="padding-right3" deDate="<%=CurrentFlights[i].deDate%>" carrierFlightNo="<%=CurrentFlights[i].carrierFlightNo%>" arCity= "<%=CurrentFlights[i].arCity%>" deCity= "<%=CurrentFlights[i].deCity%>" mainCabin= "<%=CurrentFlights[i].mainCabin%>" certId= "<%=CurrentFlights[i].certId%>" pnr= "<%=CurrentFlights[i].pnr%>" certType= "<%=CurrentFlights[i].certType%>" deTime= "<%=CurrentFlights[i].deTime%>" deCode= "<%=CurrentFlights[i].deCode%>" arCode= "<%=CurrentFlights[i].arCode%>" isFlightInit= "<%=CurrentFlights[i].isFlightInit%>" ticketNumber= "<%=CurrentFlights[i].ticketNumber%>" carrierAirCode= "<%=CurrentFlights[i].carrierAirCode%>" planeType= "<%=CurrentFlights[i].planeType%>" childPlaneType= "<%=CurrentFlights[i].childPlaneType%>" ffType= "<%=CurrentFlights[i].ffType%>" passengerName= "<%=CurrentFlights[i].passengerName%>" passengerType= "<%=CurrentFlights[i].passengerType%>" cabin= "<%=CurrentFlights[i].cabin%>" airCode= "<%=CurrentFlights[i].airCode%>">
+				<% if(CurrentFlights[i].opType==1){%>
+				<div class="personal_concernList_div_08 Check_in_seat_selection">值机选座</div>
+				<%}else if(CurrentFlights[i].opType==2){%>
+				<div class="personal_concernList_div_08 Wait_for_check_in">等待值机</div>
+				<%}else if(CurrentFlights[i].opType==3){%>
+				<div class="personal_concernList_div_08 historic_interest">值机已关闭</div>
+				<%}else if(CurrentFlights[i].opType==4){%>
+				<div class="personal_concernList_div_08 Have_check_in">已值机</div>
+				<%}%>
+			</td>
+		</tr>
+	</table>
+	<%}%>
+	<%if(HisFlights){%>
+	<% for(var i in HisFlights){%>
+	<table data-role='none' class="personal_concernList_table" id='t<%=HisFlights[i].id%>' >
+		<tr>
+			<td>
+				<div class="personal_concernList_div_04 dispalyNone">
+					<input data-role='none' type="checkbox" id='<%=HisFlights[i].id%>' name = "checkboxitems" onchange="ButtonSwitchChange()"/>
+				</div>
+			</td>
+			<td class="personal_concernList_td_01">
+				<div class="personal_concernList_div_05">
+					<div class="personal_concernList_div_06">
+						<ul>
+							<li><span><%=HisFlights[i].deDate%></span><span
+								class="personal_concernList_span_01"><%=HisFlights[i].deWeek%></span></li>
+							<li class="personal_concernList_li_01"><span><%=HisFlights[i].arTime%></span><span
+								class="personal_concernList_span_02"><%=HisFlights[i].arCity%></span><span
+								class="personal_concernList_span_03">-</span></li>
+						</ul>
+					</div>
+					<div class="personal_concernList_div_07">
+						<ul>
+							<li><span><%=HisFlights[i].airCn%></span><span><%=HisFlights[i].airCode%><%=HisFlights[i].fltNum%></span></li>
+							<li class="personal_concernList_li_02"><span><%=HisFlights[i].deCity%></span><span
+								class="personal_concernList_span_04"><%=HisFlights[i].deTime%></span></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<!-- <span>可选座位</span><span class="personal_concernList_span_05"><%=HisFlights[i].remainSeatPer%></span><span>，快去办理吧</span> -->
+				</div>
+			</td>
+			<td class="padding-right3">
+			    <% if(HisFlights[i].opType==1){%>
+			    <div class="personal_concernList_div_08 Check_in_seat_selection"><%=HisFlights[i].content%></div>
+			    <%}else if(HisFlights[i].opType==2){%>
+				<div class="personal_concernList_div_08"><%=HisFlights[i].content%></div>
+			    <%}else if(HisFlights[i].opType==3){%>
+				<div class="personal_concernList_div_08"><%=HisFlights[i].content%></div>
+			    <%}else if(HisFlights[i].opType==4){%>
+				<div class="personal_concernList_div_08"><%=HisFlights[i].content%></div>
+				<%}%>
+			</td>
+		</tr>
+	</table>
+	<%}}}else{%>
+	<div class = "personal_concernList_noConcernList">···目前没有关注航班···</div>
+	<%}%>
+</div>

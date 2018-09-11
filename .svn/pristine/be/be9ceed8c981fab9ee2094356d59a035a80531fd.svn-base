@@ -1,0 +1,25 @@
+
+<div data-role="content" id="content" class="flight-guide">
+	<div class="ticket">
+		<div class="ticket-header ticket-font-padding">
+			<div class="ticket-date "><%=data.flightDate%></div><div class="ticket-date ticket-airline">&nbsp<%=data.flightNo%></div>
+			<div class="flightclear"><div class="departcity ticket-msg-font">北京</div><div class="arrivecity ticket-msg-font">广州</div></div>
+			<div class="flightclear"><div class="departtime ticket-msg-font">8:00</div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivetime ticket-msg-font">10:00</div></div>
+			<div class="flightclear"><div class="depart-airport ticket-msg-font">首都机场</div><div class="arrive-airport ticket-msg-font">白云机场</div></div>
+			<div class="ticket-half-round"></div>
+		</div>
+		
+		<div class="ticket-context">
+			<div class="flightclear">
+		    	<table>
+		    	<tr><td class="ticket-table">登机口<h1>待定</h1></td><td class="ticket-table">座位号<h1><%=data.seatNo%></h1></td><td class="ticket-table">行李情况<h1></h1></td></tr>
+		    	</table>
+				<div align="center"><img class="QRCode-seatselection" src="data:image/gif;base64,<%=checkinRsp.lsDciS2c[0].ebpImgByteStr%>"/></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div data-role="navbar" class="footer">
+    <div class="tocard" id="addcard">添加到微信卡包</div>
+</div>    

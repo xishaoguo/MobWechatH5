@@ -1,0 +1,15 @@
+<div class = "page">
+	<div class="page-content-cersonalityBackground">
+				<img alt="头像" src="images/avatar.png" class = "avatarImg">
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class = "index_page_buttom_message">
+		<ul class="personal_center_ul">
+			<li id="personalProfiel"><div class="personal_center_lileft">个人资料</div><div class="personal_center_liright"><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="flyHistory"><div class="personal_center_lileft">选座历史</div><div class="personal_center_liright"><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="concernList"><div class="personal_center_lileft">关注列表</div><div class="personal_center_liright"><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="feedback"><div class="personal_center_lileft">意见与反馈</div><div class="personal_center_liright"><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+			<li id="downloadClient"><div class="personal_center_lileft">下载客户端</div><div class="personal_center_liright"><span><img class="index_page_li_span_img" src="images/arrowR.png"/></span></div></li>
+		</ul>
+	</div>
+</div>

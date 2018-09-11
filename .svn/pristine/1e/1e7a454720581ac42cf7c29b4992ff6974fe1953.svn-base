@@ -1,0 +1,68 @@
+<!--   <div data-role="header">
+    <ul class="lyb-header">
+        	<li class="lyb-header-font1">齐天大圣</li>
+        	<li class="lyb-header-font1 lyb-header-font2">太白</li>
+        	<li class="lyb-header-font1 lyb-header-font2">八戒</li>
+        	<li class="lyb-header-font1 lyb-header-font2">嫦娥</li>       	
+    </ul>  
+  </div> -->
+
+  <div data-role="none" style="background-color: #32343c;" id="ui-content">
+    <div class="lyb-content">
+        <div class="lyb-content-font1" id="seatnumber"><%if(RecommendSeat.code==0 && RecommendSeat.rsp.seatInfo!=null){%>
+        <%=RecommendSeat.rsp.seatInfo.seatNum%>
+        <%}%>
+        </div>
+    	<div class="lyb-content-item1">
+    	 	<div class="lyb-content-item2">
+    	 	    <ul id="headList">
+    	 	        <li Index="1" seatNum=""><div class="all-icon selected-head-portrait"></div><div class="checkin-name-font"><%=name%></div><div class="head-num">1</div></li>
+    	 	       <!--  <li><div class="all-icon selected-head-portrait"></div><div class="checkin-name-font">八戒</div><div class="all-icon checkin-remove-user remove-location"></div></li>
+    	 	        <li><div class="all-icon select-head-portrait"></div><div class="checkin-name-font">九尾</div><div class="all-icon checkin-remove-user remove-location"></div></li> -->
+    	 	        <!-- <li><div class="all-icon select-head-portrait"></div><div class="checkin-name-font">大鹅</div><div class="all-icon checkin-remove-user remove-location"></div></li> -->
+    	 	    </ul>
+    	 	</div>
+    	</div>
+    	<div class="lyb-content-last" id='searchsubmit'><div class="all-icon add-together-button"></div><div class="add-together-font">同行人</div></div>
+    </div>
+    <!--同PNR乘客  -->
+    <%if(pnrTraList.code==0 && pnrTraList.rsp.errorCode==0){%>
+    <div class="others">
+        <ul id="repersonList">
+            <li class="others-font">推荐同行人</li>
+            <% for(var i  in pnrTraList.rsp.lsPNRt){%>
+            <li class="j-notadded"><div class="floor-button" asrSeatNum="<%=pnrTraList.rsp.lsPNRt[i].asrSeatNum%>" certNo="<%=pnrTraList.rsp.lsPNRt[i].certNo%>" certType="<%=pnrTraList.rsp.lsPNRt[i].certType%>" passengerName="<%=pnrTraList.rsp.lsPNRt[i].passengerName%>" pnrNo="<%=pnrTraList.rsp.lsPNRt[i].pnrNo%>" ticketNum="<%=pnrTraList.rsp.lsPNRt[i].ticketNum%>"><%=pnrTraList.rsp.lsPNRt[i].passengerName%></div></li>
+            <%}%>
+        </ul>
+    </div>
+    <%}%>
+  <div class="container">
+      <div class="booking-details">
+  	    <div class="seat-explain"><div class="all-icon availableseat-icon"></div><div class="seat-explain-font">可选</div></div>
+  	    <div class="seat-explain"><div class="all-icon unavailableseat-icon"></div><div class="seat-explain-font">已占</div></div>
+  	    <div class="seat-explain"><div class="all-icon locked-icon"></div><div class="seat-explain-font">已锁</div></div>
+        <div class="seat-explain"><div class="floor-button">上层<div class="floor-button-circle left"></div></div></div>  
+      </div>
+      <%if(priceList.length>0){%>
+      <div class="booking-details">
+          <%for(var i in priceList){%>
+         <div class="seat-explain"><div class="all-icon price-seat<%=i%>"></div><div class="seat-explain-font"><%=priceList[i].price%></div></div>
+         <%}%> 
+      </div>
+      <%}%>
+      <div class="seat" id="wrapper">
+      <div id="seat-map" class="seat-map">
+      </div>
+      </div> 
+  </div>
+
+  </div>
+
+  <div data-role="navbar" class="footer">
+  <!--1: 预选座 2:值机  -->
+    <%if(operating==1){%>
+    <div class="button j-PrimarySeatSelect"><%=lang.done%></div>
+    <%}else{%>
+    <div class="button j-Check-in"><%=lang.done%></div>
+    <%}%>
+  </div>        

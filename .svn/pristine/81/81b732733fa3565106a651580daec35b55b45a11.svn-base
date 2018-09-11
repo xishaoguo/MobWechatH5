@@ -1,0 +1,105 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_profile.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalProfile = SGView.extend({
+		pageId : 'personal_profile',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			var sex = this.GetSex();
+			var CertificateStatus = this.CertificateStatus();
+			var flightData = this.FlightData();
+			var Birthday = this.Birthday();
+			
+			self.$el.append(self.template({Sex:sex,FlightData:flightData,
+				Birthday:Birthday,CertificateStatus:CertificateStatus}));
+			return this;
+		},
+		events : {
+			"click #personalSex" : "PersonalSex",
+			"click #personalBirthday" : "PersonalBirthday",
+			"click #personalCert" : "PersonalCert",
+			
+		},
+		/**
+		 * 性别页面
+		 */
+		PersonalSex : function(){
+			this.jumpTo("forward/personalProfileSex");
+			this.removeCache("gender");
+		},
+		/**
+		 * 生日页面
+		 */
+		PersonalBirthday : function() {
+			this.jumpTo("forward/personalProfileBirthday");
+		},
+		/**
+		 * 身份证页面
+		 */
+		PersonalCert : function() {
+			this.jumpTo("forward/personalProfileCert");
+		},
+		
+		/**
+		 * 获取选择的性别
+		 * 
+		 * */
+		GetSex : function() {
+			var sex = this.getCache("Sex");
+			if(sex == "0"){
+				sex = "未设置"
+			}else if(sex == "1"){
+				sex = "男";
+			}else if(sex == "2"){
+				sex = "女";
+			}
+			return sex;
+		},
+		
+		/**
+		 * 飞行历史信息
+		 * 
+		 * */
+		FlightData : function() {
+			var personalProfileData = this.getCache("PersonalProfileData");
+			
+			return personalProfileData;
+		},
+		/**
+		 * 生日日期
+		 * 
+		 * */
+		Birthday : function() {
+			var Birthday = this.getCache("Birthday");
+			
+			return Birthday;
+		},
+		/**
+		 * 证件认证状态
+		 * 
+		 * */
+		CertificateStatus : function() {
+			var personalProfileData = this.getCache("PersonalProfileData");
+			var certification_status = personalProfileData.certify_status;
+			
+			if(certification_status == "1"){
+				certification_status = "已认证";
+				return certification_status;
+			}else if(certification_status == "2"){
+				certification_status = "未认证";
+				
+				
+				/*
+				 * 这里写删除div逻辑
+				 */
+				return certification_status;
+			}
+		},
+	});
+	return PersonalProfile;
+});

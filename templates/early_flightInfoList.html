@@ -1,0 +1,62 @@
+  <div data-role="header" class="flight-header" role="banner">
+    <aside class="cont_wrap" >
+		    <ul class="journey_tab">
+		        <li data-journey="1" class="journeyTabCrt" >本人</li>
+		        <li data-journey="2" class="" >他人</li>
+		    </ul>
+	</aside>
+  </div>
+
+  <div data-role="none" class="flight-content" id="myflight">
+     <span class="flight-count" id="textajax">...您已通过实名认证，自动为您提取可用航班...</span>
+     <div id="wrapper">
+     	<ul data-role="none" class='flightlistview  ui-listview'>
+     		<li  class="item-content ui-li-static ui-body-inherit ui-first-child" couponId="<%=data[i].couponId%>">
+     		    <div class="flightinfo-firstdiv"><div class="firstdiv-left">2015/10/10 周一</div><div class="firstdiv-right">国航CA1326</div></div>
+     			<div class="flightdate">de_date_week</div><div class="addcard" id="addcard">air_scn_num </div>
+     			<div class="flightclear"><div class="departcity">de_city</div><div class="arrivecity">ar_city</div></div>
+     			<div class="departtime">de_time</div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivetime">ar_time</div>
+     			
+     			<div class="depart-airport">de_name_ter</div><div class="arrive-airport">ar_name_ter</div>
+     			<div class="half-round"></div>
+     			<div class="circle"></div><div class="flight-msg"><%=data[i].tripContext%><i class="all-icon flightlst-forward"></i></div>
+     		</li>
+     	</ul>
+     </div>
+  </div>
+  
+  <div data-role="none" class="flight-historytab hideTab" id="historyflight" >
+	<div class="flight-count"><div class="all-icon green-arrow-left history-left"></div><div class="history-year">2015</div><div class="all-icon green-arrow-right history-right"></div></div>
+	<div class="flight-historylist" id="wrapperHistory" style="display:none;">	
+		<ul data-role="listview" class='flightlistview'>
+		<% for(var i  in hisrsp){
+		var itemList = hisrsp[i];
+		var yearCouponList = itemList.couponList;
+			 for(var j=0,len=yearCouponList.length;j<len;j++){%>
+			<li class="item-history" couponId="<%=yearCouponList[j].couponId%>">
+			<div class="history-info">
+				<div class="history-first"><div class="history-flightdate"><%=yearCouponList[j].de_date%></div><div class="history-airline"><%=yearCouponList[j].fltNumber%></div></div>
+     			<div class="flightclear"><div class="history-departcity"><%=yearCouponList[j].de_city%></div><div class="history-arrivecity"><%=yearCouponList[j].ar_city%></div></div>
+     			
+     			<div class="history-departtime"><%=yearCouponList[j].de_time%></div><div class="flight-icon"></div><div class="history-arrivetime"><%=yearCouponList[j].ar_time%></div>
+     		</div>
+     		<div class="history-state">已使用<div class="all-icon history-forward"></div></div>
+			</li>
+			<%}%>
+			<%}%>
+		</ul>
+	</div>
+	<div class="history-authentication">
+	    <div class="authentication-title">身份认证，尽享便利</div>
+	    <div class="authentication-content"><div class="all-icon checkboxed-icon display-icon"></div>更及时获得个人行程提醒</div>
+	    <div class="authentication-content"><div class="all-icon checkboxed-icon display-icon"></div>更方便贴心的航班服务</div>
+	    <div class="authentication-button" id="authentication"><div class="all-icon plus-icon"></div><div class="add-personinfo-font">添加证件</div></div>
+	</div>
+  </div>
+  <% if(0){%>
+  <div data-role="navbar" class="footer authentication">
+    <div>隐私保护，信息安全 </div>
+    <div class="authentication-com">中国航信安全系统保护您的信息安全</div>
+  </div>
+  <%}%>
+     

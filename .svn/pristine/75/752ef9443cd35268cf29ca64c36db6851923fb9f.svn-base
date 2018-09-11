@@ -1,0 +1,189 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_concern_list.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalConcertList = SGView.extend({
+		pageId : 'personal_concern_list',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var CurrentFlights = this.CurrentFlights();
+			//this.ButtonSwitchChange();
+			var HisFlights = this.HisFlights();
+			var hisrsp = {};
+			self.$el.append(self.template({
+				CurrentFlights:CurrentFlights,HisFlights:HisFlights
+			}));
+			return this;
+		},
+		events : {
+			"click #deleteButton" : "DeleteList",
+			"click #edit" : "ButtonSwitch",
+			"click #cancel" : "ButtonCancel",
+		},
+		/**
+		 * 获得正在关注的缓存的关注列表数据
+		 */
+		CurrentFlights : function() {
+			var CurrentFlights = this.getCache("CurrentFlights");
+			return CurrentFlights;
+		},
+		/**
+		 * 获得已经关注的缓存列表数据
+		 */
+		HisFlights : function() {
+			var HisFlights = this.getCache("HisFlights");
+			return HisFlights;
+		},
+		/**
+		 * 取消按钮功能
+		 */
+		ButtonCancel : function() {
+			var cancel = document.getElementById("cancel");
+			cancel.className = "personal_concernList_div_01 dispalyNone";
+			
+			var edit = document.getElementById("edit");
+			edit.className = "personal_concernList_div_01";
+			
+			var deleteFollow = document.getElementById("deleteFollow");
+			deleteFollow.className = "personal_concernList_div_01 dispalyNone";
+			
+			var checkBox = document.getElementsByName("checkboxitems");
+			for (var i=checkBox.length-1; i>=0;i--){
+				var boxDiv=checkBox[i].parentNode;
+				boxDiv.className = "personal_concernList_div_04 dispalyNone";
+				checkBox[i].checked = false;
+			}
+		},
+		/**
+		 * 编辑删除按钮切换
+		 */
+		ButtonSwitch : function() {
+			var cancel = document.getElementById("cancel");
+			cancel.className = "personal_concernList_div_01";
+			
+			var edit = document.getElementById("edit");
+			edit.className = "personal_concernList_div_01 dispalyNone";
+			
+			var deleteFollow = document.getElementById("deleteFollow");
+			deleteFollow.className = "personal_concernList_div_01";
+			
+			var checkBox = document.getElementsByName("checkboxitems");
+			for (var i=checkBox.length-1; i>=0;i--){
+				var boxDiv=checkBox[i].parentNode;
+				boxDiv.className = "personal_concernList_div_04";
+			}
+		},
+		/**
+		 * 删除选中列表
+		 */
+		DeleteList : function() {
+			var quesy = {
+				    "rpid": "2007", 
+				    "ropenid": "4526948", 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": {
+				        "concernIds": [
+				            {
+				                "id": "adsfadsfadsf", 
+				                "identity": "Y"
+				            }, 
+				            {
+				                "id": "adsfadsfadsf"
+				            }
+				        ]
+				    }
+				};
+			var customs_data = {
+				    "code": 0, 
+				    "msg": "success", 
+				    "rsp": {
+				        "data": {
+				            "currentFlights": [
+				                {
+				                    "airCode": "CA", 
+				                    "fltNum": "133", 
+				                    "deDate ": "2015-11-11", 
+				                    "deTime": "08:15", 
+				                    "arTime": "09:50", 
+				                    "deCity": "北京", 
+				                    "arCity": "广州", 
+				                    "buttonMsg": "已值机", 
+				                    "opType": 4, 
+				                    "identity": "", 
+				                    "id": "24A0F11CBC353644E0530657060A1582"
+				                },
+				                {
+				                    "airCode": "NB", 
+				                    "fltNum": "133", 
+				                    "deDate ": "2015-11-11", 
+				                    "deTime": "08:15", 
+				                    "arTime": "09:50", 
+				                    "deCity": "北京", 
+				                    "arCity": "广州", 
+				                    "buttonMsg": "已值机", 
+				                    "opType": 4, 
+				                    "identity": "", 
+				                    "id": "24A0F11CBC353644E0530657060A1582"
+				                }
+				                
+				            ], 
+				            "hisFlights": [
+				                {
+				                    "airCode": "HU", 
+				                    "fltNum ": "144", 
+				                    "deDate ": "2015-11-17", 
+				                    "deTime": "06:15", 
+				                    "arTime": "08:50", 
+				                    "deCity": "上海", 
+				                    "arCity": "广州", 
+				                    "opType": 3, 
+				                    "content": "值机已关闭", 
+				                    "identity": "Y", 
+				                    "id": "24A0F11CBC353644E0530657060A1582"
+				                }
+				            ]
+				        }
+				    }
+				};
+			if (customs_data && customs_data.code == 0) {// 查询成功
+				var currentFlights = customs_data.rsp.data.currentFlights;
+				var hisFlights = customs_data.rsp.data.hisFlights;
+				var items = document.getElementsByName("checkboxitems");
+				for (var i = 0; i < items.length; i++) {
+					if(items[i].checked){
+						this.removeCache("CurrentFlights");
+						//this.addCache("HisFlights", hisFlights);
+						this.addCache("CurrentFlights", currentFlights);
+						this.utils.showAlert({
+							text : ("删除成功")
+						});
+					}
+				}
+			} else if (customs_data && customs_data.code != 0) {//查询失败
+				this.utils.showAlert({
+					text : (customs_data.msg)
+				});
+			}
+		},
+	});
+	return PersonalConcertList;
+});
+
+/**
+ * 删除按钮样式变化
+ */
+function ButtonSwitchChange(){
+	var checkBox = document.getElementsByName("checkboxitems");
+	var deleteButton = document.getElementById("deleteButton");
+	for (var i = checkBox.length-1;i >=0;i--) {
+		if(checkBox[i].checked){
+			deleteButton.className = "personal_concernList_div_03 delete_able";
+		}else{
+			deleteButton.className = "personal_concernList_div_03 delete_disable";
+		}
+	}
+}

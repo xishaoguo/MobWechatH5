@@ -1,0 +1,12 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<img alt="头像" src="images/avatar.png" class="avatarImg">
+	</div>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="personal_profile_cert_div01">身份证<span class="personal_profile_cert_span01"><%=GetNumber%></span></div>
+	<div class="personal_profile_cert_div02">
+		已认证</div>
+	<div class="personal_sex_buttonDiv_01" id="personal_sex_buttonDiv">
+		<span>证件解绑</span>
+	</div>
+</div>

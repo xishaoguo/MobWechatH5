@@ -1,0 +1,29 @@
+<div class="page">
+	<div class="page-content-cersonalityBackground">
+		<div id="writeSuggest" class="personal_feedback_write_div_02">写建议</div>
+		<img alt="头像" src="images/avatar.png" class="avatarImg">
+		<div id="lookBack" class="personal_feedback_write_div_03">看回复</div>
+	</div>
+	<textarea id="status" name="status" maxlength="300" data-role='none'
+		onkeydown='countChar("status","counter","personal_feed_buttonDiv");'
+		onkeyup='countChar("status","counter","personal_feed_buttonDiv");'
+		class="personal_feedback_write_textarea"></textarea>
+	<!-- -----------------------------自定义背景结束----------------------------- -->
+	<div class="personal_feedback_write_div_01">
+		<span id="counter">0</span>/300
+	</div>
+</div>
+<div>
+	<div style="margin-top: 15px;" id = "upload">
+		<img src="images/add_img.png" style="height: 14px; margin-left: 10px;" /><span
+			style="font-size: 15px;">上传图片</span>
+		<div class = "file_div">
+			<input type = "file" id = "upload_control" style="width:100px;height:20px;opacity:0;
+filter:alpha(opacity=0);top:0;border-style: none;"/>
+		</div>
+	</div>
+</div>
+<div class="personal_sex_buttonDiv_02" id = "personal_feed_buttonDiv">
+	<span>确定</span>
+</div>
+ 

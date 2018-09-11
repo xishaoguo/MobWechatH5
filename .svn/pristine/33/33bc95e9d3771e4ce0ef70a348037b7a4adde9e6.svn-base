@@ -1,0 +1,71 @@
+<div id="wrapper" class="page personal_s_history">
+	<% if(data.length>0) {for(var i in data){ %>
+	<% if(data[i].operatingList.length>1){%>
+	<div>
+		<%=divByindex(i,data[i].operatingList[0].passengerName,1)%>
+			<div class="personal_s_history_add" id="personalHistoryAdd">
+				<div id="display" class="personal_display_none">
+					<img src="images/yellowclose2x.png" class="personal_s_history_closeYellow" id="personalHistoryMinus"/>
+					<img src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<%=divByindex(i,data[i].operatingList[0].passengerName,2)%>
+			<ul>
+				<li><span><%=data[i].depDate%></span><span
+					class="personal_s_history_span01"><%=data[i].airLineName%><%=data[i].flightNo%></span></li>
+				<li class="personal_s_history_li01"><span><%=data[i].depTime%></span><span
+					class="personal_s_history_span02"><%=data[i].depCityName%></span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06"><%=data[i].arrCityName%></span><span><%=data[i].arrTime%></span>
+					</div></li>
+					<%for(var j in data[i].operatingList){%>
+				    <li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03"><%=data[i].depTime%></span><span
+					class="personal_s_history_span05"><%=data[i].depTime%></span>
+					<div class="personal_s_history_div04">
+						<%=operaterSpan(data[i].operatingList[j].status,data[i].operatingList[j].operatingMark,data[i].operatingList[j].seatNo,data[i].operatingList[j].passengerName)%>
+					</div>
+					</li>
+					<%}%>
+			</ul>
+		</div>
+	</div>
+	<%}else{%>
+		<div>
+		<%=divByindex(i,data[i].operatingList[0].passengerName,1)%>
+			<div class="personal_s_history_round">
+				<div style="display: none;">
+					<img src="images/yellowclose2x.png"
+						class="personal_s_history_closeYellow" /><img
+						src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<%=divByindex(i,data[i].operatingList[0].passengerName,2)%>
+			<ul>
+				<li><span><%=data[i].depDate%></span><span
+					class="personal_s_history_span01"><%=data[i].airLineName%><%=data[i].flightNo%></span></li>
+				<li class="personal_s_history_li01"><span><%=data[i].depTime%></span><span
+					class="personal_s_history_span02"><%=data[i].depCityName%></span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06"><%=data[i].arrCityName%></span><span><%=data[i].arrTime%></span>
+					</div></li>
+					<%for(var j in data[i].operatingList){%>
+				    <li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03"><%=data[i].depTime%></span><span
+					class="personal_s_history_span05"><%=data[i].depTime%></span>
+					<div class="personal_s_history_div04">
+						<%=operaterSpan(data[i].operatingList[j].status,data[i].operatingList[j].operatingMark,data[i].operatingList[j].passengerName)%>
+					</div>
+					</li>
+					<%}%>
+			</ul>
+		</div>
+	</div>
+	<%}}}else{%>
+	<div class="personal_s_history_div05"><span class="personal_s_history_span08">...</span>您目前没有本平台的选座记录<span class="personal_s_history_span08">...</span></div>
+	<%}%>
+</div>

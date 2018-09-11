@@ -1,0 +1,37 @@
+<div data-role="none" class="flight-content" id="myflight">
+<%if(data.length==0){%>
+     <span class="flight-count j-no-cancel">...您目前没有可取消航班...</span>
+     <%}%>
+     <div id="wrapper">
+     	<ul data-role="listview" class='flightlistview'>
+     	<% for(var i  in data){%>
+     		<li  class="item-content flightcheckin-style">
+     		    <div class="flightcheckin-firstdiv"><div class="firstdiv-left checkin-left"><%=data[i].deDate%> <%=data[i].deWeek%></div><div class="firstdiv-right checkin-right"><%=data[i].airScnNum%></div></div>
+     			<div class="flightcheckin-deCity"><%=data[i].deCity%></div><div class="flightcheckin-arCity"><%=data[i].arCity%></div>
+     			<div class="flightclear checkin-time-div"><div class="departcity flightcheckin-city-font"><%=data[i].deTime%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivecity flightcheckin-city-font"><%=data[i].arTime%></div></div>
+     			
+     			<div class="departtime flightcheckin-time-font"><div class="travelnum-font">票价：</div><div class="price"><%=data[i].price%></div></div><div class="flight-icon"></div><div class="arrivetime flightcheckin-time-font">舱位：<%=data[i].cabin%></div>
+     			<%if(data[i].buttonStatus==2){%>
+     			<div class="flightclear depart-airport flightcheckin-travelnum"><div class="all-icon write-icon"></div><div class="travelnum-font">常客号码：<%=data[i].ffNumber%></div></div>
+     			<%}%>
+     			<div class="flightcheckin-half-round"></div>
+     			<!--
+     			    1：取消预留
+     			    2：取消值机
+     			    4：  -->
+     			<% if(data[i].buttonStatus==0){%>
+     			<div class="flight-msg flightcheckin-msg others-font" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}else if(data[i].buttonStatus==1){%>
+     			<div class="flight-msg flightcheckin-msg cancelReserve" id="reserveSeat" deDate="<%=data[i].deDate%>" deCode="<%=data[i].deCode%>" arCode="<%=data[i].arCode%>" fltNumber="<%=data[i].fltNumber%>" opAirCodeFltNumber="<%=data[i].opAirCodeFltNumber%>" mainCabin="<%=data[i].mainCabin%>" pnr="<%=data[i].pnr%>" deTime="<%=data[i].deTime%>" isFlightInit="<%=data[i].isFlightInit%>" idNumber="<%=data[i].idNumber%>" ticketNumber="<%=data[i].ticketNumber%>" airCd="<%=data[i].airCd%>" opFltNumber="<%=data[i].opFltNumber%>" planetype="<%=data[i].planetype%>" childPlantype="<%=data[i].childPlantype%>" passengerName="<%=data[i].passengerName%>" cardLevel="<%=data[i].cardLevel%>" passengerType="<%=data[i].passengerType%>" childCabin="<%=data[i].childCabin%>"><%=data[i].buttonContext%></div>
+     			<%}else if(data[i].buttonStatus==2){%>
+     			<div class="flight-msg flightcheckin-msg cancel-checkin" id="seatselection" deDate="<%=data[i].deDate%>" arCode="<%=data[i].arCode%>" deCode="<%=data[i].deCode%>" opAirCodeFltNumber="<%=data[i].opAirCodeFltNumber%>" mainCabin="<%=data[i].mainCabin%>" pnr="<%=data[i].pnr%>" deTime="<%=data[i].deTime%>" isFlightInit="<%=data[i].isFlightInit%>" idNumber="<%=data[i].idNumber%>" ticketNumber="<%=data[i].ticketNumber%>" airCd="<%=data[i].airCd%>" opFltNumber="<%=data[i].opFltNumber%>" planetype="<%=data[i].planetype%>" childPlantype="<%=data[i].childPlantype%>" passengerName="<%=data[i].passengerName%>" cardLevel="<%=data[i].cardLevel%>" passengerType="<%=data[i].passengerType%>" childCabin="<%=data[i].childCabin%>"><%=data[i].buttonContext%></div>
+     			<%}else if(data[i].buttonStatus==3){%>
+     			<div class="flight-msg flightcheckin-msg follow-flight" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}else{%>
+     			<div class="flight-msg flightcheckin-msg Checkin-color" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}%>
+     		</li>
+     	<%}%>
+     	</ul>
+     </div>
+  </div>

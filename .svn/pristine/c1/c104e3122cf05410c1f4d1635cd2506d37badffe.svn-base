@@ -1,0 +1,96 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_profile_sex.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalProfileSex = SGView.extend({
+		pageId : 'personal_profile_sex',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #mycustoms" : "MyCustoms",
+			"click #feedback" : "FeedBack",
+			"click #list_btn_01" : "Male",
+			"click #list_btn_02" : "Female",
+			"click #personalUpdateSex" : "PersonalUpdateSex",
+		},
+		/**
+		 * 男女样式切换1
+		 * 
+		 */
+		Male: function() {
+			var list_btn_01 = document.getElementById("list_btn_01");
+			var list_btn_02 = document.getElementById("list_btn_02");
+			list_btn_02.removeAttribute("class");
+			list_btn_02.setAttribute("class",'list_btn_02');
+			
+			list_btn_01.removeAttribute("class");
+			list_btn_01.setAttribute("class",'list_btn_01');
+		},
+		/**
+		 * 男女样式切换2
+		 * 
+		 */
+		Female: function() {
+			var list_btn_01 = document.getElementById("list_btn_01");
+			var list_btn_02 = document.getElementById("list_btn_02");
+			list_btn_01.removeAttribute("class");
+			list_btn_01.setAttribute("class",'list_btn_02');
+			
+			list_btn_02.removeAttribute("class");
+			list_btn_02.setAttribute("class",'list_btn_01');
+		},
+		/**
+		 * 确定按钮
+		 * 
+		 */
+		PersonalUpdateSex: function() {
+			var self = this;
+			var list_btn_01_className = document.getElementById("list_btn_01").className;
+			var list_btn_02_className = document.getElementById("list_btn_02").className;
+			var gender;
+			if(list_btn_01_className == "list_btn_01"){
+				gender = 1;
+			}else {
+				gender = 2;
+			}
+			var _query = {
+				    "rpid": "1006", 
+				    "ropenid": "4526948", 
+				    "version": "1.0", 
+				    "rip": "127.0.0.1", 
+				    "rpara": {
+				        "sex": gender
+				    }
+				};
+			alert(_query.rpara.sex);
+			self.utils.showMessage("onLoading",'',self.sgClient);
+			self.sgClient.post(_query,'',function(customs_data){
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					self.utils.showAlert({text : ("修改成功")});
+					self.jumpTo("forward/personalProfile");
+				}else if(customs_data && customs_data.code != 0){//查询失败
+					self.utils.showAlert({text : (customs_data.msg)});
+					self.jumpTo("forward/personalProfile");
+				}
+				self.utils.hideMessage();
+			},"json");
+		},
+		/**
+		 * 回复反馈
+		 * 
+		 */
+		FeedBack : function() {
+			this.jumpTo("forward/feedback");
+		},
+	});
+	return PersonalProfileSex;
+});

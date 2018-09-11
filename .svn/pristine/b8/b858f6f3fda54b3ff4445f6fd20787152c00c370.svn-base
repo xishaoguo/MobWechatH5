@@ -1,0 +1,8 @@
+function CheckUrl(str) {
+	var RegUrl = new RegExp();
+	RegUrl.compile("^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&\?\/.=]+$");
+	if (!RegUrl.test(str)) {
+	return false;
+	}
+	return true;
+}

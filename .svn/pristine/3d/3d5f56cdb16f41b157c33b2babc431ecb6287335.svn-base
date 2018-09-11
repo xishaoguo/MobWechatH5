@@ -1,0 +1,44 @@
+<div data-role="none" class="flight-content" id="myflight">
+     <span class="flight-count">...您已通过实名认证，自动提取可用航班...</span>
+     <div id="wrapper">
+     	<ul data-role="listview" class='flightlistview'>
+     	<% for(var i  in data){%>
+     		<li  class="item-content">
+     		    <div class="flightcheckin-firstdiv"><div class="firstdiv-left checkin-left"><%=data[i].deDate%> <%=data[i].deWeek%></div><div class="firstdiv-right checkin-right"><%=data[i].airScnNum%></div></div>
+     			<div class="flightdate"><%=data[i].deCity%></div><div class="addcard"><%=data[i].arCity%></div>
+     			<div class="flightclear"><div class="departcity flightcheckin-city-font"><%=data[i].deTime%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivecity flightcheckin-city-font"><%=data[i].arTime%></div></div>
+     			
+     			<div class="departtime flightcheckin-time-font"><div class="travelnum-font">票价：</div><div class="price"><%=data[i].price%></div></div><div class="flight-icon"></div><div class="arrivetime flightcheckin-time-font">舱位：<%=data[i].cabin%></div>
+     			
+     			<div class="flightclear depart-airport flightcheckin-travelnum"><div class="all-icon write-icon"></div><div class="travelnum-font">常客号码：<%=data[i].ffNumber%></div></div>
+     			<div class="flightcheckin-half-round"></div>
+     			<!--0:不支持在线值机、等待值机、已值机选座、在线值机关闭
+     			    1：预留座位
+     			    2：值机选座
+     			    3：关注航班
+     			    4：  -->
+     			<% if(data[i].buttonStatus==0){%>
+     			<div class="flight-msg flightcheckin-msg others-font" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}else if(data[i].buttonStatus==1){%>
+     			<div class="flight-msg flightcheckin-msg reserveSeat" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}else if(data[i].buttonStatus==2){%>
+     			<div class="flight-msg flightcheckin-msg Checkin-color" id="seatselection" deDate="<%=data[i].deDate%>" arCode="<%=data[i].arCode%>" deCode="<%=data[i].deCode%>" opAirCodeFltNumber="<%=data[i].opAirCodeFltNumber%>" mainCabin="<%=data[i].mainCabin%>" pnr="<%=data[i].pnr%>" deTime="<%=data[i].deTime%>" isFlightInit="<%=data[i].isFlightInit%>" idNumber="<%=data[i].idNumber%>" ticketNumber="<%=data[i].ticketNumber%>" airCd="<%=data[i].airCd%>" opFltNumber="<%=data[i].opFltNumber%>" planetype="<%=data[i].planetype%>" childPlantype="<%=data[i].childPlantype%>" passengerName="<%=data[i].passengerName%>" cardLevel="<%=data[i].cardLevel%>" passengerType="<%=data[i].passengerType%>" childCabin="<%=data[i].childCabin%>"><%=data[i].buttonContext%></div>
+     			<%}else if(data[i].buttonStatus==3){%>
+     			<div class="flight-msg flightcheckin-msg follow-flight" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}else{%>
+     			<div class="flight-msg flightcheckin-msg Checkin-color" id="seatselection"><%=data[i].buttonContext%></div>
+     			<%}%>
+     			<!-- <div class="flight-msg flightcheckin-msg CancelCheckin">取消预留</div> -->
+     			<!-- <div class="flight-msg flightcheckin-msg reserveSeat" id="reserveSeat">预留座位</div> -->
+     		</li>
+     	<%}%>
+     	</ul>
+     </div>
+  </div>
+<!--   <div data-role="none" class="footer notice">
+  	<div><div class="common-contact-checkbox  all-icon checkboxed-icon" style="float: left;"></div>已阅读并同意值机协议、乘机须知、危险品公告<div class="notice-font" id="notice">温馨提示</div></div>
+  	<ul id="noticeli" style="margin-left: 18px;">
+  		<li>儿童、婴儿、特殊旅客暂不办理</li>
+  		<li>一个航班只能办理三次手机值机取消</li>
+  	</ul>
+  </div> -->

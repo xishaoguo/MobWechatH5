@@ -1,0 +1,42 @@
+<div data-role="content" id="content" class="flight-guide">
+	<div class="ticket">
+ 		<div class="ticket-header ticket-font-padding">
+			<div class="primaryseat-flNo primaryseat-firsr-div"><%=data.airCn%></div><div class="primaryseat-name primaryseat-firsr-div"><%=data.passengerName%></div>
+			<div class="flightclear"><div class="primaryseat-dedate ticket-msg-font"><%=data.deDate%> <%=data2.deWeek%></div><div class="primaryseat-ardate ticket-msg-font"><%=data.arDate%> <%=data.arWeek%></div></div>
+			<div class="flightclear"><div class="primaryseat-depart-airport ticket-msg-font"><%=data.deCityName%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="primaryseat-arrive-airport ticket-msg-font"><%=data.arCityName%></div></div>
+			<div class="flightclear"><div class="departtime ticket-msg-font"><%=data.deTime%></div><div class="arrivetime ticket-msg-font"><%=data.atime%></div></div>
+			<div class="flightclear"><div class="primaryseat-deairport"><%=data.deAirportName%></div><div class="primaryseat-arairport"><%=data.arAirportName%></div></div>
+			<div class="ticket-half-round"></div>
+		</div>
+		
+		<div class="ticket-context">
+			<div class="flightclear">
+		       <table >
+		    	<tr><td class="primaryseat-td"><div class="primaryseat-td-title">登机时间</div><div class="primaryseat-time"><%=BoardingTime%></div></td>
+		    	     <td class="primaryseat-td"><div class="primaryseat-td-title">登机口</div><div class="primaryseat-boardinggate">待定</div></td>
+		    	</tr>
+		    	</table>
+			</div>
+			<div style="margin-top: 17px;text-align: center;min-height: 155px;">
+			    <table class="userList">
+			        <tr><td class="primaryseat-userList">乘客</td><td class="primaryseat-userList">座位号</td><td class="primaryseat-result">选座结果</td></tr>
+			        <% for(var i  in CheckInRsp){%>
+			        <tr class="j-seat-info">
+			            <td class="primaryseat-userList primaryseat-list-font"><%=CheckInRsp[i].passengerName%></td>
+			            <td class="primaryseat-userList"><%=CheckInRsp[i].seatNo%></td>
+			            <%if(CheckInRsp[i].errorCode==0){%>
+			            <td class="primaryseat-result result-success">成功</td>
+			            <%}else{%>
+			            <td class="primaryseat-result result-fail">失败</td>
+			            <%}%>
+			        </tr>
+			        <%}%>
+			    </table>
+			</div>
+		</div>
+		    
+		<div class="">
+			<div class="primaryseat-addcard Complete-PrimarySeat">添加到微信卡包</div>
+		</div>
+	</div>
+</div>  

@@ -1,0 +1,311 @@
+define(['jquery','underscore','backbone','SGView','text!templates/add_together_personal.html'],
+function($,_,Backbone,SGView,viewtTpl){
+	var AddTogetherPersonal = SGView.extend({
+		pageId:'PrimaryseatDetails',
+		template:_.template(viewtTpl),
+		addcount:1,
+		render:function(){
+			var self = this;
+			self.addcount = self.params.travelerCount + 1;
+			this.$el.empty();
+			var PrimaryRsp = self.getCache("PrimaryRsp");
+			self.$el.append(self.template({lang:self.lang,data:self.params.nowTicket,PrimaryRsp:PrimaryRsp}));
+			this.$el.attr('class','ui-page-active ui-page');
+			if(self.addcount == 4){//如果等于4置灰按钮
+				setTimeout(function(){self.changeGrey();},300);
+			}
+			return this;
+		},
+		events: {
+			"click #adduser": "adduser",
+			"click .remove": "removeuser",
+			"click #next": "next",
+			"click .common-contact-checkbox": "chgCheIcon",
+			"click .common-contact": "comuser",
+			"click .add-userlist-button": "AddUserList",
+		},
+		/**
+		 * 添加乘客
+		 */
+		adduser:function(){
+			var self = this;
+			var userlist = self.$el.find("#userlist");
+			var lastul = userlist.find("ul").last();
+			var cardid = lastul.children("li").eq(1).find("input").val();
+			if(!cardid){
+				self.utils.showAlert({text:"请填写证件号"});
+				return false;
+			}
+			var usercount = userlist.children("ul").length +1;
+			if((4-self.addcount)>0){
+			var html = "";
+			html+="<ul class='personinfo'>";
+			html+="<li class='personinfo-li personList-title-font'>"+"乘客"+usercount+"<div class='all-icon trash-icon remove remove' style='display:inline-block;float: right;'></div></li>";
+			html+="<li class='personinfo-li'><div class='personinfolist-half-round' ></div><div style='width:25%;display:inline-block;float:left;'>";
+			html+="<select data-role='none' class='selectstyle'>";
+			html+="<option value ='0'>"+"身份证"+"</option>";
+			html+="<option value ='1'>"+"护照"+"</option>";
+			html+="<option value ='2'>"+"港澳通行证"+"</option>";
+			html+="<option value ='3'>"+"台胞证"+"</option>";
+			html+="<option value ='4'>"+"军官证"+"</option>";
+			html+="<option value ='5'>"+"其他"+"</option>";
+			html+="</select></div>";
+			html+="<div style='display:inline-block;'> <input style='font-family: 黑体;' type='text' data-role='none' placeholder='请输入证件号'/></div></li>";
+//			html+="<li class='personinfo-li-last'><div class='personinfolist-half-round' ></div><div class='addtogether-list'>"+"手机号:"+"</div><div style='display:inline-block;'><input style='font-family: 黑体;' type='text' data-role='none' placeholder='请输入手机号 ' /></div></li>";
+			html+="</ul>";
+			userlist.append(html);
+			$("#doothers").height(document.body.clientHeight - $("#doothers").position().top);
+			self.initScroll("doothers");
+			self.addcount = self.addcount + 1;
+			}
+			if(self.addcount==4){
+				self.changeGrey();
+			}	
+		},
+		/*
+		 * 置灰加号按钮
+		 */
+		changeGrey:function(){
+			$(".plus-icon").removeClass(".plus-icon").addClass("grey-plus-icon");//置灰加号
+			$(".add-personinfo-font").addClass("grey-font");//置灰文字
+		},
+		/*
+		 * 恢复可选按钮
+		 */
+		recovery:function(){
+			$(".grey-plus-icon").removeClass(".grey-plus-icon").addClass("plus-icon");
+			$(".grey-font").removeClass("grey-font");
+		},
+		/*
+		 * 删除乘客
+		 */
+		removeuser:function(e){
+			var self = this;
+			var element = $(e.currentTarget);
+			var ulelement = element.parent('li').parent('ul');
+			ulelement.remove();
+			self.addcount = self.addcount - 1;
+			self.recovery();
+		},/*
+		 * 常用联系人
+		 */
+		comuser:function(e){
+			var self = this;
+			var ropenid = self.store.getOpenId();
+			var event = $(e.currentTarget).parent("li").parent("ul");//当前ul节点
+			var comuserCha = self.getCache("comuser");
+			if(comuserCha && $(".searchUserList").length>0){//如果有缓存
+				self.$el.find(".searchUserList").toggle();
+				self.$el.find(".add-userlist-button").attr("display","none");
+				event.children(".personinfo-li-last").toggle();
+				$("#doothers").height(document.body.clientHeight - $("#doothers").position().top);
+				self.initScroll("doothers");
+				return false;
+			}
+			var query = {
+				    "rpid":"3013",
+				    "ropenid":ropenid,
+				    "version":"1.0",
+				    "rip":"127.0.0.1",
+				    "rpara":{
+				    }
+				};
+			self.utils.showMessage("",'',self.sgClient);
+			self.sgClient.post(query,'',function(_data){			
+				if(_data && _data.code == 0){//查询成功
+					var comuser = _data.rsp;
+					event.children(".personinfo-li-last").hide();
+					
+					for(var i=0;i<comuser.selectResult.length;i++){
+						var html = "";
+						html+="<li class='personinfo-li searchUserList' >";
+		     			html+=" <div class='addtogether-list'>"+comuser.selectResult[i].passengerName+"</div>"
+		     			html+=" <div style='display:inline-block;' certType="+comuser.selectResult[i].certType+" ><input class='cardNum' type='text' data-role='none' placeholder='请输入手机号 ' value="+comuser.selectResult[i].certId+"></div>";
+		     			html+=" <div class='common-contact-checkbox ' ></div>";
+		     			html+=" </li>";		     			
+		     			event.append(html);
+		     			
+					}
+     				var addli ="<li class='personinfo-li-last add-userlist-button'>确定添加</li>";
+					event.append(addli);
+
+					$("#doothers").height(document.body.clientHeight - $("#doothers").position().top);
+					self.initScroll("doothers");
+					self.addCache("comuser",comuser);//添加缓存，本页操作无需再调后台
+				}else if(_data.code != 0){//查询失败
+					self.utils.showAlert({text:(_data.msg)});
+				}
+				self.utils.hideMessage();
+			},"json");
+		},
+		/*
+		 * 添加选中的人
+		 */
+		AddUserList:function(e){
+			var self = this,
+            event = $(e.currentTarget);
+			event.parent("ul").children(".personinfo-li-last").show();
+			var userlist = self.$el.find("#userlist");
+			var checkedList = self.$el.find(".checkboxed-icon");//选中的常客列表			
+			checkedList.each(function(i){
+				var name = $(this).parent('li').find(".addtogether-list").text(); 
+			    var cardNum = $(this).parent('li').find(".cardNum").val();
+			    var certType = $(this).prev('div').attr("certType");
+			    if(i==0){//第一个被选中乘客在当前常客卡添加常客信息
+			    $(this).parents('ul').children().eq(0).text(name);
+			    $(this).parents('ul').children().eq(0).attr("name",name);
+			    $(this).parents('ul').children().eq(0).attr("certType",certType);
+			    $(this).parents('ul').children().eq(1).find("input").val(cardNum);
+			    }else{
+			    	var html = "";
+					html+="<ul class='personinfo'>";
+					html+="<li class='personinfo-li personList-title-font' name="+name+" certType="+certType+">"+name+"<div class='all-icon trash-icon remove remove' style='display:inline-block;'></div></li>";
+					html+="<li class='personinfo-li'><div style='width:25%;display:inline-block;float:left;'>";
+					html+="<select data-role='none' class='selectstyle'>";
+					html+="<option value ='0'>"+"身份证"+"</option>";
+					html+="<option value ='1'>"+"护照"+"</option>";
+					html+="<option value ='2'>"+"港澳通行证"+"</option>";
+					html+="<option value ='3'>"+"台胞证"+"</option>";
+					html+="<option value ='4'>"+"军官证"+"</option>";
+					html+="<option value ='5'>"+"其他"+"</option>";
+					html+="</select></div>";
+					html+="<div style='display:inline-block;'> <input style='font-family: 黑体;' type='text' data-role='none' value="+cardNum+" placeholder='请输入证件号'/></div></li>";
+					html+="</ul>";
+					userlist.append(html);
+			    }
+			  });
+			self.ListToggle(e);
+			self.addcount = self.addcount + checkedList.length;
+		},
+		/*
+		 * 切换常旅客列表显示状态
+		 */
+		ListToggle:function(e){
+			var self = this;
+			var event = $(e.currentTarget).parent("li").parent("ul");//当前ul节点
+			self.$el.find(".searchUserList").hide();
+			self.$el.find(".add-userlist-button").hide();
+			$("#doothers").height(document.body.clientHeight - $("#doothers").position().top);
+			self.initScroll("doothers");
+		},
+		/*
+		 * 切换选中状态
+		 */
+		chgCheIcon:function(e){
+			var self = this,
+            event = $(e.currentTarget);
+			var checkCount = self.addcount; 
+			var cheflag = event.hasClass("checkboxed-icon");
+			if(cheflag){
+				event.removeClass("all-icon checkboxed-icon");
+				checkCount = checkCount - 1;
+				var checkList = self.$el.find(".common-contact-checkbox");
+				checkList.each(function(){//取消置灰
+				    if($(this).hasClass("checkbox-disable")){
+				    	$(this).removeClass("checkbox-disable");
+				    }
+				  });
+			}else{
+				if(checkCount<4){//选中人数不得多于4个
+				event.addClass("all-icon checkboxed-icon");
+				checkCount = checkCount + 1;
+				if(checkCount == 4){
+					var checkList = self.$el.find(".common-contact-checkbox");
+					checkList.each(function(){//置灰
+					    if(!$(this).hasClass("checkboxed-icon")){
+					    	$(this).addClass("checkbox-disable");
+					    }
+					  });
+					}
+				}
+			}
+		},
+		/*
+		 * 手动添加同行人
+		 */
+		next:function(){
+			var self = this;
+			var ropenid = self.store.getOpenId();
+			var lsCi = [];
+			var userInfoList = $('#userlist').children('ul');
+			var aaa = $(userInfoList[i]).children().eq(0).attr("certType");
+			for(var i=0;i< userInfoList.length;i++){
+				if($(userInfoList[i]).children().eq(1).find("input").val()!=""){
+					lsCi[i] = {
+							"certNo":$(userInfoList[i]).children().eq(1).find("input").val(),
+							"certType": "0"
+					}
+				}
+			};
+			var fltNumber = self.params.nowTicket.airCd + self.params.nowTicket.fltNumber;
+			var flightInit = "1";
+			if(self.params.nowTicket.isFlightInit==true){
+				flightInit = "0";
+			};
+			var query = {
+					"rpid":"3010",
+				    "ropenid":ropenid,
+				    "version":"1.0",
+				    "rip":"127.0.0.1",
+				    "rpara":{
+				    	"fltNumber": fltNumber,
+				        "deAptCode": self.params.nowTicket.deCode,
+				        "deDate": self.params.nowTicket.deDate,
+				        "deTime": self.params.nowTicket.deTime,
+				        "arAptCode": self.params.nowTicket.arCode,
+				        "arDate": self.params.nowTicket.arDate,
+				        "arTime": self.params.nowTicket.arTime,
+				        "couponId": self.params.nowTicket.couponNumber,
+				        "flightInit": flightInit,
+				        "cabin": self.params.nowTicket.mainCabin,
+				        "carrierFlightNo": self.params.nowTicket.opAirCodeFltNumber,
+				    	"lsCi":lsCi
+				    }
+			};
+			self.utils.showMessage("",'',self.sgClient);
+			self.sgClient.post(query,'',function(_data){			
+				if(_data && _data.code == 0){//查询成功
+					var Rsp3010 = _data.rsp;
+					var status = [];
+					for(var i=0;i< Rsp3010.length;i++){
+						if(Rsp3010[i].status==0){
+							status.push("0");
+						}else if(Rsp3010[i].status==1){
+							self.utils.showAlert({text:"乘客"+Rsp3010[i].certNo+"非本航班乘客，请确认重输。",title:"错误提示",onOktext:"我知道了",onOK:function(){
+								return false;
+							}});
+						}else if(Rsp3010[i].status==2){
+							self.utils.showAlert({text:"乘客"+Rsp3010[i].certNo+"不可值机。",title:"错误提示",onOktext:"我知道了",onOK:function(){
+								return false;
+							}});
+						}else if(Rsp3010[i].status==3){
+							self.utils.showAlert({text:"乘客"+Rsp3010[i].certNo+"已值机，请勿重复办理。",title:"错误提示",onOktext:"我知道了",onOK:function(){
+								return false;
+							}});
+						}else if(Rsp3010[i].status==4){
+							self.utils.showAlert({text:"乘客"+Rsp3010[i].certNo+"不可选座。",title:"错误提示",onOktext:"我知道了",onOK:function(){
+								return false;
+							}});
+						}else if(Rsp3010[i].status==5){
+							self.utils.showAlert({text:"乘客"+Rsp3010[i].certNo+"已选座，请勿重复办理。",title:"错误提示",onOktext:"我知道了",onOK:function(){
+								return false;
+							}});
+						}else if(Rsp3010[i].status==6){
+							self.utils.showAlert({text:"乘客"+Rsp3010[i].certNo+"舱位不同。",title:"错误提示",onOktext:"我知道了",onOK:function(){
+								return false;
+							}});
+						};
+					}
+					if(status.length == Rsp3010.length){//当所有同行人均状态为0
+						self.addCache("Rsp3010",Rsp3010);
+						self.jumpTo("forward/seatselection");
+					}
+				}else{//失败
+					self.utils.showAlert({text:(_data.msg)});
+				}
+				self.utils.hideMessage();
+			},"json");
+		}
+	});
+	return AddTogetherPersonal;
+});

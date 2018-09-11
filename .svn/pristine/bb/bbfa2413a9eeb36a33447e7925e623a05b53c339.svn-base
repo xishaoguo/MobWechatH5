@@ -1,0 +1,79 @@
+  <div data-role="header" class="flight-header">
+    <aside class="cont_wrap" >
+		    <ul class="journey_tab">
+		        <li data-journey="1" class="journeyTabCrt" >本人</li>
+		        <li data-journey="2" class="" >他人</li>
+		    </ul>
+	</aside>
+  </div>
+
+  <div data-role="none" class="flight-content" id="myflight">
+     <div id="wrapper">
+     		<span class="boardingpass-notice">...请输入您本人准确的证件信息...</span>
+     		<ul class="personinfo">
+     			<li class="personinfo-li"><div class="personinfo-half-round"></div>
+     			<div style="width:25%;display:inline-block;float:left;">
+     			<select data-role="none" class="selectstyle" id="mytype">
+  					<option value ="0">身份证</option>
+  					<option value ="1">护照</option>
+  					<option value ="2">港澳通行证</option>
+  					<option value ="3">台胞证</option>
+  					<option value ="4">军官证</option>
+  					<option value="5">其他</option>
+				</select>
+				</div>
+				<div style="display:inline-block;"> <input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入证件号' id='oneselfCard'/></div></li>
+     			
+     			<li class="personinfo-li-last"><div class="personinfo-half-round"></div><div class="boardingpass-first-cell">姓名</div><div style="display:inline-block;"><input style="font-family: 黑体;" type="text" data-role="none" placeholder='姓名' id=''/></div></li>
+     		</ul>
+     		 
+     </div>
+     <div class="personinfo-button" id="next">下一步</div>
+     <span class="boardingpass-text"><a class="ui-link">取消选座</a></span>
+<!--       <div class="recommend-window">
+          <div class="recommend-window-left">
+              <ul>
+                  <li class="window-left-title">为您推荐座位</li>
+                  <li class="window-left-li">靠窗</li>
+                  <li class="window-left-li">前排</li>
+              </ul>
+          </div>
+          <div class="recommend-window-right"><div class="all-icon recommend-img recommend-img-margin"></div></div>
+      </div> -->
+  </div>
+  
+  <div data-role="none" class="flight-content hideTab" id="doothers">
+  	<div id="dootherswrapper">
+  	<div id="userlist">
+  	<span class="boardingpass-notice"></span>
+  		<ul class="personinfo">
+  		        <li class="personinfo-li personList-title-font">乘客1 <!-- <div class="all-icon trash-icon remove" style="display:inline-block;" ></div> --></li>
+  		        <li class="personinfo-li"><div class="personinfolist-half-round"></div>
+     			<div style="width:25%;display:inline-block;float:left;">
+     			<select data-role="none" class="selectstyle">
+  					<option value ="volvo">身份证</option>
+  					<option value ="saab">护照</option>
+  					<option value="opel">其他</option>
+				</select>
+				</div>
+				<div style="display:inline-block;"> <input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入证件号'/></div>
+				<div class="common-contact">常用</div></li>
+   <!--   			<li class="personinfo-li-last">
+     			<div class="boardingpass-first-cell">常用旅客名</div>
+     			<div style="display:inline-block;"><input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入手机号 '/></div>
+     			<div class="common-contact-checkbox all-icon checkboxed-icon" ></div>
+     			</li> -->
+     			
+     			<!-- <li class="personinfo-li-last"><div class="personinfolist-half-round"></div><div class="boardingpass-first-cell">手机号</div><div style="display:inline-block;"><input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入手机号 '/></div></li> -->   			
+     	</ul>
+     </div>
+     <div class="add-personinfo" id="adduser"><div class="all-icon plus-icon"></div><div class="add-personinfo-font">添加乘客</div></div>
+     <div class="personinfo-button" id="manynext">下一步</div>
+     <div class="boardingpass-text"><a >取消选座</a></div>
+  	</div>
+  </div>
+
+  <div data-role="navbar" class="footer">
+    <!-- <div class="button" id="next">下一步</div> -->
+    <div class="copyright">版权所有：中国民航信息网络股份有限公司</div>
+  </div>

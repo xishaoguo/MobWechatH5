@@ -1,0 +1,431 @@
+define(['jquery','underscore','backbone','SGView','text!templates/seat_selection.html','SeatCharts'],
+function($,_,Backbone,SGView,viewtTpl){
+	var SeatSelection = SGView.extend({
+		pageId:'flight_search',
+		template:_.template(viewtTpl),
+		recommendedSeat:[],//推荐座位
+		map:[],//座位图
+		unavailable:[],//已占用的座位
+		columns:[],//座位列名
+		rows:[],//座位行名
+		exit:[],//安全出口所在位置
+		render:function(){
+			var self = this;
+			this.$el.empty();
+			var pnrTraList = self.getCache("pnrTraList");//获取pnr旅客
+			var RecommendSeat = self.getCache("RecommendSeat");//获取推荐座位
+			if(RecommendSeat.code==0){
+				self.recommendedSeat.push(RecommendSeat.rsp.seatInfo.seatNum);
+			}
+			self.$el.append(self.template({lang:self.lang,data:self.recommendedSeat,pnrTraList:pnrTraList,RecommendSeat:RecommendSeat}));
+//			self.$el.addClass('login-bg ui-page-active');
+			this.$el.attr('class','ui-page-active ui-page');
+			self.map = [];//清空座位图
+			self.unavailable = [];//清空已占座位列表
+			self.exit = [];//清空安全出口
+			self.columns = [];//座位列名
+			self.rows = [];//座位行名
+			self.$el.on('pageshow',function(){ 
+				$("#wrapper").height(document.body.clientHeight - $("#wrapper").position().top - 48);
+//				$("#wrapper").width(document.body.clientWidth);
+				self.initScroll( "wrapper");
+			}); 
+			this.initSeatMap();//初始化座位图
+			this.AppendExit();//向座位图添加安全出口
+			this.showRecommendedSeat();//显示推荐座位框
+			return this;
+		},
+		events: {
+			"click #done": "seatSelect",
+			"click .floor-button-circle": "Upperandlower",
+			"click .recommend-window": "hideWindow",
+			"click .checkin-remove-user": "removeUser",
+			"click .j-notadded": "addReperson",
+			
+		},
+		/**
+		 * 确定
+		 */
+		seatSelect:function(){
+			var self = this;
+			var query = {
+				    "rpid": "3006",
+				    "ropenid": "4526948",
+				    "version": "1.0",
+				    "rip": "127.0.0.1",
+				    "rpara": [
+				        {
+				            "openID": "001",
+				            "cardID": "",
+				            "flightClass": "K",
+				            "isSNR": "0",
+				            "flightNo": "HU7607",
+				            "gender": "F",
+				            "asrSeatNo": "",
+				            "passengerMark": "0",
+				            "phoneNo": "12345678901",
+				            "reissue": "N",
+				            "tourIndex": "1",
+				            "cardAirLine": "HU",
+				            "seatNo": "37E",
+				            "passengerName": "白戈",
+				            "flightDate": "2015-10-28",
+				            "certNo": "210103197107232131",
+				            "toCity": "SHA",
+				            "etCode": "8802326395568",
+				            "fromCity": "PEK"
+				        }
+				    ]
+				};
+			var _query = {
+				    "rpid": "3006",
+				    "ropenid": "4526948",
+				    "version": "1.0",
+				    "rip":  "127.0.0.1",
+				    "rpara": [
+				        {
+				            "openID": "001",
+				            "cardID": "",
+				                    "flightClass": "K",
+				            "isSNR": "0",
+				            "flightNo": "HU7607",
+				            "gender": "F",
+				                  "asrSeatNo": "",
+				            "passengerMark": "0",
+				            "phoneNo": "12345678901",
+				                       "reissue": "N",
+				            "tourIndex": "1",
+				             "cardAirLine": "HU",
+				            "seatNo": "37F",
+				                "passengerName": "柏岩",
+				            "flightDate": "2015-10-28",
+				            "certNo":  "211221199411271520",
+				            "toCity": "SHA",
+				            "etCode": "8809738731331",
+				                      "fromCity": "PEK"
+				        }
+				    ]
+				};
+			self.utils.showMessage("",'',self.sgClient);
+			self.sgClient.post(query,'',function(_data){			
+				if(_data && _data.code == 0){//查询成功
+					var checkinRsp = JSON.parse(_data.rsp);
+					if(checkinRsp.lsDciS2c[0].ciSuccess==0){
+						self.addCache("checkinparam",query);//请求参数添加到缓存，机票详情页显示
+						self.addCache("checkinRsp",checkinRsp);
+						self.jumpTo("forward/seatselectiondetails");
+					}else{
+						self.utils.showAlert({text:(checkinRsp.lsDciS2c[0].errorMsg)});
+					}
+					
+				}else if(_data.code != 0){//查询失败
+					self.utils.showAlert({text:(_data.msg)});
+				}
+				self.utils.hideMessage();
+			},"json");		
+		},
+		/**
+		 * 初始化滚轮
+		 */
+		initIScroll:function(){
+			this.myScroll = new iScroll("wrapper");
+		},
+		/**
+		 * 获取滚轮高度
+		 */
+		getScrollHeight:function(){
+			var bodyHeight = document.body.clientHeight;
+			//此处减去头部高度
+			var scrollHeight = bodyHeight-44;
+			var footerHeight = self.$el.find('.footer').height();
+			scrollHeight = scrollHeight - footerHeight;
+			
+			return scrollHeight;
+		},	
+		/*
+		 * 获取座位图
+		 */
+		getSeatData:function(){
+			var self = this;
+			var checkinSeat = self.getCache("checkinSeat");//从后台查的
+			var seatData = checkinSeat.seatDataL;//下层座位
+			for(var i = 0;i<seatData.length;i++){//遍历建立座位图模型
+				var row = seatData[i];
+				if(row[0].seatRow == '-1'){//-1为安全出口排
+					self.exit.push(i);
+				}else{
+					self.map.push('');
+					self.rows.push(row[0].seatRow);//行名
+				
+				for(var j = 0;j<row.length;j++){
+					var count = self.map.length-1;
+					if(row[j].seatRow != '-1'){
+						if(self.columns.length<checkinSeat.lineNum){
+							self.columns.push(row[j].seatColumn);//列名
+						}
+						
+					if(row[j].seatStatus=='*'){//可选
+						self.map[count]+='y';
+					}else if(row[j].seatStatus=='$' || row[j].seatStatus=='X' || row[j].seatStatus=='!' || row[j].seatStatus=='.'){//占用
+						self.map[count]+='y';
+						self.unavailable.push(row[j].seatRow + row[j].seatColumn);
+					}else if(row[j].seatStatus=='=' || row[j].seatStatus=='E' || row[j].seatStatus==' ' || row[j].seatStatus=='N'){//过道
+						self.map[count]+='_';
+					}
+				}
+				}
+				}
+			}
+			return self.map;
+		},
+		/*
+		 * 获取推荐座位
+		 */
+		RecommendedSeat:function(){
+			_query = {				    
+				    "paxInfo": {   
+				        "idCardMd5": "9640782d7f8cf427cfdd2c92831ac960",
+				        "idCard": "11302020202020202",
+				        "etCode": "800000"
+				    },
+				    "fltInfo": {  
+				        "AirLine": "CA",
+				        "FltNbr": "1501",
+				        "AirCrftType": "777",
+				        "AirCrftMDL": "777-300E",
+				        "Class": "F",
+				        "SubClass": "A",
+				        "Departure": "PEK",
+				        "Arrival": "SHA"
+				    },
+				    "flightNum": "HU7182",
+				    "pnr": "HU7182",
+				    "ticketDate": "HU7182",
+				    "depAirportCode": "PEK",
+				    "arrAirportCode": "HAK"
+				};
+			_data = {	    
+				    "paxInfo": "9640782d7f8cf427cfdd2c92831ac960",
+				    "seatInfo": "35A"
+				};
+		},
+		/**
+		 * 初始化座位图
+		 */
+		initSeatMap:function(){
+			var firstSeatLabel = 1;
+			var self = this;
+            self.getSeatData();//获取座位图
+//			$(document).ready(function() {
+//				var $cart = self.$el.find('#selected-seats'),
+				var $seatnumber = self.$el.find('#seatnumber'),
+//					$counter = self.$el.find('#counter'),
+//					$total = self.$el.find('#total'),
+					sc = self.$el.find('#seat-map').seatCharts({
+                    map: self.map,
+					seats: {
+						f: {
+							price   : 100,
+							classes : 'first-class', //your custom CSS class
+							category: '头等舱'
+						},
+						y: {
+							price   : 40,
+							classes : 'economy-class', //your custom CSS class
+							category: 'Y'
+						}					
+					
+					},
+					naming : {
+						columns: self.columns,
+						rows: self.rows,
+//						top : false,
+						getLabel : function (character, row, column) {
+							return column;
+						},
+					},
+					legend : {
+						node : $('#legend'),
+					    items : [
+							[ 'f', 'available',   '头等舱' ],
+							[ 'y', 'available',   'Y'],
+							[ 'y', 'unavailable', '已预定'],
+							[ 'y', 'recommended', '推荐']
+					    ]					
+					},
+					click: function () {
+						if (this.status() == 'available' || this.status() == 'recommended') {
+							var dd = this.data().category;
+							/* $('<li>'+this.data().category+this.settings.label+'号座位'+'：<br/>价格：<b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[删除]</a></li>') */
+//							$('<div class="seatCharts-number"><li class="seatCharts-number-font">座位号：'+this.settings.id+'</li></div>')
+//								.attr('id','cart-item-'+this.settings.id)
+//								.data('seatId', this.settings.id)
+//								.appendTo($cart);
+							var aa = $seatnumber.text();
+							if(aa !=""){//清除已选座位
+							self.$el.find('#'+aa).removeClass('unavailable').removeClass('recommended').addClass('available').attr('aria-checked','false');
+							sc.get([aa]).status('available');
+						}
+							$seatnumber.text(this.settings.id);
+//							$counter.text(sc.find('selected').length+1);
+//							$total.text(recalculateTotal(sc)+this.data().price);
+							
+							return 'selected';
+						} else if (this.status() == 'selected') {
+							//update the counter
+//							$counter.text(sc.find('selected').length-1);
+							//and total
+//							$total.text(recalculateTotal(sc)-this.data().price);
+						
+							//remove the item from our cart
+//							$('#cart-item-'+this.settings.id).remove();
+							
+							$seatnumber.text("");
+							//seat has been vacated
+							return 'available';
+						} else if (this.status() == 'unavailable') {
+							//seat has been already booked
+							return 'unavailable';
+						} else {
+							return this.style();
+						}
+					}
+				});
+
+				//this will handle "[cancel]" link clicks
+//				$('#selected-seats').on('click', '.cancel-cart-item', function () {
+//					//let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+//					sc.get($(this).parents('li:first').data('seatId')).click();
+//				});
+
+				//let's pretend some seats have already been booked
+				sc.get(self.unavailable).status('unavailable');//不可选
+				sc.get(self.recommendedSeat).status('recommended');//推荐座位
+//		});
+
+//		function recalculateTotal(sc) {
+//			var total = 0;
+//		
+//			//basically find every selected seat and sum its price
+//			sc.find('selected').each(function () {
+//				total += this.data().price;
+//			});
+//			
+//			return total;
+//		}
+		},
+		/*
+		 * append安全出口
+		 */
+		AppendExit:function(){
+			var self = this;
+			if(self.exit.length>0){
+				var seatDivList = self.$el.find("#seat-map");
+				var html = '';
+				html += '<div style="width:100%;"><ul><li class="Emergency-Exit-leftline">紧急出口</li><li class="Emergency-Exit-text">紧急出口</li><li class="Emergency-Exit-leftline"></li></ul></div>';
+				for(var i = 0;i<self.exit.length;i++){
+					$(seatDivList.children()[self.exit[i]+1]).before(html);
+				}
+			}
+		},
+		/*
+		 * 预定选座
+		 */
+		Bookselection:function(){
+			var self = this;
+			var _query = {				    
+				    "pnrNo": "PB05R1",
+				    "flightDate ": "2015-08-28 12:30",
+				    "cabin": "Y",
+				    "flightNo": "HU7182",
+				    "cardNo": "7000000",
+				    "passengerName": "***",
+				    "seatNum": "31A" ,
+				    "depAirportCode": "PEK",
+				    "arrAirportCode": "HAK"
+				};
+			var _data = {};
+		},
+		/*
+		 * 上下层
+		 */
+		Upperandlower:function(){
+			$('.floor-button-circle').animate({left:'2px'});
+//			$('.floor-button-circle').removeClass('left');
+//			$('.floor-button-circle').addClass('right');
+//			$('.floor-button').text("下层");
+		},
+		/*
+		 * show推荐座位window
+		 */
+		showRecommendedSeat:function(){
+			var self = this;
+			if(self.getCache("RecommendSeat").code==0){
+			var seatInfo = self.getCache("RecommendSeat").rsp.seatInfo;
+			var likeInfo = self.getCache("RecommendSeat").rsp.likeInfo;
+			var html = '';
+			html += '<div class="recommend-window" style="display:none">';
+			html += '<div class="recommend-window-left">';
+			html += '<ul>';
+			html += '<li class="window-left-title"><div class="recommend-li-div">为您推荐座位</div><div class="recommend-num">'+seatInfo.seatNum+'</div></li>';
+			if(seatInfo.window=="Y"){
+				html += '<li class="window-left-li"><div class="window-circle"></div><div class="recommend-window-text">靠窗</div></li>';
+			}
+			if(seatInfo.frontBack=="F"){
+				html += '<li class="window-left-li"><div class="window-circle"></div><div class="recommend-window-text">前排</div></li>';
+			}
+			if(seatInfo.frontBack=="B"){
+				html += '<li class="window-left-li"><div class="window-circle"></div><div class="recommend-window-text">后排</div></li>';
+			}
+			if(seatInfo.aisle=="N"){
+				html += '<li class="window-left-li"><div class="window-circle"></div><div class="recommend-window-text">靠过道</div></li>';
+			}
+			if(seatInfo.leftRight=="L"){
+				html += '<li class="window-left-li"><div class="window-circle"></div><div class="recommend-window-text">左侧</div></li>';
+			}
+			if(seatInfo.leftRight=="R"){
+				html += '<li class="window-left-li"><div class="window-circle"></div><div class="recommend-window-text">右侧</div></li>';
+			}
+			html += '</ul>';
+			html += '</div>';
+			html += '<div class="recommend-window-right"><div class="all-icon recommend-img recommend-img-margin"></div></div>';
+			html += '</div>';
+			$('body').append(html);
+			var bodyClientHeight = document.body.clientHeight;
+			var bodyClienWidth = document.body.clientWidth;
+			var box = $('.recommend-window');
+			var boxHeight = box.height();
+			var boxWidth = box.width();
+			box.css({'top':bodyClientHeight/2-boxHeight/2+'px','left':bodyClienWidth/2-boxWidth/2+'px'});//居中
+			box.show();
+			$('.recommend-window').unbind('click').bind('click',function(){
+				box.css('display','none');
+				box.remove();
+			});
+			};
+		},
+		hideWindow:function(){
+			$(".recommend-window").hide();
+		},
+		/*
+		 * 移除同行人
+		 */
+		removeUser:function(e){
+			var element = $(e.currentTarget);
+			var ulelement = element.parent('li');
+			ulelement.remove();
+		},
+		/*
+		 * 添加推荐同行人
+		 */
+		addReperson:function(e){
+			var self = this;
+			if($('#headList').children('li').length<4){
+				var html = '<li><div class="all-icon selected-head-portrait"></div><div class="checkin-name-font">八戒</div><div class="all-icon checkin-remove-user remove-location"></div></li>';
+				$(e.currentTarget).removeClass('j-notadded');//移除为添加标识
+				$('#headList').append(html);
+			}
+		}
+	});
+	return SeatSelection;
+});

@@ -1,0 +1,69 @@
+<div id="wrapper" class="page personal_s_history">
+	<% for(var i in data){ %>
+	<% if(data[i].operatingList.length>1){%>
+	<div>
+		<div class="personal_s_history_div01">
+			<div class="personal_s_history_add" id="personalHistoryAdd">
+				<div id="display" class="personal_display_none">
+					<img src="images/yellowclose2x.png" class="personal_s_history_closeYellow" id="personalHistoryMinus"/>
+					<img src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<div class="personal_s_history_div02">
+			<ul>
+				<li><span><%=data[i].depDate%></span><span
+					class="personal_s_history_span01"><%=data[i].airLineName%><%=data[i].flightNo%></span></li>
+				<li class="personal_s_history_li01"><span><%=data[i].depTime%></span><span
+					class="personal_s_history_span02"><%=data[i].depCityName%></span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06"><%=data[i].arrCityName%></span><span><%=data[i].arrTime%></span>
+					</div></li>
+					<%for(var j in data[i].operatingList){%>
+				    <li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03"><%=data[i].depTime%></span><span
+					class="personal_s_history_span05"><%=data[i].depTime%></span>
+					<div class="personal_s_history_div04">
+						<span>值机选座</span><span class="personal_s_history_span07"><%=data[i].operatingList[j].seatNo%></span>
+					</div>
+					</li>
+					<%}%>
+			</ul>
+		</div>
+	</div>
+	<%}else{%>
+		<div>
+		<div class="personal_s_history_div01">
+			<div class="personal_s_history_round">
+				<div style="display: none;">
+					<img src="images/yellowclose2x.png"
+						class="personal_s_history_closeYellow" /><img
+						src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<div class="personal_s_history_div02">
+			<ul>
+				<li><span><%=data[i].depDate%></span><span
+					class="personal_s_history_span01"><%=data[i].airLineName%><%=data[i].flightNo%></span></li>
+				<li class="personal_s_history_li01"><span><%=data[i].depTime%></span><span
+					class="personal_s_history_span02"><%=data[i].depCityName%></span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06"><%=data[i].arrCityName%></span><span><%=data[i].arrTime%></span>
+					</div></li>
+					<%for(var j in data[i].operatingList){%>
+				    <li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03"><%=data[i].depTime%></span><span
+					class="personal_s_history_span05"><%=data[i].depTime%></span>
+					<div class="personal_s_history_div04">
+						<span>值机选座</span><span class="personal_s_history_span07"><%=data[i].operatingList[j].seatNo%></span>
+					</div>
+					</li>
+					<%}%>
+			</ul>
+		</div>
+	</div>
+	<%}}%>
+</div>

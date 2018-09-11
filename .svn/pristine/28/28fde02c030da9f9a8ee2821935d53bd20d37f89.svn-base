@@ -1,0 +1,12 @@
+  <div data-role="none" class="flight-content">
+     <div class="photo-title">请点击<div class="all-icon lphoto-icon"></div>上传证件照片</div>
+     <div class="photo-sample">
+        <label for="fileElem"><div class="all-icon bphoto-icon" id="camera"></div></label>
+	    <div class="id-photo-sample"></div>
+     </div>
+     <div class="photo-notice">请按图示拍摄证件，确保头像与证件号清晰完整</div>
+<input type="file" name="pic" id="fileElem" multiple accept="image/*" data-role="none" style="display: none;">
+<div id="fileList" style="width:200px;height:200px;"></div>
+  </div>
+  
+  

@@ -1,0 +1,38 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_center.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalCenter = SGView.extend({
+		pageId : 'personal_center',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personalProfiel" : "PersonalProfile",
+			"click #feedback" : "PersonalFeedbackWrite",
+			"click #concernList" : "PersonalConcertList",
+		},
+		/**
+		 * 回复反馈
+		 * 
+		 */
+		PersonalProfile : function(){
+			this.jumpTo("forward/personalProfile");
+		},
+		PersonalFeedbackWrite : function() {
+			this.jumpTo("forward/personalFeedbackWrite");
+		},
+		PersonalConcertList : function() {
+			this.jumpTo("forward/personalConcertList");
+		},
+	});
+	return PersonalCenter;
+});

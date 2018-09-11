@@ -1,0 +1,77 @@
+require.config({
+    //path mappings for module names not found directly under baseUrl
+    baseUrl:'js',
+    paths: {
+        require:		'vendor/require/require',
+        jquery:     	'vendor/jqm/jquery-1.8.3',
+        jqm:     		'vendor/jqm/jquery.mobile-1.4.2.min',
+        underscore: 	'vendor/underscore/underscore_amd',
+        backbone:   	'vendor/backbone/backbone_amd',
+        text:       	'vendor/require/text',
+        plugin:    		'plugin',
+        templates:  	'../templates',
+        model:       	'../model',
+        views:    		'../views',
+        Iscroll: 		'plugin/iscroll',
+        Security:		'plugin/security',
+        TabController: 	'plugin/tab-controller',
+        SwiperMaster: 	'plugin/idangerous.swiper-1.8',
+        SwiperIscroll:	'plugin/idangerous.swiper.scrollbar-1.0',
+        Qrcode:			'plugin/jquery.qrcode.min',
+        store:			'common/store',
+        utils:			'common/utils',
+        params:			'common/params',
+        OBTLog:			'common/OBTLog',
+        constant:		'common/constant',
+        InstallAPK:		'vendor/phoneGap/InstallAPK',
+        JourneyCalendar:'vendor/phoneGap/JourneyCalendar',
+        UMAnalytics:	'vendor/phoneGap/UMAnalytics',
+        lang:			'../lang',
+		  SGView: '../views/SGView',
+		  SGClient:'common/SGClient',
+		  selectpanel:'plugin/selectpanel',
+		  SGSelectPanel:'plugin/SGSelectPanel',
+		SeatCharts: 'vendor/seatcharts/jquery.seat-charts.min',
+		MD5: 'plugin/md5'
+    },
+	shim:{
+		'MD5': {
+            exports: 'MD5'
+        },
+		'SeatCharts': {
+            exports: 'SeatCharts'
+        },
+		'Iscroll': {
+             exports: 'Iscroll'
+         },
+	 'Security':{
+        	exports:'Security' 
+         },
+		'TabController':{
+			 exports: 'TabController'
+		},
+		'Qrcode':{
+			deps:['jquery'],
+			exports:'Qrcode'
+		},
+		'selectpanel':{
+			deps:['jquery'],
+			exports:'selectpanel'
+		},'SwiperIscroll':{
+			deps:['jquery','SwiperMaster'],
+			exports:'SwiperIscroll'
+		}
+		
+		
+	}
+});
+
+/**
+ *	1. load app.js, 
+ *	2. configure jquery mobile to prevent default JQM ajax navigation
+ *	3. bootstrapping application
+ */
+define(['jquery','underscore','backbone','app','jqm-config'], function($,_,Backbone,app) {
+   app.initialize();
+});
+

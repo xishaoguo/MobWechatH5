@@ -1,0 +1,214 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_concern_list.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalConcertList = SGView.extend({
+		pageId : 'personal_concern_list',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var CurrentFlights = this.CurrentFlights();
+			//this.ButtonSwitchChange();
+			var HisFlights = this.HisFlights();
+			var OpType = this.OpType();
+			var hisrsp = {};
+			self.$el.append(self.template({
+				CurrentFlights:CurrentFlights,HisFlights:HisFlights,OpType:OpType
+			}));
+			return this;
+		},
+		events : {
+			"click #deleteButton" : "DeleteList",
+			"click #edit" : "ButtonSwitch",
+			"click #cancel" : "ButtonCancel",
+		},
+		/**
+		 * 获得正在关注的缓存的关注列表数据
+		 */
+		CurrentFlights : function() {
+			var CurrentFlights = this.getCache("CurrentFlights");
+			return CurrentFlights;
+		},
+		/**
+		 * 获得已经关注的缓存列表数据
+		 */
+		HisFlights : function() {
+			var HisFlights = this.getCache("HisFlights");
+			return HisFlights;
+		},
+		/**
+		 * 判断操作类型
+		 */
+		OpType : function() {
+			var HisFlights = this.getCache("HisFlights");
+			var CurrentFlights = this.getCache("CurrentFlights");
+			if (HisFlights ==null &&CurrentFlights==null) {
+				//alert("没有");
+			}else{
+				//alert("有");
+			}
+			if (HisFlights !=null && HisFlights !="") {
+				for (var i = 0; i < HisFlights.length; i++) {
+					var HisFlightsOpType = HisFlights[i].opType;
+					switch (HisFlightsOpType) {
+					case 1:
+						HisFlightsOpType = "值机选座";
+						break;
+					case 2:
+						HisFlightsOpType = "等待值机";
+						break;
+					case 3:
+						HisFlightsOpType = "历史关注";
+						break;
+					case 4:
+						HisFlightsOpType = "已值机";
+						break;
+
+					default:
+						break;
+					}
+					
+				}
+			}
+			if (CurrentFlights !=null && CurrentFlights !="") {
+				for (var i = 0; i < CurrentFlights.length; i++) {
+					var CurrentFlightsOpType = CurrentFlights[i].opType;
+					switch (CurrentFlightsOpType) {
+					case 1:
+						CurrentFlightsOpType = "值机选座";
+						break;
+					case 2:
+						CurrentFlightsOpType = "等待值机";
+						break;
+					case 3:
+						CurrentFlightsOpType = "历史关注";
+						break;
+					case 4:
+						CurrentFlightsOpType = "已值机";
+						break;
+
+					default:
+						break;
+					}
+					
+				}
+			}
+			var opType = {
+					CurrentFlightsOpType,
+					HisFlightsOpType
+					};
+			return opType;
+		},
+		/**
+		 * 取消按钮功能
+		 */
+		ButtonCancel : function() {
+			var cancel = document.getElementById("cancel");
+			cancel.className = "personal_concernList_div_01 dispalyNone";
+			
+			var edit = document.getElementById("edit");
+			edit.className = "personal_concernList_div_01";
+			
+			var deleteFollow = document.getElementById("deleteFollow");
+			deleteFollow.className = "personal_concernList_div_01 dispalyNone";
+			
+			var checkBox = document.getElementsByName("checkboxitems");
+			for (var i=checkBox.length-1; i>=0;i--){
+				var boxDiv=checkBox[i].parentNode;
+				boxDiv.className = "personal_concernList_div_04 dispalyNone";
+				checkBox[i].checked = false;
+			}
+		},
+		/**
+		 * 编辑删除按钮切换
+		 */
+		ButtonSwitch : function() {
+			var cancel = document.getElementById("cancel");
+			cancel.className = "personal_concernList_div_01";
+			
+			var edit = document.getElementById("edit");
+			edit.className = "personal_concernList_div_01 dispalyNone";
+			
+			var deleteFollow = document.getElementById("deleteFollow");
+			deleteFollow.className = "personal_concernList_div_01";
+			
+			var checkBox = document.getElementsByName("checkboxitems");
+			for (var i=checkBox.length-1; i>=0;i--){
+				var boxDiv=checkBox[i].parentNode;
+				boxDiv.className = "personal_concernList_div_04";
+			}
+		},
+		/**
+		 * 删除选中列表
+		 */
+		DeleteList : function() {
+			var deleteButton = document.getElementById("deleteButton");
+			if(deleteButton.className == "personal_concernList_div_03 delete_able"
+				|| deleteButton.className == "delete_able"){
+				var self = this;
+				var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+				var _query = {
+					    "rpid": "2008", 
+					    "ropenid": openid, 
+					    "version": "1.0", 
+					    "rip": "127.0.0.1", 
+					    "rpara": {
+					        "concernIds": [
+					            {
+					                "id": "adsfadsfadsf", 
+					                "identity": "Y"
+					            }, 
+					            {
+					                "id": "adsfadsfadsf"
+					            }
+					        ]
+					    }
+					};
+				self.utils.showMessage("onLoading", '', self.sgClient);
+				self.sgClient.post(_query, '', function(customs_data) {
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					/*var currentFlights = customs_data.rsp.currentFlights;
+					var hisFlights = customs_data.rsp.data.hisFlights;
+					var items = document.getElementsByName("checkboxitems");
+					for (var i = 0; i < items.length; i++) {
+						if(items[i].checked){
+							self.removeCache("CurrentFlights");
+							//this.addCache("HisFlights", hisFlights);
+							self.addCache("CurrentFlights", currentFlights);
+							self.utils.showAlert({
+								text : ("删除成功")
+							});
+						}
+					}*/
+					self.utils.showAlert({
+						text : ("删除成功")
+					});
+				} else if (customs_data && customs_data.code != 0) {//查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+				}, "json");
+			}
+		},
+	});
+	return PersonalConcertList;
+});
+
+/**
+ * 删除按钮样式变化
+ */
+function ButtonSwitchChange(){
+	var checkBox = document.getElementsByName("checkboxitems");
+	var deleteButton = document.getElementById("deleteButton");
+	for (var i = checkBox.length-1;i >=0;i--) {
+		if(checkBox[i].checked){
+			deleteButton.className = "personal_concernList_div_03 delete_able";
+		}else{
+			deleteButton.className = "personal_concernList_div_03 delete_disable";
+		}
+	}
+}

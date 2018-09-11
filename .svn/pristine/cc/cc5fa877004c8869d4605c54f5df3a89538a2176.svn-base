@@ -1,0 +1,29 @@
+  <div data-role="none" class="flight-content" id="myflight">
+  	<div id="dootherswrapper">
+  	<div id="userlist">
+  	<span class="boardingpass-notice"></span>
+  		<ul class="personinfo">
+  		        <li class="personinfo-li personList-title-font">乘客1 <!-- <div class="all-icon trash-icon remove" style="display:inline-block;" ></div> --></li>
+  		        <li class="personinfo-li"><div class="personinfolist-half-round"></div>
+     			<div style="width:25%;display:inline-block;float:left;">
+     			<select data-role="none" class="selectstyle">
+  					<option value ="volvo">身份证</option>
+  					<option value ="saab">护照</option>
+  					<option value="opel">其他</option>
+				</select>
+				</div>
+				<div style="display:inline-block;"> <input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入证件号'/></div>
+				<div class="common-contact">常用</div></li>
+   <!--   			<li class="personinfo-li-last">
+     			<div class="boardingpass-first-cell">常用旅客名</div>
+     			<div style="display:inline-block;"><input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入手机号 '/></div>
+     			<div class="common-contact-checkbox all-icon checkboxed-icon" ></div>
+     			</li> -->
+     			
+     			<!-- <li class="personinfo-li-last"><div class="personinfolist-half-round"></div><div class="boardingpass-first-cell">手机号</div><div style="display:inline-block;"><input style="font-family: 黑体;" type="text" data-role="none" placeholder='请输入手机号 '/></div></li> -->   			
+     	</ul>
+     </div>
+     <div class="add-personinfo" id="adduser"><div class="all-icon plus-icon"></div><div class="add-personinfo-font">添加乘客</div></div>
+     <div class="personinfo-button" id="manynext">下一步</div>
+  	</div>
+  </div>

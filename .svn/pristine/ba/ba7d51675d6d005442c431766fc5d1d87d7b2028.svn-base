@@ -1,0 +1,219 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_feedback_write.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalFeedbackWrite = SGView.extend({
+		pageId : 'personal_feedback_write',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personal_feed_buttonDiv" : "PersonalFeedButtonDiv",
+			"click #lookBack" : "LookBack",
+			"click #delImg" : "DeleteImage",
+		},
+		/**
+		 * 提交信息
+		 * 
+		 */
+		PersonalFeedButtonDiv : function() {
+			var status = document.getElementById("status");
+			if(status.value != "" && status.value != null && status.value != "请写下您的建议,帮助我们更好的为您服务"){//判断输入框有没有内容
+				var self = this;
+				var openid = self.store.getOpenId();
+				//var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+				var _query = {
+					    "rpid": "1012", 
+					    "ropenid": openid, 
+					    "version": "1.0", 
+					    "rip": "127.0.0.1", 
+					    "rpara": {
+					        "content": status.value, 
+					        "img_address": "http://localhost"
+					    }
+					};
+				self.utils.showMessage("onLoading",'',self.sgClient);
+				self.sgClient.post(_query,'',function(customs_data){
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					self.utils.showAlert({
+						text : ("提交成功")
+					});
+					//清空输入框
+					status.value = "";
+					var personalFeedButtonDiv = document.getElementById("personal_feed_buttonDiv");
+					
+					personalFeedButtonDiv.removeAttribute("class");
+					personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+					document.getElementById("counter").innerHTML = "0";
+					//清空图片
+					
+					
+				} else if (customs_data && customs_data.code != 0) {//查询失败
+					self.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+				self.utils.hideMessage();
+				},"json");
+				$("#upload_part").siblings().remove();
+				$("#Continue_upload").addClass("dispalyNone ");
+				$("#upload_button").css("margin-top","0px");
+				var inputFirst = $("#uploadForm").find("input").first()
+				inputFirst.siblings().remove();
+				$(".add_button").css("width","25px");
+				$("#input_file0").removeAttr("disabled","disabled");
+				if($("#upload_picture_text").attr("class")!="upload_photo upload_paddingTop3"){
+					var juxuAdd = '<div class="upload_photo upload_paddingTop3" id = "upload_picture_text">上传照片</div>';
+					$("#upload_button").append(juxuAdd);
+				}
+			}
+		},
+		/**
+		 * 删除图片
+		 * 
+		 */
+		DeleteImage : function(e) {
+			//var preview = document.getElementById("wpic");
+			//var preview_parent = preview.parentNode;
+			var preview = $(e.currentTarget);
+			var preview_parent = preview.parent();
+			var id = preview_parent.parent().attr("id");
+			var idNum=id.charAt(id.length - 1);
+			idNum=idNum-1;
+			var idObject = document.getElementById("input_file"+idNum);
+			if (idObject != null){
+			    idObject.parentNode.removeChild(idObject);
+			}
+			preview_parent.parent().remove();
+			var fileParamArry = $("#uploadForm").children();
+			if(fileParamArry.length<="4"){
+				$("#input_file0").removeAttr("disabled","disabled");
+				$(".add_button").css("width","25px");
+			}
+			if(fileParamArry.length=="1"){
+				$("#Continue_upload").addClass("dispalyNone");
+				var jixu = '<div class="upload_photo upload_paddingTop3" id = "upload_picture_text">上传照片</div>';
+				$("#upload_button").append(jixu);
+				$("#upload_button").css("margin-top","0px");
+			}
+			return;
+		},
+		/**
+		 * 点击跳到查询回复页面
+		 */
+		LookBack : function() {
+			var self = this;
+			var openid = self.store.getOpenId();
+			//var openid = "oG3L4wvgC1BaFc-PTdjFAb2DF7xk";
+		var _query = {
+			    "rpid": "1013", 
+			    "ropenid": openid, 
+			    "version": "1.0", 
+			    "rip": "127.0.0.1", 
+			    "rpara": ""
+			};
+		self.utils.showMessage("onLoading",'',self.sgClient);
+		self.sgClient.post(_query,'',function(data){
+			if (data && data.code == 0) {// 查询成功
+				var DataRsp = JSON.parse(data.rsp);
+				self.addCache("ReplyMessage",DataRsp);
+				self.jumpTo("forward/personalFeedbackView");
+			} else if (data && data.code != 0) {//查询失败
+				self.utils.showAlert({
+					text : (data.msg)
+				});
+			}
+				self.utils.hideMessage();
+			},"json");
+		},
+	});
+	return PersonalFeedbackWrite;
+});
+/**
+ * 输入框已输入的文字个数和提交按钮的状态
+ * @param textareaName
+ * @param spanName
+ * @param personalFeedButtonDiv
+ */
+function countChar(textareaName,spanName,personalFeedButtonDiv){
+   document.getElementById(spanName).innerHTML = document.getElementById(textareaName).value.length;
+   var personalFeedButtonDiv = document.getElementById(personalFeedButtonDiv);
+   if(document.getElementById(textareaName).value.length != "0"){
+		personalFeedButtonDiv.removeAttribute("class");
+		personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_01');
+   }else if(document.getElementById(textareaName).value.length == "0"){
+	   personalFeedButtonDiv.removeAttribute("class");
+	   personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+   }
+}
+/**
+ * 清空提示信息
+ */
+function PromptInformation(){
+	var statusVal = $("#status").val();
+	if(statusVal=='请写下您的建议,帮助我们更好的为您服务'){
+		$("#status").val('');
+		 $("#status").removeClass("textarea_text_style");
+	}
+}
+/**
+ * 输入提示信息
+ */
+function ClearPromptInformation(){
+	var statusText = $("#status").val();
+	if(statusText==''){
+		$("#status").val('请写下您的建议,帮助我们更好的为您服务');
+		$("#status").addClass("textarea_text_style");
+	}
+}
+
+/**
+ * 上传
+ * 
+ */
+var index=1;
+function previewImage(files){
+	$("#upload_button").css("margin-top","35px")
+	$("#upload_picture_text").addClass("dispalyNone");
+	$("#Continue_upload").attr("class","");
+	$("#upload_picture_text").remove();
+	var fileParamArry = $("input[name=fileParam]");
+	if(fileParamArry.length=="4"){
+		$("#input_file0").attr("disabled","disabled");
+		$(".add_button").css("width","0");
+	}
+	var html = '';
+	var file;
+	var onceFileCount = files.files.length;
+	var i = 0;
+	while (files.files[i]!=undefined) {
+		file = files.files[i];
+		//隐藏当前的input file，然后添加一个新的上去
+		$(file).hide();
+		var inputFile = '<input type="file" data-role="none" id = "input_file'+window.index+'" name="fileParam"  onchange="previewImage(this)"/>';
+		$("#uploadForm").append(inputFile);
+		//$(file).siblings("input").show();
+		var reader = new FileReader();
+        reader.onload = function(e) {
+			html = html +'<div id="wpic_' + window.index + '" class="personal_feedback_write_div_04">'
+						+'<div id="img1">'
+						+'<img id="delImg" src="images/Clear.png" data-ke-src="add_img.png" class="personal_feedback_write_img_01"/>'
+						+'<img id="uploadImage_' + window.index + '" name="uploadImage" src="' + e.target.result + '" data-ke-src="add_img.png" class="personal_feedback_write_img_02"/>'
+						+'</div>'
+						+'</div>';
+			$("#upload_files").append(html);
+			html='';
+			window.index++;
+		}
+		i++;
+		reader.readAsDataURL(file);
+      }
+}

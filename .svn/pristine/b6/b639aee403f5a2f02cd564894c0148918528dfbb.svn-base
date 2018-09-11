@@ -1,0 +1,91 @@
+<div class="page personal_s_history">
+	<div>
+		<div class="personal_s_history_div01">
+			<div class="personal_s_history_add">
+				<div style="display: none;">
+					<img src="images/yellowclose2x.png"
+						class="personal_s_history_closeYellow" /><img
+						src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<div class="personal_s_history_div02">
+			<ul>
+				<li><span>2015/08/10</span><span
+					class="personal_s_history_span01">国际航空CA2316</span></li>
+				<li class="personal_s_history_li01"><span>15:30</span><span
+					class="personal_s_history_span02">北京</span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06">上海</span><span>00:16</span>
+					</div></li>
+				<li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03">02-14</span><span
+					class="personal_s_history_span05">19:17</span>
+					<div class="personal_s_history_div04">
+						<span>值机选座</span><span>01E</span>
+					</div></li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<div class="personal_s_history_div01">
+			<div class="personal_s_history_round">
+				<div style="display: none;">
+					<img src="images/yellowclose2x.png"
+						class="personal_s_history_closeYellow" /><img
+						src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<div class="personal_s_history_div02">
+			<ul>
+				<li><span>2015/08/10</span><span
+					class="personal_s_history_span01">国际航空CA2316</span></li>
+				<li class="personal_s_history_li01"><span>15:30</span><span
+					class="personal_s_history_span02">北京</span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06">上海</span><span>00:16</span>
+					</div></li>
+				<li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03">02-14</span><span
+					class="personal_s_history_span05">19:17</span>
+					<div class="personal_s_history_div04">
+						<span>值机选座</span><span>01E</span>
+					</div></li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<div class="personal_s_history_div01">
+			<div class="personal_s_history_lineYellow">
+				<div style="">
+					<img src="images/yellowclose2x.png"
+						class="personal_s_history_closeYellow" /><img
+						src="images/yellowdot2x.png" class="personal_s_history_dotYellow" />
+				</div>
+			</div>
+		</div>
+		<div class="personal_s_history_div02">
+			<ul>
+				<li><span>2015/08/10</span><span
+					class="personal_s_history_span01">国际航空CA2316</span></li>
+				<li class="personal_s_history_li01"><span>15:30</span><span
+					class="personal_s_history_span02">北京</span><span
+					class="personal_s_history_span04">-</span>
+					<div class="personal_s_history_div03">
+						<span class="personal_s_history_span06">上海</span><span>00:16</span>
+					</div></li>
+				<li class="personal_s_history_li01"><span>操作时间</span><span
+					class="personal_s_history_span03">02-14</span><span
+					class="personal_s_history_span05">19:17</span>
+					<div class="personal_s_history_div04">
+						<span>值机选座</span><span>01E</span>
+					</div></li>
+			</ul>
+		</div>
+	</div>
+</div>

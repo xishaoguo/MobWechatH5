@@ -1,0 +1,31 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_selected_history.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var NewIndex = SGView.extend({
+		pageId : 'personal_selected_history',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #mycustoms" : "MyCustoms",
+			"click #feedback" : "FeedBack",
+		},
+		/**
+		 * 回复反馈
+		 * 
+		 */
+		FeedBack : function() {
+			this.jumpTo("forward/feedback");
+		},
+	});
+	return NewIndex;
+});

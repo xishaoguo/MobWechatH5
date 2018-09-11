@@ -1,0 +1,37 @@
+
+<div data-role="content" id="content" class="flight-guide">
+	<div class="ticket">
+		<div class="ticket-header ticket-font-padding">
+			<div class="ticket-date "><%=data.de_date%>/<%=data.de_week%></div><div class="ticket-date ticket-airline"><%=data.air_scn%><%=data.air_cd%><%=data.fltNumber%></div>
+			<div class="flightclear"><div class="departcity ticket-msg-font"><%=data.deCity%></div><div class="arrivecity ticket-msg-font"><%=data.arCity%></div></div>
+			<div class="flightclear"><div class="departtime ticket-msg-font"><%=data.de_time%></div><div class="flight-icon"><div class="all-icon flightlist-plane"></div></div><div class="arrivetime ticket-msg-font"><%=data.ar_time%></div></div>
+			<div class="flightclear"><div class="depart-airport ticket-msg-font"><%=data.deAirpot%></div><div class="arrive-airport ticket-msg-font"><%=data.arAirport%></div></div>
+			<div class="ticket-half-round"></div>
+		</div>
+		
+		<div class="ticket-context">
+			<div class="flightclear">
+		    	<!-- <ul>
+		    		<li class="boardinggate">登机口<h1>待定</h1></li><li class="boardinggate">座位号<h1>35B</h1></li><li class="boardinggate">行李情况<i>限额</i><h1>20KG</h1></li>
+		    	</ul>
+		    	<ul>
+		    		<li class="flightclear boardinggate">舱位等级<h1>经济舱Y</h1></li><li class="boardinggate">餐食情况<h1>无餐食</h1></li><li class="boardinggate">时间/里程<h1>3h10m</h1></li>
+		    	</ul> -->
+		    	<table >
+		    	<tr ><td class="ticket-table">登机口<h1><%=data.gate%></h1></td><td class="ticket-table">座位号<h1><%=data.seatNumber%></h1></td><td class="ticket-table">行李情况<h1><%=data.maxWeight%></h1></td></tr>
+		    	<tr ><td class="ticket-table">舱位等级<h1><%=data.cabin%></h1></td><td class="ticket-table">餐食情况<h1><%=data.meal%></h1></td><td class="ticket-table">时间/里程<h1><%=data.fltTimeHour%>h<%=data.fltTimeMinute%>m</h1><h1><%=data.distance%></h1></td></tr>
+		    	</table>
+				
+			</div>
+		</div>
+		    
+		<div class="ticket-footer">
+			<ul class="">
+				<li class="tiket-footer-li"><div class="tiket-footer-li-circle"></div><div class="ticket-table-font1">电子客票号&nbsp</div><div class="ticket-table-font2"><%=data.ticketNumber%></div></li>
+				<li class="tiket-footer-li"><div class="tiket-footer-li-circle"></div><div class="ticket-table-font1">票价/基建/燃油&nbsp</div><div class="ticket-table-font2"><%=data.price%>/<%=data.cadFound%>/<%=data.fuelSurcharges%></div></li>
+				<li class="tiket-footer-li"><div class="tiket-footer-li-circle"></div><div class="ticket-table-font1">行李号&nbsp</div><div class="ticket-table-font2"><%=data.bagNumber%></div></li>
+			</ul>
+		</div>
+	</div>
+</div>
+ 

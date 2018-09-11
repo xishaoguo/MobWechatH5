@@ -1,0 +1,106 @@
+define([ 'jquery', 'underscore', 'backbone', 'SGView',
+		'text!templates/personal_feedback_write.html' ], function($, _, Backbone,
+		SGView, viewtTpl) {
+	var PersonalFeedbackWrite = SGView.extend({
+		pageId : 'personal_feedback_write',
+		template : _.template(viewtTpl),
+		render : function() {
+			var self = this;
+			this.$el.empty();
+			this.$el.attr('class', 'ui-page-active ui-page');
+			/*-------------------------------------------------------------------------*/
+			var hisrsp = {};
+			self.$el.append(self.template({
+				
+			}));
+			return this;
+		},
+		events : {
+			"click #personal_feed_buttonDiv" : "PersonalFeedButtonDiv",
+			"click #lookBack" : "LookBack",
+		},
+		/**
+		 * 提交信息
+		 * 
+		 */
+		PersonalFeedButtonDiv : function() {
+				
+			var status = document.getElementById("status");
+			if(status.value != "" && status.value != null ){//判断输入框有没有内容
+				var content = {"rpid":"1053",
+						"ropenid":"4526948",
+						"version":"1.0",
+						"rip":"127.0.0.1",
+						"rpara":{
+						"content":status.value,
+						"img_address":"http://localhost"
+						}};
+				var customs_data = {
+					    "code": 0, 
+					    "msg": "ok", 
+					    "rsp": ""
+					};
+				if (customs_data && customs_data.code == 0) {// 查询成功
+					this.utils.showAlert({
+						text : (customs_data.msg)
+					});
+					status.value = "";
+					var personalFeedButtonDiv = document.getElementById("personal_feed_buttonDiv");
+					
+					personalFeedButtonDiv.removeAttribute("class");
+					personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+					document.getElementById("counter").innerHTML = "0"
+				} else if (customs_data && customs_data.code != 0) {//查询失败
+					this.utils.showAlert({
+						text : (customs_data.msg)
+					});
+				}
+			}
+			//alert(content.rpara.content);
+		},
+		/**
+		 * 点击跳到回复页面
+		 */
+		LookBack : function() {
+		var quest = {
+			    "rpid": "1053", 
+			    "ropenid": "4526948", 
+			    "version": "1.0", 
+			    "rip": "127.0.0.1", 
+			    "rpara": ""
+			}
+		var customs_data = {
+			    "code": 0, 
+			    "msg": "ok", 
+			    "rsp": "[{\"user_id\":100000000114,\"message_id\":167,\"feedback_time\":\"2015-12-04 13:50:10\",\"reply_time\":null,\"feedback_content\":\"aaaaaaa\",\"reply_content\":null,\"oper_id\":0,\"img_address\":\"[\\\"http://localhost\\\"]\"},{\"user_id\":100000000114,\"message_id\":166,\"feedback_time\":\"2015-12-04 12:21:50\",\"reply_time\":null,\"feedback_content\":\"1111\",\"reply_content\":null,\"oper_id\":0,\"img_address\":null},{\"user_id\":100000000114,\"message_id\":163,\"feedback_time\":\"2015-12-04 11:56:09\",\"reply_time\":null,\"feedback_content\":\"1111\",\"reply_content\":null,\"oper_id\":0,\"img_address\":null},{\"user_id\":100000000114,\"message_id\":162,\"feedback_time\":\"2015-12-04 11:54:29\",\"reply_time\":null,\"feedback_content\":\"1111\",\"reply_content\":null,\"oper_id\":0,\"img_address\":null},{\"user_id\":100000000114,\"message_id\":161,\"feedback_time\":\"2015-12-04 11:51:52\",\"reply_time\":null,\"feedback_content\":\"1111\",\"reply_content\":null,\"oper_id\":0,\"img_address\":null},{\"user_id\":100000000114,\"message_id\":160,\"feedback_time\":\"2015-12-04 11:49:44\",\"reply_time\":null,\"feedback_content\":\"aaaaaaa\",\"reply_content\":null,\"oper_id\":0,\"img_address\":null},{\"user_id\":100000000114,\"message_id\":153,\"feedback_time\":\"2015-12-03 22:33:10\",\"reply_time\":null,\"feedback_content\":\"try\",\"reply_content\":null,\"oper_id\":0,\"img_address\":\"[\\\"T18RZTBCKT1RCvBVdK\\\",\\\"T1NRxTByJT1RCvBVdK\\\"]\"}]"
+			};
+		if (customs_data && customs_data.code == 0) {// 查询成功
+			var DataRsp = JSON.parse(customs_data.rsp);
+			this.addCache("ReplyMessage",DataRsp);
+			this.jumpTo("forward/personalFeedbackView");
+		} else if (customs_data && customs_data.code != 0) {//查询失败
+			this.utils.showAlert({
+				text : (customs_data.msg)
+			});
+		}
+		},
+	});
+	return PersonalFeedbackWrite;
+});
+/**
+ * 输入框已输入的文字个数和提交按钮的状态
+ * @param textareaName
+ * @param spanName
+ * @param personalFeedButtonDiv
+ */
+function countChar(textareaName,spanName,personalFeedButtonDiv){
+   document.getElementById(spanName).innerHTML = document.getElementById(textareaName).value.length;
+   var personalFeedButtonDiv = document.getElementById(personalFeedButtonDiv);
+   if(document.getElementById(textareaName).value.length != "0"){
+		personalFeedButtonDiv.removeAttribute("class");
+		personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_01');
+   }else if(document.getElementById(textareaName).value.length == "0"){
+	   personalFeedButtonDiv.removeAttribute("class");
+	   personalFeedButtonDiv.setAttribute("class",'personal_sex_buttonDiv_02');
+   }
+}

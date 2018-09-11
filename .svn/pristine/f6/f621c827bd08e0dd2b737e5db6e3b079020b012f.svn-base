@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="format-detection" content="telephone=no"/>
+<meta id='metaCon' name="viewport" content="minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, width=device-width, user-scalable=no" />
+<meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+<link rel="stylesheet" href="css/g.css" />
+<link rel="stylesheet" href="css/common/jquery.mobile-1.4.2.min.css" />
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/new_index.css">
+<link rel="stylesheet" href="css/jquery.seat-charts.css">
+<link rel="stylesheet" href="css/style.css">
+<link id='ThemeStyle' rel="stylesheet" href="css/main.css" />
+<script data-main="js/main" src="js/vendor/require/require.js"></script>
+</head>
+<body class="ui-mobile-viewport ui-overlay-g ui-overlay-a">
+</body>
+</html>

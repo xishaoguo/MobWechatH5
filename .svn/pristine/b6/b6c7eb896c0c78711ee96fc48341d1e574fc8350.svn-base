@@ -1,0 +1,187 @@
+define(['jquery','underscore','backbone','SGView','text!templates/flight_guide.html'],
+function($,_,Backbone,SGView,viewtTpl){
+	var FlightGuide = SGView.extend({
+		pageId:'flight_list',
+		template:_.template(viewtTpl),
+		render:function(){
+			var self = this;
+			this.$el.empty();
+			var TripTrail = self.getCache("TripTrail");
+			self.$el.append(self.template({lang:self.lang,data:TripTrail}));
+			self.$el.on('pageshow',function(){ 
+				$("#wrapper").height(document.body.clientHeight - $("#wrapper").position().top);
+				self.initScroll("wrapper");
+			}); 
+			setTimeout(function(){self.initStyle();},300);
+			return this;
+		},
+		events: {
+			"click #flightdetails": "flightdetails",
+			"click #boardingpass": "boardingpass",
+			"click #seatselection": "seatselection",
+			"click #QRCode": "showQRCode",
+		},
+		/**
+		 * 初始化样式
+		 */
+		initStyle:function(){
+			var self = this;
+			var TripTrail = self.getCache("TripTrail");//获取行程估计数据缓存
+			var status = parseInt(TripTrail.status);
+			var itemli = self.$el.find(".item-guide");
+			for(var i = 0;i <= status;i++){
+				$(itemli[i]).removeClass("item-guide-todo").addClass("item-guide-done");//高亮显示当前及之前事务
+			};
+			switch(status){
+				case 0://出票
+					
+					break;
+				case 1://选座
+					var seatselectionli = self.$el.find("#seatselection");					
+					self.$el.find(".guide-date-color").removeClass("guide-date-color");//移除高亮样式
+					seatselectionli.prev("li").addClass("guide-date-color");//日期时间高亮
+					var html = "<div class='guide-circle' style='top: -694px;'><div class='all-icon guide-seat-icon guide-icon'></div></div>";
+					self.$el.find(".guide-circle").remove();
+					self.$el.find("ul").append(html);//当前事务图标
+					self.$el.find(".item-guide-doing").css("top","228px");//卷边样式定位
+					var scrollbar = self.$el.find(".scroll-bar");//滚动条
+					scrollbar.css("height","200px");
+					break;
+				case 2://值机
+					var boardingpassli = self.$el.find("#boardingpass");
+					self.$el.find(".guide-date-color").removeClass("guide-date-color");//移除高亮样式
+					boardingpassli.prev("li").addClass("guide-date-color");//日期时间高亮
+					var html = "<div class='guide-circle' style='top: -570px;'><div class='all-icon guide-checkin-icon guide-icon'></div></div>";
+					self.$el.find(".guide-circle").remove();
+					self.$el.find("ul").append(html);//当前事务图标
+					self.$el.find(".item-guide-doing").css("top","352px");//卷边样式定位
+					var scrollbar = self.$el.find(".scroll-bar");//滚动条
+					scrollbar.css("height","323px");
+					break;
+				case 3://托运
+					var consignmentli = self.$el.find("#consignment");
+					self.$el.find(".guide-date-color").removeClass("guide-date-color");//移除高亮样式
+					consignmentli.prev("li").addClass("guide-date-color");//日期时间高亮
+					var html = "<div class='guide-circle' style='top: -446px;'><div class='all-icon guide-consignment-icon guide-icon'></div></div>";
+					self.$el.find(".guide-circle").remove();
+					self.$el.find("ul").append(html);//当前事务图标
+					self.$el.find(".item-guide-doing").css("top","476px");//卷边样式定位
+					var scrollbar = self.$el.find(".scroll-bar");//滚动条
+					scrollbar.css("height","446px");
+					break;
+				case 4://安检
+					var QRCodeli = self.$el.find("#QRCode");
+					self.$el.find(".guide-date-color").removeClass("guide-date-color");//移除高亮样式
+					QRCodeli.prev("li").addClass("guide-date-color");//日期时间高亮
+					var html = "<div class='guide-circle' style='top: -322px;'><div class='all-icon guide-check-icon guide-icon'></div></div>";
+					self.$el.find(".guide-circle").remove();
+					self.$el.find("ul").append(html);//当前事务图标
+					self.$el.find(".item-guide-doing").css("top","599px");//卷边样式定位
+					var scrollbar = self.$el.find(".scroll-bar");//滚动条
+					scrollbar.css("height","571px");
+					break;
+				case 5://登机
+					var boardingli = self.$el.find("#boarding");
+					self.$el.find(".guide-date-color").removeClass("guide-date-color");//移除高亮样式
+					boardingli.prev("li").addClass("guide-date-color");//日期时间高亮
+					var html = "<div class='guide-circle' style='top: -198px;'><div class='all-icon guide-boarding-icon guide-icon'></div></div>";
+					self.$el.find(".guide-circle").remove();
+					self.$el.find("ul").append(html);//当前事务图标
+					self.$el.find(".item-guide-doing").css("top","723px");//卷边样式定位
+					var scrollbar = self.$el.find(".scroll-bar");//滚动条
+					scrollbar.css("height","694px");
+					break;
+				case 6://到达
+					var arriveli = self.$el.find("#arrive");
+					self.$el.find(".guide-date-color").removeClass("guide-date-color");//移除高亮样式
+					arriveli.prev("li").addClass("guide-date-color");//日期时间高亮
+					var html = "<div class='guide-circle' style='top: -74px;'><div class='all-icon guide-arrive-icon guide-icon'></div></div>";
+					self.$el.find(".guide-circle").remove();
+					self.$el.find("ul").append(html);//当前事务图标
+					self.$el.find(".item-guide-doing").css("top","847px");//卷边样式定位
+					var scrollbar = self.$el.find(".scroll-bar");//滚动条
+					scrollbar.css("height","818px");
+					break;
+				default:
+					break;
+			}
+		},
+		/**
+		 * 安检二维码
+		 */
+		showQRCode:function(){
+			var self = this;
+			self.jumpTo("forward/qRCode");
+		},
+		/**
+		 * 机票详情
+		 */
+		flightdetails:function(e){
+			var self = this;
+			var target = $(e.target);
+			var couponId = target.attr("couponId");
+			var query = {
+				    "rpid":"2003",
+				    "ropenid":"4526948",
+				    "version":"1.0",
+				    "rip":"127.0.0.1",
+				    "rpara":{
+				        "couponId":"17E2DEE7140445899F7F0F73F1220E8D",
+				    }
+				};
+			self.utils.showMessage("",'',self.sgClient);
+			self.sgClient.post(query,'',function(_data){			
+				if(_data && _data.code == 0){//查询成功
+					var TicketDetail = JSON.parse(_data.rsp);
+					self.addCache("TicketDetail",TicketDetail);
+					self.jumpTo("forward/flightdetails");
+				}else if(_data.code != 0){//查询失败
+					self.utils.showAlert({text:(_data.msg)});
+				}
+				self.utils.hideMessage();
+			},"json");
+		},
+		/**
+		 * 预选座位
+		 */
+		seatselection:function(){
+			var self = this;
+			var _query = {
+				    rpid:"3002",
+				    ropenid:"4526948",
+				    version:"1.0",
+				    rip:"127.0.0.1",
+				    rpara:{
+				        flightNum: "HU7182",
+				        pnr: "NKV77D",
+				        ticketDate: "2015-10-30 12:30"
+				    }
+				};
+			self.utils.showMessage("",'',self.sgClient);
+			self.sgClient.post(_query,'',function(_data){			
+				if(_data && _data.code == 0){//查询成功
+					var preseat = JSON.parse(_data.rsp);
+					self.addCache("preseat",preseat);
+					self.jumpTo("forward/flightsearch");
+				}else if(_data.code != 0){//查询失败
+					self.utils.showAlert({text:(_data.msg)});
+				}
+				self.utils.hideMessage();
+			},"json");
+			
+		},
+		/**
+		 * 办登机牌
+		 */
+		boardingpass:function(){
+			this.jumpTo("forward/boardingpass");
+		},
+		/**
+		 * 返回
+		 */
+		back:function(){
+			this.jumpTo("back/flightsearch");
+		}
+	});
+	return FlightGuide;
+});
